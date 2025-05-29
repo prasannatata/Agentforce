@@ -1,0 +1,141 @@
+# Insurance Claim Assistant – Technical Specification Document
+
+## Overview
+This document outlines the complete technical specification for the Insurance Claim Assistant built on Salesforce Agentforce. It details the architecture, data model, flows, deployment steps, and user interface design deployed in the Experience Cloud site.
+
+---
+
+## 1. Objectives
+- Enable members to check the status of their insurance claims via chat.
+- Verify members using OTP via email before showing sensitive claim data.
+- Retrieve claim information using Claim ID and/or verified email.
+- Escalate to a live support agent or log a case when needed.
+
+---
+
+## 2. Salesforce Objects Used
+
+### Standard Objects
+- **User**
+- **EmailMessage**
+- **Task**
+- **Case**
+
+### Custom Objects
+- **Claim__c**
+  - Fields: Claim_ID__c, Member_ID__c, Email__c, Provider__c, Date_of_Service__c, Amount_Billed__c, Amount_Paid__c, Denial_Code__c, Status__c
+
+- **Member__c**
+  - Fields: Member_ID__c, Email__c, First_Name__c, Last_Name__c
+
+---
+
+## 3. Agent Topics & Flow Structure
+
+### Topics Created
+1. **Get_Claim_Status**
+   - Verifies Claim ID and Email
+   - Returns status and claim details
+
+2. **Member_Claim_Lookup**
+   - Starts with Member ID
+   - Lists all associated claims
+   - Verifies member email before showing claim data
+
+3. **Verify_Member_Email**
+   - Separate topic for OTP verification
+   - Invokes flows to send and validate OTP
+
+4. **Support_Interaction**
+   - Handles escalations and task creation
+
+---
+
+## 4. Flows Implemented
+
+### Flow: Send_Verification_Code_Custom_Member
+- Input: inputEmail (Text)
+- Output: verificationCode, authenticationKey
+- Sends email OTP
+
+### Flow: Verify_Member_Code_Custom
+- Inputs: authenticationKey, memberCode
+- Outputs: isVerified (Boolean), messageAfterVerification (Text)
+
+### Flow: Get_Claim_Status_Main
+- Inputs: Claim_ID, Verified_Email
+- Queries Claim__c based on both fields
+
+### Flow: Member_Claims_List
+- Input: Member_ID__c
+- Outputs: List of Claims associated
+
+### Flow: Escalate_to_Agent_or_Log_Task
+- Used in fallback scenarios or upon request
+
+---
+
+## 5. Agent Actions Configured
+
+- **Send Verification Code Custom Member**
+- **Verify Member Code Custom**
+- **Log Member Inquiry**
+- **Claim Retriever Insights** (optional fallback action for document-based claim search)
+
+---
+
+## 6. Experience Cloud Deployment
+
+### Site Setup:
+- Created an Experience Cloud site using **Partner Central Template**
+- Enabled **Messaging** and added Copilot (Agentforce) component to homepage
+- Ensured Omni-Channel routing and presence is active
+- Updated profile permissions for site guest/user to access required objects
+
+### Deployment Notes:
+- Flows tested in Lightning runtime
+- Used Developer Console and Flow Debug to test OTP validation
+- All Flows activated and made available to topics via Agentforce UI
+
+---
+
+## 7. Screenshots to Include (Reference)
+
+1. **Claim__c Object & Fields** – Custom object setup
+2. **Member__c Object** – Email field and sample record
+3. **Flow: Send_Verification_Code_Custom_Member** – Flow diagram
+4. **Flow: Verify_Member_Code_Custom** – Flow diagram
+5. **Experience Cloud Site** – Agent visible on the homepage
+6. **Agent Topic Setup** – Screenshot of each topic (Get_Claim_Status, Member_Claim_Lookup, etc.)
+7. **Email Verification Output** – Sample success message after OTP validation
+8. **Claim Detail Output** – Sample result with claim info (Claim ID, Status, Provider)
+9. **Escalation Flow** – Logging task and escalation to live agent
+10. **Omni-Channel Config** – Status as available and Messaging routing
+
+---
+
+## 8. Security Layers
+
+- OTP validation prevents access without identity verification.
+- Member switch is disabled post-verification.
+- Email and Member ID inputs are sanitized.
+- Permission sets include Read access for Member__c and Claim__c only.
+
+---
+
+## 9. Improvements & Final Changes
+
+- Restructured to support multiple claims per Member
+- Injected email verification between claim listing and detail view
+- Added escalation topic and fallback routing
+- Deployed to Experience Cloud and made agent available with routing status
+
+---
+
+## 10. Future Enhancements
+
+- Add SMS-based OTP support
+- Link spouse or dependent claims using household Member_ID logic
+- AI-based routing using denial reasons or common inquiry tags
+
+---
