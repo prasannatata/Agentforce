@@ -1,0 +1,88 @@
+Access the Agent in Experience Cloud (User View)
+This is how members or users interact with the Claims Assistant on your public/private site.
+
+✅ Steps:
+Go to your Experience Cloud Site URL
+
+Example: https://yourdomain.force.com/memberportal/s/
+
+If the site is unpublished, preview via Builder → Preview.
+
+Locate the Embedded Agent
+
+The chatbot usually appears:
+
+As a floating Copilot icon in the bottom-right corner
+
+Or embedded in a dedicated page component
+
+Click the Chat Icon
+
+Opens the Agentforce Copilot window.
+
+Start a Conversation
+
+Example: type Hi or I want to check my claims
+
+The agent triggers based on keyword matches and flows behind each topic.
+
+Interact as a Member
+
+Follow prompts like entering:
+
+Member ID
+
+Email
+
+Claim ID
+
+OTP (if enabled)
+
+Get Responses or Escalate
+
+The agent either:
+
+Answers the inquiry using data and flows
+
+Or logs a support task/escalates via Omni-Channel
+
+🛠️ Part 2: Access the Agent in Agentforce Builder (Admin Setup)
+This is where you configure topics, actions, flows, and test logic.
+
+✅ Steps:
+Go to Salesforce Setup
+
+Open your Salesforce org and go to App Launcher (9 dots).
+
+Search for and open Copilot Builder or Agentforce (depends on edition).
+
+Open Your Agent
+
+Find your agent (e.g., Claims Inquiry Assistant) from the list.
+
+Click the agent name to open it.
+
+Explore Tabs
+
+Topics tab → Create or edit assistant topics like Get Claim Status
+
+Actions tab → Assign flows or invocable actions
+
+Instructions tab → Write natural language instructions to guide the LLM
+
+Preview/Test → Use the embedded preview window to test conversations
+
+Assign & Deploy Agent
+
+Assign it to a Copilot Component on your Experience Cloud site:
+
+Go to Experience Cloud → Builder
+
+Drag the Copilot (Agentforce) component to a section
+
+Set Agent name = your configured agent
+
+Test Live
+
+Preview the Experience Cloud site or go live to see your agent running end-to-end.
+
