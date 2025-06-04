@@ -1,0 +1,44 @@
+Data Modeling (Custom Objects):
+
+Candidate Profile – Stores patient demographics, health traits, etc.
+
+Trial Protocol – Defines the inclusion/exclusion criteria.
+
+Screening Log – Captures each screening attempt.
+
+Referral Record – Tracks referral status and outcome.
+
+Eligibility_Criterion__c - To store individual inclusion/exclusion rules for each Trial_Protocol__c
+
+Example Real-World Use Case: each protocol has its own set of eligibility rules stored as records. The system loops through and evaluates each one against the candidate profile.
+Protocol A has 3 inclusion rules and 2 exclusion rules. Candidate X qualifies on 3 inclusion checks but fails 1 exclusion rule → system logs that failure, marks them ineligible, and doesn’t show the trial in results.
+
+Outreach_Event__c Object (for Logging Outreach Activity)
+For outreach, I’ve added a lightweight Outreach_Event__c object to log all digital outreach attempts and responses. On the agent side, we can start the conversation with a simple prompt asking if the user wants to check trial eligibility. Once they respond, the flow collects info and runs the screening logic. This mimics a real outreach-to-screening funnel, just like in a real-world clinical recruitment system.”
+
+
+
+Matching Funnel (Flow Logic):
+
+Step 1: Get Candidate info using the provided ID.
+
+Step 2: Match to available Trial Protocols using eligibility logic.
+
+Step 3: Filter based on location or site availability (e.g., enrolling sites).
+
+Step 4: Log screening attempt and reason for success/failure.
+
+Step 5: If successful, auto-create Referral Record and send notification.
+
+
+
+Scope Area	How Your Flow Covers It
+
+
+Outreach	Not in Flow yet, but this would come from marketing/agent front.
+Pre-Screening	✅ Flow dynamically checks candidate eligibility using inclusion/exclusion criteria.
+Trial Matching	✅ Flow loops through eligible Trial Protocols and matches based on age, gender, diagnosis, etc.
+Scheduling and Referral	✅ If matched, flow auto-creates a Referral Record linking the candidate to the appropriate site or coordinator.
+
+
+
