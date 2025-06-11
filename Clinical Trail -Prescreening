@@ -1,0 +1,29 @@
+ Pre-Screening Questions for Clinical Trial Eligibility
+
+1. What is your date of birth?**
+(Used to calculate and match against allowed age range)*
+
+2. What is your gender?**
+(Matched with `Allowed Genders` in the Eligibility Rule)*
+
+3. Have you been diagnosed with any of the following conditions?**
+(Show options: e.g., COPD, Migraine, Diabetes...)*
+
+4. Are you currently pregnant?**
+(Used when `Exclude If Pregnant` = TRUE)*
+
+5. Are you currently taking any of these medications?**
+(Select from list – compared against `Prohibited Medications`)*
+
+6. Have you participated in any clinical trials in the last 30 days?**
+(Used when `Require No Recent Trial` = TRUE)*
+
+7. Have you used any recreational drugs in the last 30 days?**
+*(Used for `Exclude Drug Users` logic)*
+
+8. Are you fluent in \[English / Spanish / other]?**
+(Used when `Required Languages` is defined)*
+
+9. Do you have any known allergies we should avoid?**
+(Used for `Known Allergens to Avoid`)*
+
