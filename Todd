@@ -1,0 +1,35 @@
+Thanks for sharing the screenshots of your **Agentforce PoC: Clinical Trial Recruitment** document. Based on that, here’s an enhanced message for Todd that clearly ties your updates and requests to the documented scope and objectives:
+
+---
+
+**Hi Todd,**
+
+Would it be okay to reschedule our meeting to tomorrow? I’m finalizing a few updates and want to ensure I present more meaningful progress aligned with the PoC goals.
+
+Since our last discussion, I’ve completed:
+
+* The **“Find Trials Near Me”** feature based on location.
+* Added options for candidates to **update info, withdraw, or check referral status**.
+* Refined **pre-screening logic** to align with real-world criteria like medication use and trial history.
+* Enhanced **eligibility rule checks** mapped to dynamic trial protocols.
+
+Currently working on:
+
+* A proper **email OTP verification step** before showing referral/trial info.
+* Handling **partial user input** more gracefully with guided prompts.
+
+Also exploring:
+
+* A **scoring-based eligibility model** to support nuanced recommendations rather than strict pass/fail.
+* Logic to **auto-recommend alternate trials** nearby when a candidate doesn’t qualify for the primary match—this ties back to the Trial Matching and Scheduling goals in the PoC document.
+
+Rescheduling would give me time to cleanly integrate these enhancements and demonstrate a more complete, real-world-ready assistant.
+
+Let me know if that works.
+
+Thanks,
+Prasanna
+
+---
+
+Let me know if you want to include a bullet like “aligns with IRB guardrails / candidate consent logic” or make it shorter.
