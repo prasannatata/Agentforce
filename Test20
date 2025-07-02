@@ -1,0 +1,75 @@
+Wayfinder Agent — Job 4
+Present Waystar Support (Current State)
+Today, support for missing remits, user access, and security-related issues is handled manually by administrative or IT support teams. Tasks include:
+
+Assisting clients with missing remittance files or payment posting questions.
+
+Helping users reset passwords or recover locked accounts.
+
+Managing permission sets and role assignments, including enabling or revoking access.
+
+Supporting two-factor authentication (2FA) setup and recovery.
+
+Managing account-level access, IP restrictions, and compliance settings.
+
+Reviewing audit logs and login history to investigate security events.
+
+These tasks often require back-and-forth verification steps, manual email responses, and involve significant operational overhead, leading to longer resolution times and potential compliance risks.
+
+Agent Execution (Proposed State)
+🌟 What the agent will do
+Automate guidance and resolution for missing remittance inquiries, including checking status, confirming availability, or initiating a resend.
+
+Assist users with password resets, following secure verification workflows, and explain password policy requirements.
+
+Guide users through permission and role understanding — help them identify current permissions, request changes, or understand access rights.
+
+Support secure 2FA setup and recovery steps, reducing manual IT intervention.
+
+Provide detailed login and audit history upon request (e.g., "When did I last log in?").
+
+Address basic account-level security configurations, such as IP restrictions and access policies.
+
+Escalate high-risk or unresolved security issues (e.g., suspected unauthorized access, Domain Admin lockouts) directly to IT/security teams.
+
+💬 Agent Tasks and Data Sources
+Data Sources:
+
+User Management module (Users screen, Permissions tab, Roles tab, Reset Password, 2FA tab, Login history).
+
+Security module (Permission Sets, IP restrictions, password and account policies).
+
+Remits module (Remittance files, Payment posting screens).
+
+Agent Tasks:
+
+Retrieve and verify user account details securely before initiating actions.
+
+Show assigned roles and permissions, help explain or adjust access as per policy.
+
+Initiate password reset and guide through policy-compliant password creation.
+
+Help configure or recover two-factor authentication, provide security best practices.
+
+Address missing remit requests by checking remittance file statuses and triggering resends if allowed.
+
+Provide or clarify login history and security audit logs.
+
+Manage escalations seamlessly to IT/security teams when required.
+
+Data Cloud
+Centralizes user and security data for real-time verification and status checks.
+
+Supports secure identity linking between Experience Cloud and backend systems.
+
+Provides up-to-date data for permissions, remittance files, and account-level security configurations.
+
+Maintains compliance standards (HIPAA, PHI) by enforcing strict access controls and audit logging.
+
+Configure the Agent
+Define specific topics and workflows: e.g., "Reset My Password," "Recover 2FA," "Check Missing Remits," "Verify My Access Rights."
+
+Configure decision logic to guide self-service resolution or trigger escalations for high-risk scenarios.
+
+Enforce dynamic permissions and guardrails to protect sensitive data.
+
