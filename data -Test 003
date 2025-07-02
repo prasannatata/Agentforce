@@ -1,0 +1,13 @@
+| **Current Module / Screen**                      | **Data Points Available**                                 | **How Agent Will Use This Data**                                                         |
+| ------------------------------------------------ | --------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Remits > Payments screen**                     | Invoice details, payment status, adjustments              | Show outstanding balances, confirm payment posted, explain adjustments.                  |
+| **Remits > Remittance Detail screen**            | Payment line items, payer adjustments, unapplied amounts  | Provide detailed payment breakdown to clients.                                           |
+| **Denial Management > Denial Listing & My Work** | Denial reasons, status, appeal stages                     | Explain denial reasons, guide through next steps or appeals, detect escalation triggers. |
+| **Denial Management > Review Denial screen**     | Root cause analysis, claim adjustments, workgroup details | Provide deeper context for denial explanations.                                          |
+| **Denial Management > Appeals screen**           | Appeal submission status (e.g., Ready, Sent, Closed)      | Update client on appeal progress.                                                        |
+| **Claim Management > Claim Monitoring screen**   | Claim statuses (Submitted, Pending, Paid, Denied)         | Provide real-time claim status updates.                                                  |
+| **Claim Management > Claim Details screen**      | Line-level status, payer responses, corrections           | Offer detailed claim breakdowns and guidance.                                            |
+| **Payment Management > Patient Payments**        | Patient balances, payment options                         | Show invoice summary, provide pay-now instructions.                                      |
+| **Payment Management > Reconciliation screens**  | Payment-to-claim matching, discrepancies                  | Help clients understand payment allocations and resolve mismatches.                      |
+| **Analytics Pro > AR Aging dashboards**          | Days outstanding, payer trends                            | Suggest proactive payment actions or escalate when overdue.                              |
+| **Analytics Pro > Denial trends & resolution**   | Denial rate metrics, resolution times                     | Identify trends, explain resolution efforts to clients.                                  |
