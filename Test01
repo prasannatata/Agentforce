@@ -1,0 +1,93 @@
+✅ Here’s a **clean, detailed write-up in the same style as your Word doc**, but focused on **Job 3 (Accounts Receivable)**. You can copy it directly:
+
+---
+
+# **Wayfinder Agent Job 3**
+
+## Present Waystar Support (Current State)
+
+Currently, AR (Accounts Receivable) inquiries are addressed mainly through manual processes. Clients must log into the Experience Cloud portal or call support to:
+
+* Check balances and payment statuses.
+* Understand invoices.
+* Review claim statuses and denials.
+* Request guidance on appeals.
+* Resolve discrepancies or reconcile payments.
+
+Support teams handle these tasks manually, often escalating unresolved or complex issues to finance or collections teams.
+
+---
+
+## Agent Execution (Proposed State)
+
+### 🌟 **What the agent will do**
+
+* Retrieve and show invoice and payment details directly to authenticated clients.
+* Provide claim statuses and explain denial reasons using integrated Denial and Claim Management data.
+* Offer step-by-step guidance on how to pay bills or initiate appeals.
+* Detect when an issue is too complex or high-risk and automatically escalate to finance or collections.
+* Reduce call volume and manual follow-up, improving client experience and reducing AR cycle time.
+
+---
+
+### 💬 **Agent Tasks and Data Sources**
+
+**Data Sources:**
+
+* Payment Management (Remits, Patient Payments, Reconciliation)
+* Claim Management
+* Denial Prevention + Recovery
+* Analytics + Reporting (for AR aging and trend data)
+
+**Agent Tasks:**
+
+* Fetch and display outstanding invoices and balances.
+* Show payment posting status.
+* Retrieve real-time claim and denial information.
+* Guide through payment and appeal steps.
+* Trigger finance/collections handoff when needed.
+* Enforce permissions and PHI compliance before displaying data.
+
+---
+
+## Data Cloud
+
+* Ingest payment and claims data from integrated modules to provide live status updates.
+* Leverage Data Cloud to connect Experience Cloud user identity with AR data securely.
+* Use automated data streams to ensure real-time updates.
+* Implement strict security and role-based access controls for PHI and financial data.
+
+---
+
+## Configure the Agent
+
+* Define clear AR-related topics (e.g., "Check My Balance," "Why Was My Claim Denied?").
+* Set up two main flows: one for self-service resolution and one for escalation to finance/collections.
+* Apply explicit guardrails to ensure the agent only answers within scope and triggers escalation when needed.
+
+---
+
+## Set Up Retrieval Logic
+
+* Enable RAG (Retrieval-Augmented Generation) to pull current claim and payment data.
+* Create prompts for common AR scenarios to guide clients through self-service before escalation.
+* Ensure logs and audit trails are kept for compliance.
+
+---
+
+## Prompt Builder
+
+* Develop custom prompt templates focused on AR workflows (e.g., "Retrieve My Payment Status," "Explain My Denial Reason").
+* Use knowledge snippets combined with live data retrieval to provide accurate, contextual responses.
+
+---
+
+## Design Actions (Optional)
+
+* Use Flow automations to handle background processes like logging, case creation, and task routing to finance.
+* Automatically create a support case if a question remains unresolved after self-service attempts.
+* Record client actions and handoffs for reporting and future optimization.
+
+---
+
+### ⭐ Let me know if you'd also like visual conversation flow diagrams (like in your Job 1 screenshots) or pre-formatted Word file text. I can prepare it for you!
