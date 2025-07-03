@@ -153,5 +153,33 @@ Moves from simple article lookups to live, personalized answers, pulling real-ti
 Enables clients to take immediate action, such as paying a bill, checking claim status, or resetting access — rather than just reading static instructions.
 
 Seamlessly escalates unresolved or complex issues, handing off with full context to the right internal teams.
+Job 1: Knowledge Answers
+"The agent helps clients get instant, accurate answers from Waystar’s large knowledge base — instead of making them dig through hundreds of articles.
+
+It understands questions in natural language, guides them step by step, and suggests related topics when needed.
+
+If the client still needs help, it smoothly escalates to a human support case with full context."
+
+✅ Job 2: Webinar & Sales Recommendations
+"The agent acts like a smart guide for education and engagement.
+
+It recommends relevant webinars, product sessions, or training based on what the client uses and what they're interested in.
+
+Clients can register right away or ask for more details — helping them stay informed and engaged without needing separate emails or calls."
+
+✅ Job 3: Accounts Receivable Support
+"The agent makes it easy for clients to check invoices, balances, payment statuses, and denial reasons, all in real time.
+
+It guides them on how to pay, explains why a claim was denied, and shows what to do next.
+
+If something can’t be resolved — like a complex dispute — the agent automatically escalates it to finance or collections with all the needed details."
+
+✅ Job 4: User Management & Security Tasks
+"This is about making access and security tasks self-service.
+
+The agent helps with password resets, role and permission explanations, two-factor authentication recovery, and even missing remittance requests.
+
+It securely verifies identity, guides clients step by step, and escalates high-risk issues to IT when needed — all while reducing manual support work."
+
 
 
