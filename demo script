@@ -1,0 +1,117 @@
+✅ Absolutely! Here’s a **more natural, friendly, and easy-to-explain version of the demo script**, designed to feel like you're talking directly to a group (not reading slides), while showing you clearly understand both the business and technical pieces.
+
+---
+
+# 💬 **Waystar Agent Demo — Natural Script**
+
+---
+
+## 👋 **Introduction**
+
+"Hey everyone!
+
+Today, I’ll share what we understood so far about Waystar, how they support clients today, and what we’re planning to build with the new agent.
+
+I'll keep it simple and conversational so it's easy to follow."
+
+---
+
+## 💡 **About Waystar**
+
+"Waystar is a healthcare payments technology company.
+
+They help hospitals and providers manage everything related to revenue — things like getting claims paid, handling denials, posting payments, and making sure the cash flow is smooth.
+
+Their main goal is to simplify these processes so providers can focus on patient care instead of chasing payments."
+
+---
+
+## 🤝 **How they currently support clients**
+
+"Right now, clients mostly rely on the ATLAS Community portal, plus emails and phone calls.
+
+If a client has a question — for example, about a payment, an invoice, or a claim status — they either have to dig through knowledge articles or open a support ticket and wait.
+
+Similarly, if they have issues like password resets, access problems, or missing remittance files, it often involves manual back-and-forth with the support or finance teams.
+
+Overall, this process works but it’s very manual and takes time."
+
+---
+
+## 🤖 **What we are planning to build**
+
+"This is where our new Wayfinder Agent comes in.
+
+The idea is to build an intelligent, conversational agent that lives in the ATLAS Community portal and can handle most of these questions and tasks automatically.
+
+Instead of waiting for someone to reply, clients can get instant help."
+
+---
+
+## ⭐ **What the agent will do (Jobs overview)**
+
+### ✅ **Job 1: Knowledge answers**
+
+"It will help answer general questions using over 2,000 knowledge articles.
+
+For example, if a client asks, 'How do I resubmit a claim?' or 'Where can I download my remittance file?', the agent will instantly provide a step-by-step answer without needing a support ticket."
+
+---
+
+### ✅ **Job 2: Webinar and sales recommendations**
+
+"If a client is using a new product, the agent can suggest relevant webinars or training sessions, making it easier for them to learn and stay engaged."
+
+---
+
+### ✅ **Job 3: Accounts Receivable support**
+
+"This one is really important.
+
+The agent will help clients check their invoices, see outstanding balances, view payment statuses, and understand denial reasons — all in real time.
+
+If there’s an issue — like a payment is missing or a claim was denied — the agent can guide them on what to do next or escalate it directly to the finance or collections team when needed."
+
+---
+
+### ✅ **Job 4: User management and security tasks**
+
+"Clients will also be able to handle tasks like resetting their password, managing permissions, setting up or recovering 2FA, and asking about missing remits — all without having to wait for manual support.
+
+This reduces workload on the IT and support teams and helps clients solve problems faster."
+
+---
+
+## 🔧 **How we plan to do it (high-level technical)**
+
+"On the technical side, we plan to connect the agent to different Waystar modules — like Remits, Denial Management, Claim Management, and User Management.
+
+We’ll use data from these modules in real time, but with strict controls so only the right users see the right information.
+
+We’ll also use Data Cloud to securely link client accounts and ensure permissions are respected, so there’s no risk of exposing sensitive data.
+
+And of course, any actions taken by the agent will be logged for compliance and audit purposes."
+
+---
+
+## 🎯 **What this will achieve**
+
+"With this agent, we’ll move from a manual, ticket-heavy process to a faster, self-service experience.
+
+Clients get answers immediately, finance and support teams can focus on complex tasks, and overall satisfaction goes up.
+
+It’s about making things simpler, faster, and more secure."
+
+---
+
+## ✅ **Wrap-up**
+
+"So overall, that’s what we understood and what we’re planning to build.
+
+Happy to answer any questions or go deeper into any specific job or technical detail!"
+
+---
+
+### 💬 **If you'd like, I can also format this into a single-page "talking points" sheet you can use live, or prepare a slide deck version in this simple style. Just let me know — "Yes, make talking points" or "Yes, make slides"! 🚀**
+
+
