@@ -1,0 +1,75 @@
+
+<mxfile host="app.diagrams.net">
+  <diagram name="WayFinder Agent Full Flow" id="fullagentflow">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Login/OTP Verification -->
+        <mxCell id="login" value="Start: User logs in with ID or Email" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="20" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="otp" value="Send OTP & Verify" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="intent" value="Identify Intent (Job 1-4)" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="220" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Job 1: Knowledge Answers -->
+        <mxCell id="job1" value="Job 1: Knowledge Answers" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="kb" value="Fetch Knowledge Articles & Explain" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Job 2: Webinar Recommendations -->
+        <mxCell id="job2" value="Job 2: Webinar Recommendations" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="320" width="220" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="webinar" value="Fetch Webinars & Suggest" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="420" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Job 3: AR Support -->
+        <mxCell id="job3" value="Job 3: AR Support" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="320" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ar" value="Payment Status, Denials, Remittance" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="420" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Job 4: User Management & Security -->
+        <mxCell id="job4" value="Job 4: User Mgmt & Security" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="320" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="security" value="Reset Password, Roles, 2FA, Security Logs" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="420" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- End -->
+        <mxCell id="end" value="End" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="550" width="80" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="login" target="otp"/>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="otp" target="intent"/>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="job1"/>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job1" target="kb"/>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kb" target="end"/>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="job2"/>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job2" target="webinar"/>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="webinar" target="end"/>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="job3"/>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job3" target="ar"/>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ar" target="end"/>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="job4"/>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job4" target="security"/>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="security" target="end"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
