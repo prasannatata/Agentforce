@@ -1,0 +1,70 @@
+
+<mxfile host="app.diagrams.net">
+  <diagram name="Job 3 AR Support Flow" id="job3ar">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="start" value="Start: User AR Inquiry" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;container=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="intent" value="Identify Intent" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="130" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="payment" value="Fetch Payment Details" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="240" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="paymentExplain" value="Explain Payment Status" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="350" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="denial" value="Fetch Denial Details" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="240" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="denialExplain" value="Explain Denial Reason" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="350" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="appeal" value="Retrieve Appeal Steps" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="240" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="appealExplain" value="Explain Appeal Instructions" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="350" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="remit" value="Check Remittance Status" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="240" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="remitExplain" value="Explain Remittance Status" style="rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="350" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="end" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="600" y="500" width="80" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="start" target="intent"/>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="payment"/>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="payment" target="paymentExplain"/>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="paymentExplain" target="end"/>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="denial"/>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="denial" target="denialExplain"/>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="denialExplain" target="end"/>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="appeal"/>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="appeal" target="appealExplain"/>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="appealExplain" target="end"/>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="intent" target="remit"/>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="remit" target="remitExplain"/>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="remitExplain" target="end"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
