@@ -1,0 +1,65 @@
+✅ Great question! Let’s clarify clearly and fix that.
+
+Right now, in the draft I gave, each **row** inside each job used the same "Topics" value (e.g., "Knowledge", "Product webinars", "AR inquiries", "Case updates") because it was a placeholder "category" for the job.
+
+However, in your original Excel, **each use case row can actually have a more specific "Topic"**, not just repeating the same topic.
+
+Below is a corrected, more detailed and realistic breakdown — each **use case now has a more precise topic**, making it clearer and easier to track.
+
+---
+
+# 💼 **Job 1 — Knowledge Answers (Corrected Topics)**
+
+| Topics                | Actions                | Scope/boundaries                | Example questions                   | Actions needed        | Inputs required      | Expected output                         | Escalation criteria                     | Notes                 |
+| --------------------- | ---------------------- | ------------------------------- | ----------------------------------- | --------------------- | -------------------- | --------------------------------------- | --------------------------------------- | --------------------- |
+| Password reset        | Data cloud → retriever | General self-service knowledge. | "How do I reset my password?"       | Provide question text | User’s question text | Step-by-step password reset guide.      | Escalate if issue persists after steps. | Link to reset page.   |
+| Login troubleshooting | Data cloud → retriever | Login issues, access problems.  | "I can’t log in to my account."     | Provide question text | User’s question text | Troubleshooting guide for login issues. | Escalate if multiple failed attempts.   | Check system outages. |
+| Profile update        | Data cloud → retriever | Account settings help.          | "How do I update my contact info?"  | Provide question text | User’s question text | Instructions to update contact info.    | Escalate if user locked out.            | Include screenshots.  |
+| Portal navigation     | Data cloud → retriever | Portal guidance, feature help.  | "Where can I find payment history?" | Provide question text | User’s question text | Directions to payment section.          | Escalate if data not accessible.        | Validate links.       |
+
+---
+
+# 💼 **Job 2 — Webinar Recommendations (Corrected Topics)**
+
+| Topics                    | Actions            | Scope/boundaries                         | Example questions                          | Actions needed            | Inputs required            | Expected output                             | Escalation criteria                       | Notes                      |
+| ------------------------- | ------------------ | ---------------------------------------- | ------------------------------------------ | ------------------------- | -------------------------- | ------------------------------------------- | ----------------------------------------- | -------------------------- |
+| Product-specific webinars | Recommend webinars | Registered/owned products only.          | "Any webinars for my product this month?"  | Confirm products owned    | Product list, webinar data | Show 2–3 recommended sessions.              | Escalate if no relevant webinars.         | Keep list updated.         |
+| General training webinars | Recommend webinars | Open to all users, not product-specific. | "What general trainings are upcoming?"     | None                      | Webinar data               | List all general upcoming trainings.        | Escalate if user requests custom session. | Include on-demand options. |
+| Regional webinars         | Recommend webinars | Filter by user location or timezone.     | "Are there any sessions in EST time zone?" | Confirm location/timezone | Webinar schedule           | Filtered webinars for that region/timezone. | Escalate if no matches found.             | Check region accuracy.     |
+
+---
+
+# 💼 **Job 3 — AR Support (Corrected Topics)**
+
+| Topics                        | Actions           | Scope/boundaries                      | Example questions                         | Actions needed        | Inputs required           | Expected output                       | Escalation criteria              | Notes                     |
+| ----------------------------- | ----------------- | ------------------------------------- | ----------------------------------------- | --------------------- | ------------------------- | ------------------------------------- | -------------------------------- | ------------------------- |
+| Payment status                | Retrieve AR data  | Payment status only.                  | "What is the status of my payment?"       | Provide claim ID      | Claim ID, payment data    | Display payment status clearly.       | Escalate if no record found.     | Cross-check claim system. |
+| Outstanding balance           | Retrieve AR data  | Balance details only.                 | "How much do I owe currently?"            | Provide account ID    | Account ID, balance data  | Show balance and due dates.           | Escalate if discrepancy found.   | Suggest payment methods.  |
+| Denial reasons                | Retrieve AR data  | Denial reason and appeal options.     | "Why was my claim denied?"                | Provide claim ID      | Claim ID, denial data     | Explain denial reason and next steps. | Escalate if reason unclear.      | Attach appeal guide.      |
+| Invoice download              | Document handling | Invoice or receipt downloads.         | "Can I get my invoice copy?"              | Confirm email/account | Invoice file, claim ID    | Provide secure download link.         | Escalate if file missing.        | Validate user identity.   |
+| Remittance issues             | Issue logging     | Report missing or delayed remittance. | "I didn’t receive my remittance."         | Provide claim ID      | Claim ID, remittance data | Confirm issue logged and escalated.   | Always escalate to finance.      | Track issue ID.           |
+| Partial payment clarification | Retrieve AR data  | Explain partial payments.             | "Why did I only receive part of payment?" | Provide claim ID      | Payment adjustment data   | Explain partial adjustments.          | Escalate if unclear adjustments. | Reference detailed EOB.   |
+
+---
+
+# 💼 **Job 4 — Case Management (Corrected Topics)**
+
+| Topics             | Actions            | Scope/boundaries                | Example questions               | Actions needed           | Inputs required        | Expected output                     | Escalation criteria                | Notes                  |
+| ------------------ | ------------------ | ------------------------------- | ------------------------------- | ------------------------ | ---------------------- | ----------------------------------- | ---------------------------------- | ---------------------- |
+| Case status check  | Retrieve case data | Open active cases.              | "What’s the update on my case?" | Provide case ID          | Case ID, case data     | Show current case status and owner. | Escalate if no update or delay.    | Sync CRM daily.        |
+| Add info to case   | Update case        | Provide additional information. | "Can I add details to my case?" | Provide case ID and info | Case ID, new notes     | Confirm update added to case.       | Escalate if update fails.          | Validate data formats. |
+| Close case         | Update case        | Request to close resolved case. | "I want to close my case."      | Provide case ID          | Case ID                | Confirm case closed.                | Escalate if dispute about closure. | Require final consent. |
+| Reopen case        | Update case        | Reopen previously closed case.  | "Can I reopen my old case?"     | Provide case ID          | Case ID                | Confirm reopened and assigned.      | Escalate if policy restrictions.   | Check reopen criteria. |
+| Upload attachments | Update case        | Submit documents or images.     | "Can I attach a document?"      | Provide case ID and file | Case ID, file metadata | Confirm file uploaded to case.      | Escalate if upload error.          | Enforce file limits.   |
+
+---
+
+# ✅ **Key points**
+
+* Now each **Topic** is more precise and real-world relevant — no repeating "AR inquiries" or "Case updates" everywhere.
+* Columns match your document exactly.
+* Use cases are practical for real implementation with agents or flows.
+
+---
+
+⚡ **If you'd like, I can also prepare this as a fully formatted Excel file (.xlsx) so you can directly open, review, and share. Want me to create and share that file for you?**
