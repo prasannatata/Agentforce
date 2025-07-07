@@ -1,0 +1,29 @@
+Got it! Here’s a **fresh, personalized status update for you (Prasanna)** — in your own style, and **not similar to Nivas's**.
+
+---
+
+### Progress
+
+* Went through Waystar support processes in detail to understand where agents can add the most value (for example, in automating claim follow-ups and reducing manual outreach).
+* Collected key data points from Waystar website and mapped them to possible agent use cases.
+* Started outlining real-world use cases and test cases for each job, focusing on making them more practical and easy to implement.
+
+### Plans
+
+* Finish refining and expanding the use cases and test cases for all jobs.
+* Start creating high-level flow diagrams to show how each agent will work step by step.
+* Align with the team to clarify any pending business scenarios before moving into build.
+
+### Problems
+
+* Need clarity on certain edge scenarios in AR follow-ups and denial resolutions.
+* Waiting on org access and some sample data for more accurate testing.
+
+### Comments
+
+* Will be ready to start the actual flow and agent design once we finalize use cases and get access.
+* Open to feedback on the drafted use cases to ensure they match business expectations.
+
+---
+
+✅ Let me know if you'd like to make it even more crisp or friendly!
