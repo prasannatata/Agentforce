@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Agent End-to-End Flow">
+&lt;mxGraphModel dx="1626" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"&gt;
+  &lt;root&gt;
+    &lt;mxCell id="0"/&gt;
+    &lt;mxCell id="1" parent="0"/&gt;
+    &lt;mxCell id="start" value="Start: User Message / Query" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="440" y="20" width="160" height="60" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+    &lt;mxCell id="identify" value="Identify Query Type" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="440" y="120" width="160" height="80" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+    &lt;mxCell id="job1" value="Job 1: General Inquiry &amp;amp; Triage&amp;#10;- Provide FAQs&amp;#10;- Route to self-service&amp;#10;- Collect info&amp;#10;- Option to escalate" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="40" y="240" width="180" height="120" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+    &lt;mxCell id="job2" value="Job 2: AR Follow-up / Payment&amp;#10;- Validate details&amp;#10;- Fetch status&amp;#10;- Check tasks&amp;#10;- Suggest next actions" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="280" y="240" width="180" height="120" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+    &lt;mxCell id="job3" value="Job 3: Denials / Corrections&amp;#10;- Ask claim ID&amp;#10;- Fetch denial reason&amp;#10;- Suggest corrections&amp;#10;- Create outreach tasks&amp;#10;- Offer escalation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="520" y="240" width="200" height="140" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+    &lt;mxCell id="job4" value="Job 4: Escalations&amp;#10;- Confirm details&amp;#10;- Create support case&amp;#10;- Connect live agent&amp;#10;- Provide ETA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="780" y="240" width="180" height="120" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+    &lt;mxCell id="close" value="Confirmation &amp;amp; Close&amp;#10;- Summarize actions&amp;#10;- Provide ref ID&amp;#10;- Ask for anything else" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"&gt;
+      &lt;mxGeometry x="440" y="440" width="180" height="80" as="geometry"/&gt;
+    &lt;/mxCell&gt;
+
+    &lt;!-- Connectors --&gt;
+    &lt;mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="start" target="identify"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="identify" target="job1"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="identify" target="job2"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="identify" target="job3"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="identify" target="job4"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job1" target="close"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job2" target="close"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job3" target="close"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+    &lt;mxCell id="edge9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="job4" target="close"&gt;&lt;mxGeometry relative="1" as="geometry"/&gt;&lt;/mxCell&gt;
+  &lt;/root&gt;
+&lt;/mxGraphModel&gt;
+</diagram>
+</mxfile>
