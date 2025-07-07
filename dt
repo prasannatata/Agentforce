@@ -63,3 +63,21 @@ Below is a corrected, more detailed and realistic breakdown — each **use case 
 ---
 
 ⚡ **If you'd like, I can also prepare this as a fully formatted Excel file (.xlsx) so you can directly open, review, and share. Want me to create and share that file for you?**
+
+
+
+
+
+
+
+
+| Topics                    | Actions                                      | Scope/boundaries                                      | Example questions                                                              | Actions needed                    | Inputs required                    | Expected output                                                      | Escalation criteria                                    | Notes                             |
+| ------------------------- | -------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------- | ---------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------ | --------------------------------- |
+| Account access help       | Retrieve and verify account details securely | Resetting passwords, unlocking accounts.              | "I forgot my password, how do I reset it?", "Can you unlock my account?"       | Provide user ID or email          | User ID/email, account status      | Provide secure password reset link or unlock confirmation.           | Escalate if multiple failed attempts or security risk. | Enforce policy-compliant flows.   |
+| Permissions management    | Update roles and permissions                 | Adding/removing permissions, role changes.            | "Can you give me billing access?", "Remove my admin role."                     | Provide user ID, requested change | User ID, role/permission data      | Confirm updated permissions and notify user.                         | Escalate if conflict with policy or high-risk roles.   | Require proper approval.          |
+| 2FA and recovery          | Support 2FA setup or recovery                | Enabling or recovering 2FA authentication.            | "How do I set up 2FA?", "I lost my authenticator app."                         | Provide user ID                   | User ID, current auth method       | Provide instructions or recovery codes, confirm secure setup.        | Escalate if repeated failures or suspicious activity.  | Follow MFA guidelines strictly.   |
+| Remittance inquiries      | Check remittance file statuses               | Missing or delayed remittance files.                  | "I didn’t receive my remittance advice.", "Where is my remittance file?"       | Provide claim ID                  | Claim ID, remittance file data     | Show remittance status, confirm delivery or escalate issue.          | Escalate unresolved or missing files to finance.       | Always track issue ID.            |
+| Security audit log access | Provide login history and logs               | View login events and security logs.                  | "When did I last log in?", "Can I see my login history?"                       | Provide user ID                   | User ID, audit log data            | Display recent login times, IP addresses, and device info.           | Escalate if suspicious activity is detected.           | Highlight recent failed attempts. |
+| Policy enforcement        | Address security configurations              | IP restrictions, password and account policy updates. | "Why can’t I log in from this location?", "What are my password requirements?" | Provide user ID                   | User ID, policy settings           | Explain policy settings or help update restrictions.                 | Escalate if policy conflict or potential breach.       | Sync with IT security team.       |
+| High-risk security issues | Escalate to IT/Security team                 | Potential fraud, unauthorized access.                 | "I think my account was hacked.", "Someone logged in without my consent."      | Provide user ID and details       | User ID, security incident details | Log high-risk incident and transfer to IT/security team immediately. | Always escalate directly to security team.             | Fast-track critical cases.        |
+
