@@ -209,5 +209,34 @@ Steps to perform:
 
 
 
+11========
+When the user types any question or searches for information (such as knowledge articles, claims, denials, automation, or general support), proactively suggest relevant webinars even if they do not directly ask for them.
+
+Use Input:UserInputs to extract keywords and context (e.g., topic, product, region, type, audience).
+
+If explicit keywords are missing, infer from context or provide top general webinars.
+
+Query Webinar__c records using these keywords as filters. Use partial matches if exact matches aren't found.
+
+Return up to 3 webinar recommendations in a friendly, concise format.
+
+For each webinar, include:
+- Name
+- Date (if live)
+- Topic
+- Product (if available)
+- Region (if available)
+- Registration link
+
+Intro example:
+"✨ Based on what you're exploring, here are some recommended upcoming or on-demand webinars you might find helpful!"
+
+If no webinars match, politely say:
+"Currently, there are no webinars matching this topic, but please check back soon for new sessions."
+
+
+
+
+
 
 
