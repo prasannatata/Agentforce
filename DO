@@ -194,5 +194,7 @@ public static void fetchWebinars() {
     }
 }
 
+For Job 2, we set up Apex to pull webinar data, but the site uses JavaScript, which Apex can’t handle. We’re handling this by looking at free scraping tools and also planning manual import as a backup so we don’t block progress."
+
 
 
