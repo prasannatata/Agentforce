@@ -90,3 +90,86 @@ private static void parseAndSaveWebinars(String html) {
     }
 }
 
+
+
+
+
+-------
+public with sharing class WaystarWebinarFetcher {
+
+    @future(callout=true)
+    public static void fetchWebinars() {
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('https://www.waystar.com/insights-resources/events/');
+        req.setMethod('GET');
+
+        HttpResponse res = http.send(req);
+
+        if (res.getStatusCode() == 200) {
+            String html = res.getBody();
+            parseAndSaveWebinars(html);
+        } else {
+            System.debug('Failed to fetch: ' + res.getStatus());
+        }
+    }
+
+    private static void parseAndSaveWebinars(String html) {
+        System.debug('--- START PARSE ---');
+        System.debug(html);
+
+        List<Webinar__c> webinars = new List<Webinar__c>();
+
+        String[] parts = html.split('<h3>');
+        System.debug('Split parts count: ' + parts.size());
+
+        for (Integer i = 1; i < parts.size(); i++) {
+            String block = parts[i];
+            System.debug('Block: ' + block);
+
+            if (block.contains("</h3>")) {
+                String title = block.substring(0, block.indexOf("</h3>")).trim();
+                title = title.replaceAll('<[^>]*>', '').trim();
+
+                String afterTitle = block.substring(block.indexOf("</h3>") + 5);
+
+                // Get first <p> tag (date line)
+                String eventDate = '';
+                if (afterTitle.contains("<p>")) {
+                    String firstP = afterTitle.substring(afterTitle.indexOf("<p>") + 3);
+                    eventDate = firstP.substring(0, firstP.indexOf("</p>")).trim();
+                    eventDate = eventDate.replaceAll('<[^>]*>', '').trim();
+                }
+
+                // Get second <p> tag (location line)
+                String eventLocation = '';
+                if (afterTitle.indexOf("<p>", afterTitle.indexOf("</p>") + 4) != -1) {
+                    String secondP = afterTitle.substring(afterTitle.indexOf("<p>", afterTitle.indexOf("</p>") + 4) + 3);
+                    eventLocation = secondP.substring(0, secondP.indexOf("</p>")).trim();
+                    eventLocation = eventLocation.replaceAll('<[^>]*>', '').trim();
+                }
+
+                System.debug('Parsed title: ' + title);
+                System.debug('Parsed date: ' + eventDate);
+                System.debug('Parsed location: ' + eventLocation);
+
+                Webinar__c w = new Webinar__c();
+                w.Name = title;
+                w.Description__c = 'Date: ' + eventDate + ', Location: ' + eventLocation;
+                w.Link__c = 'https://www.waystar.com/insights-resources/events/';
+                w.Date__c = Date.today(); // You can improve to parse actual dates later
+
+                webinars.add(w);
+            }
+        }
+
+        if (!webinars.isEmpty()) {
+            insert webinars;
+            System.debug('Inserted webinars: ' + webinars.size());
+        } else {
+            System.debug('No webinars parsed and inserted.');
+        }
+    }
+}
+
+
