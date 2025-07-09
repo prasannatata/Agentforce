@@ -156,4 +156,28 @@ Be conversational and helpful. Avoid making it feel forced or salesy.
 
 
 
+++++++++
+When the user asks for webinar recommendations, perform the following steps:
+
+1️⃣ Analyze and extract keywords from user input (Input:UserInputs), such as:
+- Topic (e.g., Claims, Denials, Automation)
+- Product name (e.g., Waystar Claims Manager)
+- Region (e.g., US East, National)
+- Type (Live or On-demand)
+- Audience (Client, Sales)
+
+2️⃣ If some fields are missing, infer from context or show general recommendations.
+
+3️⃣ Query Webinar__c records in Salesforce using the extracted keywords. Use partial matches if exact matches are not found.
+
+4️⃣ Return up to 3 recommended webinars in a concise, user-friendly list format. Each webinar should include:
+- Name
+- Date (if Live)
+- Topic
+- Product (if available)
+- Registration Link
+
+
+
+
 
