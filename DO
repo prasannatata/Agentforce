@@ -1,0 +1,51 @@
+public with sharing class WaystarWebinarFetcher {
+
+    @future(callout=true)
+    public static void fetchWebinars() {
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('https://www.waystar.com/insights-resources/events/');
+        req.setMethod('GET');
+
+        HttpResponse res = http.send(req);
+
+        if (res.getStatusCode() == 200) {
+            String html = res.getBody();
+            parseAndSaveWebinars(html);
+        } else {
+            System.debug('Failed to fetch: ' + res.getStatus());
+        }
+    }
+
+    private static void parseAndSaveWebinars(String html) {
+        List<Webinar__c> webinars = new List<Webinar__c>();
+
+        String[] parts = html.split('<h3 class="event-title">');
+
+        for (Integer i = 1; i < parts.size(); i++) {
+            String block = parts[i];
+
+            String title = block.substring(0, block.indexOf('</h3>')).trim();
+
+            Webinar__c w = new Webinar__c();
+            w.Name = title;
+            w.Description__c = 'Imported automatically from Waystar events page.';
+            w.Link__c = 'https://www.waystar.com/insights-resources/events/';
+            w.Date__c = Date.today(); // You can later parse actual dates
+
+            webinars.add(w);
+        }
+
+        if (!webinars.isEmpty()) {
+            insert webinars;
+        }
+    }
+}
+
+WaystarWebinarScheduler
+
+public class WaystarWebinarScheduler implements Schedulable {
+    public void execute(SchedulableContext sc) {
+        WaystarWebinarFetcher.fetchWebinars();
+    }
+}
