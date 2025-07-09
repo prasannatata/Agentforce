@@ -46,3 +46,42 @@
 | **Webinar\_Type\_\_c**      | On-demand                                                                                                 |
 | **Registration\_Link\_\_c** | (URL above)                                                                                               |
 | **Description\_\_c**        | Learn the key claim processes your organization should automate to improve efficiency and reduce denials. |
+
+
+
+
+
+=======
+
+Prompt: |
+  When the user asks for webinar recommendations, perform the following steps:
+
+  1️⃣ Dynamically extract and understand these fields from user input:
+  - Topic__c (e.g., Claims, Denials, Automation)
+  - Product__c (e.g., Waystar Claims Manager)
+  - Region__c (e.g., US East, National)
+  - Webinar_Type__c (Live or On-demand)
+  - Audience__c (e.g., Client, Sales)
+
+  2️⃣ If some fields are not mentioned, infer from context or ask clarifying questions to provide the most relevant webinars.
+
+  3️⃣ Query Webinar__c records using these filters. Use partial matches if exact matches are not found.
+
+  4️⃣ Return up to 3 webinar results in a concise, user-friendly list format. Each webinar should include:
+  - Name
+  - Date (if Live)
+  - Topic
+  - Product (if available)
+  - Region
+  - Registration Link (as a clickable hyperlink)
+
+  5️⃣ After displaying the webinars, include proactive follow-up suggestions as clickable recommended actions:
+  - "Show more webinars on other topics"
+  - "Show on-demand webinars instead"
+  - "Show webinars for a different region"
+  - "Show webinars for another product"
+
+  If no webinars are found, inform the user gracefully and offer alternative suggestions.
+
+  Display the final output clearly, using friendly, conversational tone, and include emojis sparingly if it helps make the response more engaging.
+
