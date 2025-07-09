@@ -49,3 +49,44 @@ public class WaystarWebinarScheduler implements Schedulable {
         WaystarWebinarFetcher.fetchWebinars();
     }
 }
+
+
+
+
+
+
+private static void parseAndSaveWebinars(String html) {
+    System.debug('--- START PARSE ---');
+    System.debug(html);
+
+    List<Webinar__c> webinars = new List<Webinar__c>();
+
+    String[] parts = html.split('<h3 class="event-title">');
+    System.debug('Split parts count: ' + parts.size());
+
+    for (Integer i = 1; i < parts.size(); i++) {
+        String block = parts[i];
+        System.debug('Block: ' + block);
+
+        if (block.contains('</h3>')) {
+            String title = block.substring(0, block.indexOf('</h3>')).trim();
+            System.debug('Parsed title: ' + title);
+
+            Webinar__c w = new Webinar__c();
+            w.Name = title;
+            w.Description__c = 'Imported automatically from Waystar events page.';
+            w.Link__c = 'https://www.waystar.com/insights-resources/events/';
+            w.Date__c = Date.today();
+
+            webinars.add(w);
+        }
+    }
+
+    if (!webinars.isEmpty()) {
+        insert webinars;
+        System.debug('Inserted webinars: ' + webinars.size());
+    } else {
+        System.debug('No webinars parsed and inserted.');
+    }
+}
+
