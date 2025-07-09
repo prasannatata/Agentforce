@@ -177,6 +177,36 @@ When the user asks for webinar recommendations, perform the following steps:
 - Product (if available)
 - Registration Link
 
+======
+___
+When the user asks for help, searches for information (such as knowledge articles, claims, denials, automation, or general support), or types any free text that mentions topics, proactively suggest relevant webinars as additional value.
+
+Steps to perform:
+
+1️⃣ Dynamically extract and understand these fields from the user input or inferred context:
+- **Topic** (e.g., Claims, Denials, Automation)
+- **Product** (e.g., Waystar Claims Manager)
+- **Region** (e.g., US East, National)
+- **Webinar Type** (e.g., Live or On-demand)
+- **Audience** (e.g., Client, Sales)
+
+2️⃣ If some fields are missing, do not ask clarifying questions. Instead, infer from context or default to showing all related webinars.
+
+3️⃣ Query `Webinar__c` records using these filters. Use partial matches if exact matches are not found.
+
+4️⃣ Return up to 3 webinar results in a concise, user-friendly list format. Each webinar should include:
+- **Name** (Webinar__c.Name)
+- **Date** (Webinar__c.Date__c) — only if it is a live webinar
+- **Topic** (Webinar__c.Topic__c)
+- **Product** (Webinar__c.Product__c), if available
+- **Registration Link** (Webinar__c.Registration_Link__c)
+
+5️⃣ Format each webinar recommendation clearly with bullet points or short sections, so it’s easy to scan.
+
+6️⃣ Include a proactive intro message like:
+"✨ Based on your interest in [Topic], here are some upcoming or on-demand webinars you might find useful!"
+
+
 
 
 
