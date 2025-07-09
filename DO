@@ -173,3 +173,26 @@ public with sharing class WaystarWebinarFetcher {
 }
 
 
+++++++++
+
+public static void fetchWebinars() {
+    Http http = new Http();
+    HttpRequest req = new HttpRequest();
+    req.setEndpoint('https://www.waystar.com/insights-resources/events/');
+    req.setMethod('GET');
+
+    // Add user-agent header to mimic a browser
+    req.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)');
+
+    HttpResponse res = http.send(req);
+
+    if (res.getStatusCode() == 200) {
+        String html = res.getBody();
+        parseAndSaveWebinars(html);
+    } else {
+        System.debug('Failed to fetch: ' + res.getStatus());
+    }
+}
+
+
+
