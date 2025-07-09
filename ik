@@ -125,3 +125,63 @@ public with sharing class WebinarRecommendationService {
     }
 }
 
++++======
+@isTest
+public class WebinarRecommendationServiceTest {
+    @isTest
+    static void testGetRecommendedWebinars() {
+        // Create sample webinars
+        Webinar__c webinar1 = new Webinar__c(
+            Name = 'Webinar 1',
+            Topic__c = 'Claims Automation',
+            Product__c = 'Waystar Automation',
+            Region__c = 'US East',
+            Webinar_Type__c = 'On demand',
+            Audience__c = 'Clients',
+            Date__c = Date.today(),
+            Link__c = 'https://example.com/webinar1'
+        );
+        
+        Webinar__c webinar2 = new Webinar__c(
+            Name = 'Webinar 2',
+            Topic__c = 'Denials Management',
+            Product__c = 'Waystar Denials',
+            Region__c = 'US West',
+            Webinar_Type__c = 'Live',
+            Audience__c = 'Clients',
+            Date__c = Date.today().addDays(5),
+            Link__c = 'https://example.com/webinar2'
+        );
+        
+        Webinar__c webinar3 = new Webinar__c(
+            Name = 'Webinar 3',
+            Topic__c = 'RCM Automation',
+            Product__c = 'Waystar Automation',
+            Region__c = 'National',
+            Webinar_Type__c = 'On demand',
+            Audience__c = 'Sales',
+            Date__c = Date.today().addDays(10),
+            Link__c = 'https://example.com/webinar3'
+        );
+        
+        insert new List<Webinar__c>{ webinar1, webinar2, webinar3 };
+        
+        // Call the method with filters
+        String result = WebinarRecommendationService.getRecommendedWebinars(
+            'Automation',    // topic
+            null,            // webinarType
+            null,            // audience
+            null,            // region
+            null             // product
+        );
+        
+        System.debug('Result: ' + result);
+        
+        // Assertions
+        System.assert(result.contains('Webinar 1'), 'Result should contain Webinar 1');
+        System.assert(result.contains('Webinar 3'), 'Result should contain Webinar 3');
+        System.assert(!result.contains('Webinar 2'), 'Result should not contain Webinar 2 if topic does not match');
+    }
+}
+WebinarRecommendationServiceTest
+
