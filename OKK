@@ -1,0 +1,61 @@
+@isTest
+public class WebinarRecommendationServiceTest {
+    @isTest
+    static void testGetRecommendedWebinars() {
+        // Create a dummy Group or object record if Product__c is lookup to Group
+        Group testGroup = new Group(Name = 'Test Group', Type = 'Regular');
+        insert testGroup;
+
+        // Create Webinar records
+        Webinar__c webinar1 = new Webinar__c(
+            Name = 'Webinar 1',
+            Topic__c = 'Claims Automation',
+            Product__c = testGroup.Id, // set the lookup
+            Region__c = 'US East',
+            Webinar_Type__c = 'On demand',
+            Audience__c = 'Clients',
+            Date__c = Date.today(),
+            Link__c = 'https://example.com/webinar1'
+        );
+
+        Webinar__c webinar2 = new Webinar__c(
+            Name = 'Webinar 2',
+            Topic__c = 'Denials Management',
+            Product__c = testGroup.Id,
+            Region__c = 'US West',
+            Webinar_Type__c = 'Live',
+            Audience__c = 'Clients',
+            Date__c = Date.today().addDays(5),
+            Link__c = 'https://example.com/webinar2'
+        );
+
+        Webinar__c webinar3 = new Webinar__c(
+            Name = 'Webinar 3',
+            Topic__c = 'RCM Automation',
+            Product__c = testGroup.Id,
+            Region__c = 'National',
+            Webinar_Type__c = 'On demand',
+            Audience__c = 'Sales',
+            Date__c = Date.today().addDays(10),
+            Link__c = 'https://example.com/webinar3'
+        );
+
+        insert new List<Webinar__c>{ webinar1, webinar2, webinar3 };
+
+        // Call method
+        String result = WebinarRecommendationService.getRecommendedWebinars(
+            'Automation',    // topic
+            null,            // webinarType
+            null,            // audience
+            null,            // region
+            null             // product
+        );
+
+        System.debug('Result: ' + result);
+
+        // Assertions
+        System.assert(result.contains('Webinar 1'), 'Should contain Webinar 1');
+        System.assert(result.contains('Webinar 3'), 'Should contain Webinar 3');
+        System.assert(!result.contains('Webinar 2'), 'Should not contain Webinar 2');
+    }
+}
