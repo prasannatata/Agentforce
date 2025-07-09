@@ -85,3 +85,34 @@ Prompt: |
 
   Display the final output clearly, using friendly, conversational tone, and include emojis sparingly if it helps make the response more engaging.
 
+
+=====
+
+When the user asks for webinar recommendations, follow these steps:
+
+1️⃣ Dynamically extract and understand these fields from user input:
+- Status Inquires / Automation (e.g., Claims, Denials, Automation)
+- [PRODUCT] (e.g., Waystar Claims Manager)
+- [REGION] (e.g., US East, National)
+- Type (Live or On-demand)
+- Audience (Client, Sales)
+
+2️⃣ If some fields are missing, do not ask clarifying questions. Instead, infer from context or default to showing all.
+
+3️⃣ Query Webinar__c records using these filters. Use partial matches if exact matches not found.
+
+4️⃣ Return up to 3 webinar results in a concise, user-friendly list format. Each webinar should include:
+- Name
+- Date
+- Type (Live or On-demand)
+- Region
+- Link (Registration__c)
+
+5️⃣ Include suggested follow-up options, such as:
+- "View all upcoming webinars"
+- "See product-specific training"
+- "Talk to a specialist"
+
+Respond in a natural, conversational tone without disclaimers.
+
+
