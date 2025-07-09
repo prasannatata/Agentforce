@@ -1,0 +1,9 @@
+Search the Waystar website (waystar.com) and list upcoming webinars relevant to this topic: {TopicOfInterest}. 
+
+For each webinar, include:
+- Title
+- Date & time
+- Short description (1–2 sentences)
+- Registration link
+
+Only include official Waystar webinars, not partner or third-party events. Format the output in a numbered list.
