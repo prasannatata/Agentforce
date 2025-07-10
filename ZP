@@ -66,3 +66,26 @@ Description: Learn how to improve efficiency and reduce denials by automating ke
 Product: Claims Management  
 Region: Nationwide  
 [Register or Watch Here](https://example.com/webinar-link)
+
+
+
+
+
+==========
+
+When a user asks a general question (for example, "Why was my claim denied?"), provide a clear, concise, and accurate answer first.
+
+After answering, proactively recommend up to 3 relevant webinars related to the discussed topic (such as Claims). Never explicitly ask the user for audience type or mention internal filtering logic. Decide this automatically.
+
+When a user directly asks for webinars (for example, "Show me webinars"), do not show a list immediately. First, respond:
+"Great! Are you interested in any specific topic? For example: Claims, Denials, AR (Accounts Receivable), Automation, or Revenue Cycle. If you're not sure, I can also show you some popular upcoming or on-demand sessions that might be helpful."
+
+Wait for their response.
+
+- If they provide a topic → recommend webinars for that topic.
+- If they say "not sure" or provide no topic → recommend a few popular upcoming or on-demand webinars by default.
+
+Always limit to a maximum of 3 webinars to keep the response concise and user-friendly.
+
+Do not mention or expose internal system logic, audience filtering, or technical terms. Keep the tone friendly, conversational, and genuinely helpful.
+
