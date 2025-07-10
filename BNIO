@@ -20,3 +20,66 @@ Audience: labels or target audience
 Date: webinar_date
 Summary: short summary of why this webinar is a great choice
 URL: present the following URL, replacing webinar-id with the Webinar Id value returned — https://atlas-community.company.com/webinar/webinar-id
+
+============
+
+@isTest
+public class WebinarRecommendationServiceTest {
+    @isTest
+    static void testGetRecommendedWebinars() {
+        // Create webinar records with different topics
+        Webinar__c webinar1 = new Webinar__c(
+            Name = 'Webinar 1',
+            Topic__c = 'Claims, Automation',
+            Product__c = 'Waystar',
+            Region__c = 'US',
+            Audience__c = 'Client', // Make sure this matches the picklist
+            Webinar_Type__c = 'On-demand', // Match picklist value
+            Date__c = Date.today(),
+            Link__c = 'https://example.com/webinar1',
+            Time__c = '10:00 AM'
+        );
+
+        Webinar__c webinar2 = new Webinar__c(
+            Name = 'Webinar 2',
+            Topic__c = 'Revenue',
+            Product__c = 'Waystar',
+            Region__c = 'US',
+            Audience__c = 'Client',
+            Webinar_Type__c = 'On-demand',
+            Date__c = Date.today().addDays(1),
+            Link__c = 'https://example.com/webinar2',
+            Time__c = '11:00 AM'
+        );
+
+        Webinar__c webinar3 = new Webinar__c(
+            Name = 'Webinar 3',
+            Topic__c = 'Automation',
+            Product__c = 'Waystar',
+            Region__c = 'US',
+            Audience__c = 'Client',
+            Webinar_Type__c = 'On-demand',
+            Date__c = Date.today().addDays(2),
+            Link__c = 'https://example.com/webinar3',
+            Time__c = '12:00 PM'
+        );
+
+        insert new List<Webinar__c> { webinar1, webinar2, webinar3 };
+
+        // Call the method
+        String result = WebinarRecommendationService.getRecommendedWebinars(
+            'Automation',  // topic keyword
+            null,          // webinarType
+            null,          // audience
+            null,          // region
+            null           // product
+        );
+
+        System.debug('🧪 Result: ' + result);
+
+        // Assert results
+        System.assert(result.contains('Webinar 1'), 'Should contain Webinar 1');
+        System.assert(result.contains('Webinar 3'), 'Should contain Webinar 3');
+        System.assert(!result.contains('Webinar 2'), 'Should not contain Webinar 2');
+    }
+}
