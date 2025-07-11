@@ -1,0 +1,161 @@
+✅ Absolutely — let’s make it more personalized, engaging, and story-driven, using references to your work with Wayfinder and your previous conversations. Here’s a fully reimagined presentation script + slides outline + live demo guide, tailored to help you confidently win over reviewers.
+
+🌟 Personalized, Story-driven Presentation Script
+🎤 Slide 1: Welcome & Context
+Talking points:
+
+"Good [morning/afternoon]! Thank you for being here. Today, I’m excited to show you how we’ve built a Wayfinder agent experience that is human, proactive, and truly conversational — not just a static chatbot."
+
+"This work combines Data Cloud, custom objects, and advanced prompt engineering to create a smarter, more supportive agent."
+
+🚀 Slide 2: Our North Star — Why We Did This
+Talking points:
+
+"We started by looking at real-world pain points. Users often feel lost when dealing with static knowledge bases or disconnected experiences."
+
+"We wanted to build an agent that behaves more like a knowledgeable colleague — guiding, clarifying, and suggesting proactively, instead of waiting passively."
+
+"This aligns perfectly with the Wayfinder vision: helping users navigate complexities confidently and efficiently."
+
+🗺️ Slide 3: High-level Architecture (Personalized for Wayfinder)
+Diagram:
+
+csharp
+Copy
+Edit
+[User Query]
+     ↓
+[Agent with Dynamic Prompt Templates]
+     ↓
+[Agent Actions]
+     ↓
+[Data Cloud (Knowledge Articles, Webinar Object, AR Object)]
+     ↓
+[Personalized, Supportive Response]
+Talking points:
+
+"At the center is our Wayfinder agent, designed to understand context deeply and act dynamically."
+
+"We leverage Data Cloud not just as a database, but as an intelligent foundation that supports semantic retrieval and real-time personalization."
+
+"Prompt templates are crafted to guide the agent’s tone and content, keeping it human and conversational."
+
+💬 Slide 4: Job 1 — Knowledge Articles (The Learning Companion)
+Story style:
+
+"We initially tried a web content crawler. It scraped URLs and short snippets, but it was like a student who only read chapter headings — confused and inconsistent."
+
+"We realized we needed curated, trusted content. We added high-quality documents to the data library and designed instructions to make the agent act like a patient tutor — clarifying, suggesting, and summarizing naturally."
+
+Live demo flow:
+1️⃣ Ask: "Can you help me understand denial management?"
+2️⃣ Agent replies clearly, mentions documentation context, and offers up to 3 webinar suggestions without pushing.
+
+Key highlight:
+
+"The agent doesn't just throw information; it checks understanding and offers more learning paths."
+
+🎥 Slide 5: Job 2 — Webinar Registration Assistance (The Guide)
+Story style:
+
+"Users often don’t know what webinars to choose. They feel like standing in front of a huge bookshelf without labels."
+
+"We solved this by creating a Webinar object with curated data, imported it into Data Cloud, and linked it via retrievers in prompt templates."
+
+"Now, the agent becomes a personal guide: proactively suggests sessions, simplifies registration, and supports decision-making."
+
+Live demo flow:
+1️⃣ Ask: "What webinars do you have on prior authorization?"
+2️⃣ Agent offers top 3 sessions, includes clickable 'Register or Watch' links, keeps language friendly.
+
+Key highlight:
+
+"The agent thinks ahead — suggests even if the user says 'I’m not sure,' easing choice fatigue."
+
+💼 Slide 6: Job 3 — Accounts Receivable Inquiries (The Assistant)
+Story style:
+
+"When customers call about invoices, they expect immediate clarity. But many systems reply rigidly or even miss context."
+
+"We built an AR object with invoice details and a supporting flow that retrieves payment status, amounts, and due dates using invoice numbers or client names."
+
+"The agent checks conditions like 'Overdue' or 'Denied' and suggests escalation, behaving more like a finance assistant than a static query tool."
+
+Live demo flow:
+1️⃣ Ask: "What’s the status of invoice INV-2345?"
+2️⃣ Agent returns clear details: paid/unpaid, amount, due date, reason if denied, and suggests next steps.
+
+Key highlight:
+
+"This isn’t just data retrieval — it’s guided conversation with empathy."
+
+🧠 Slide 7: How We Made It Human & Smart
+Talking points:
+
+"We crafted custom instructions inspired by real service desk scripts and our Wayfinder conversational design principles."
+
+"Fallback logic ensures no user is left hanging — if no match, we guide politely and offer escalation."
+
+"We focused on tone: no technical jargon, no forced choices, always supportive."
+
+🤝 Slide 8: Anticipated Reviewer Questions & Answers
+Likely questions and how to answer them:
+
+1️⃣ Why Data Cloud over only Salesforce objects?
+✔️ "Data Cloud allows for cross-source data harmonization and semantic search, making responses context-aware, not just record-based."
+
+2️⃣ How do we handle outdated webinars or articles?
+✔️ "The data objects include active dates and availability fields, so agent only suggests what’s current."
+
+3️⃣ Can this scale to other use cases like claim status or eligibility?
+✔️ "Yes! We can replicate this pattern for new topics by extending Data Cloud objects and updating instructions."
+
+4️⃣ What about fallback or error cases?
+✔️ "We implemented polite fallback messages with gentle guidance and escalation options. No user is left without support."
+
+🌟 Slide 9: Recap & Impact
+Talking points:
+
+"Each job solves a specific, real-world problem with a human-first approach."
+
+"Our agent doesn’t just reply; it guides, supports, and builds trust — embodying the Wayfinder spirit."
+
+"This lays the foundation to extend to more complex workflows and help unify user journeys."
+
+✅ Slide 10: Live Demo — Flow & Expected Questions
+Plan to simulate:
+
+Knowledge Article: "How do I handle denied claims?" → Agent explains → Suggests webinars.
+
+Webinar: "What sessions are upcoming for revenue cycle management?" → Agent offers options.
+
+AR: "Check invoice INV-7890" → Status + escalation option.
+
+Then ask reviewers:
+
+"Would you like to see how it escalates to finance if payment is overdue?"
+
+"Want to see how it handles a 'not sure' webinar query?"
+
+💬 Style & Delivery Tips
+Use phrases like "imagine you're a user logging in confused…" to make it visual.
+
+Keep tone warm and confident — "This agent acts like a knowledgeable colleague."
+
+Avoid words like "prompt template" unless they ask technically — say "instructions and guardrails for the agent."
+
+Use light humor if comfortable, e.g., "The agent no longer behaves like a textbook — it’s like having a smart coworker who knows where every file is!"
+
+✅ Supporting PPT Slides Outline
+Slide Titles
+1️⃣ Welcome & Purpose
+2️⃣ Our North Star: User-first design
+3️⃣ Personalized Architecture (diagram)
+4️⃣ Job 1: Knowledge Articles — The Learning Companion
+5️⃣ Job 2: Webinar Assistance — The Guide
+6️⃣ Job 3: AR Inquiries — The Assistant
+7️⃣ Making it Human & Smart
+8️⃣ Anticipated Questions & Answers
+9️⃣ Recap & Wayfinder Impact
+🔟 Live Demo Flow & Interactive Q&A
+
