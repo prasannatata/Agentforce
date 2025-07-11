@@ -1,0 +1,115 @@
+✅ Here’s a **very detailed demo script** you can use to explain clearly, step by step, in a natural, friendly style. It covers the current UI, requirements, and how each Job (1–4) maps to Agentforce capabilities, including context on articles, dashboards, webinars, AR inquiries, and remittances.
+
+---
+
+## 💬 **🎤 Demo Script (Detailed, Conversational)**
+
+---
+
+### 🟢 **Opening context**
+
+"Today, I'll walk you through how we’re enhancing our existing UI and support workflows using Agentforce, making them more intelligent, proactive, and user-friendly.
+
+Currently, we have a pretty traditional support setup:
+
+* We rely on large sets of static content.
+* Users often need to guess keywords or dig manually.
+* The system feels rigid, and there's a lot of manual intervention.
+
+We’re now leveraging Agentforce to make all of this more dynamic, conversational, and personalized — like having a smart teammate guiding you."
+
+---
+
+### 💡 **Job 1: Knowledge Articles Inquiry (and Webinar Suggestions)**
+
+"Right now, we have **around 20,000 articles**.
+
+* These articles are stored across different internal guides and repositories.
+* When a user has a question, they need to manually search, using exact keywords, or browse through multiple menus in the UI.
+* This takes time, and it’s frustrating because they often don't know what to type or which keywords to use.
+
+With Agentforce:
+
+* Instead of manually pulling details, the assistant uses **semantic search**. It understands the *meaning* behind the question, even if phrased casually or vaguely.
+* It retrieves the most relevant knowledge article content and summarizes it in plain, friendly language.
+* After answering, it proactively suggests up to **three relevant webinars** that match the user's topic — no need for them to search.
+* The UI becomes conversational: users can just type "Why was my claim denied?" or "How do I fix a charge error?" and get immediate, precise guidance — plus learn about upcoming training sessions if they want to deepen their knowledge."
+
+---
+
+### 💡 **Job 2: Webinar Recommendations (Standalone)**
+
+"Currently, we have **many webinars** — but there’s no clear way to know:
+
+* Which webinars are upcoming
+* Which are on-demand
+* Or which ones are truly relevant to a user's specific issue
+
+Right now, people need to go to a separate webinars page, scroll through long lists, and guess what’s useful for them.
+
+With Agentforce:
+
+* The assistant can recommend webinars automatically, either when answering a question or even if the user just says, 'Show me webinars.'
+* It dynamically matches webinars based on the user's context (e.g., billing questions → suggest billing webinars).
+* The display format is simple and clear in the UI: title, type (upcoming or on-demand), date, short friendly summary, and a direct register or watch link.
+* This removes guesswork and gives a smooth learning journey without leaving the main screen."
+
+---
+
+### 💡 **Job 3: Accounts Receivable (AR) Inquiries**
+
+"On the current Waystar dashboard (I’ll show screenshots in a moment), if a user wants to check AR details:
+
+* They need to search by exact invoice number or client name.
+* The UI shows static fields: status, amount, due date — and if anything is missing, the user is stuck.
+* There's no guided conversation to clarify or escalate if something is overdue or denied.
+
+With Agentforce:
+
+* The assistant greets users warmly: 'Thanks! Here’s what I found for MedTrust Inc…'
+* It provides all invoice details: payment status, due date, invoice amount, notes, denial reasons if any.
+* If an invoice is overdue, it proactively offers to escalate to Finance or suggest a follow-up action.
+* If denied, it explains the denial reason clearly and offers next steps.
+* The user never feels stuck — they’re guided step by step in a natural, supportive flow.
+* Screenshots of the Waystar dashboard will illustrate how we transition from a static, manual lookup experience to an intuitive, conversational one."
+
+---
+
+### 💡 **Job 4: Remittance or Edge Case / Fallback Support**
+
+"In the current system, when users have remittance questions or vague issues like:
+
+* 'I’m not sure why this didn’t go through,'
+* 'Help,'
+* Or they get stuck on a weird error,
+
+The system typically shows a generic error message or asks them to rephrase — and that's it.
+
+With Agentforce:
+
+* The assistant detects short, unclear, or emotional responses dynamically.
+* It proactively offers suggestions: 'Would you like help with billing, claim status, or scheduling?' or 'Can I connect you with a support expert?'
+* If the user remains confused, it varies fallback messages (so it doesn’t feel like a loop) and seamlessly escalates to a live agent or creates a case.
+* The remittance workflows can finally handle real-world edge cases robustly, instead of leaving users feeling abandoned.
+
+Screenshots of the remittance UI will show how currently it's rigid, and how Agentforce's conversational fallback makes it more human and reliable."
+
+---
+
+### ✅ **Closing wrap-up**
+
+"In short:
+
+* Instead of forcing users to fight with static dashboards and long article lists, Agentforce turns our UI into a dynamic, supportive, and proactive experience.
+* Whether they're asking about articles, invoices, webinars, or struggling with unexpected issues, the assistant learns, guides, and connects them to help — all in one smooth flow.
+* The result? Faster answers, less frustration, and a much more modern, human-like experience."
+
+---
+
+## 💬 **If you'd like**, I can also:
+
+✅ Create a slide deck-ready version of this script (with slide breakdowns)
+✅ Add placeholder screenshots with annotations (e.g., "Insert Waystar dashboard here")
+✅ Or even prepare a short video-style storyboard
+
+Just tell me! 🌟
