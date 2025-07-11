@@ -1,0 +1,91 @@
+✅ Here’s a **clear, short demo script** summarizing **Job 1 to Job 4**, describing:
+
+* What each job currently does in your setup
+* What the Agentforce assistant is actually handling
+* In a concise, demo-ready way (perfect for stakeholder presentations or demo calls)
+
+---
+
+## 💬 **Demo Script — Jobs 1 to 4 (Current Process & Agentforce Handling)**
+
+---
+
+### **🟢 Job 1: Knowledge Articles + Webinar Suggestion**
+
+**Current Process:**
+
+* Users ask questions using keywords or exact phrases.
+* System only matches exact keywords in knowledge articles or PDFs.
+* No proactive help — user must know what to ask and refine if no match found.
+
+**Agentforce Enhancement:**
+
+* Uses semantic search (LLM embeddings) to understand meaning, not just keywords.
+* Responds conversationally with clear summaries from knowledge articles.
+* Proactively suggests up to 3 related webinars in a friendly format, without requiring the user to explicitly ask.
+* Avoids repetition and works more naturally, guiding users without extra effort.
+
+---
+
+### **🟢 Job 2: Accounts Receivable (AR) Inquiry**
+
+**Current Process:**
+
+* Users provide invoice number or client name.
+* System shows static invoice details from backend, but no guided conversation.
+* Users often left confused about next steps or escalation.
+
+**Agentforce Enhancement:**
+
+* Starts with warm, supportive greeting (e.g., “Thanks! Here’s what I found for you…”).
+* Shares all invoice details: status, amount, due date, notes, and denial reasons if applicable.
+* Proactively offers next actions (e.g., escalate to finance if overdue, provide denial explanations).
+* Ensures no dead ends — always a clear path forward or option to escalate.
+
+---
+
+### **🟢 Job 3: Webinar Recommendations (Standalone)**
+
+**Current Process:**
+
+* Users must explicitly search or click to find upcoming webinars.
+* No dynamic matching or automatic recommendations.
+
+**Agentforce Enhancement:**
+
+* Recommends webinars automatically after answering any relevant question, or as a standalone request (“Show me webinars”).
+* Filters by topic context dynamically.
+* Uses structured, friendly display with title, type, date, short description, and “Register or Watch Here” link.
+* Avoids repeating the same webinars to the same user session.
+
+---
+
+### **🟢 Job 4: Fallback & Edge Case Support**
+
+**Current Process:**
+
+* If user gives vague, frustrated, or emotional responses, system just asks “Please clarify” or fails.
+* No smooth fallback logic, no emotion handling, no proactive guidance.
+
+**Agentforce Enhancement:**
+
+* Detects vague, short, emotional, or off-topic messages using LLM reasoning.
+* Provides immediate suggestions, clarifies possible topics, and offers friendly next steps.
+* Varies fallback responses to avoid loops.
+* Escalates seamlessly to human support if user explicitly asks or repeats fallback cues.
+* Makes the user feel supported and guided, not abandoned.
+
+---
+
+## ✅ **Short Summary (1-liner per job)**
+
+* **Job 1:** Answers questions contextually and suggests webinars proactively.
+* **Job 2:** Handles AR inquiries warmly, shows full details, offers escalation.
+* **Job 3:** Recommends webinars dynamically, no need to search or ask explicitly.
+* **Job 4:** Catches all confusion or frustration gracefully, suggests or escalates, no dead ends.
+
+---
+
+### ⚡ **If you'd like**, I can prepare this as a slide deck-style summary (visual slides), or a single-page PDF script you can read directly in your demo.
+
+Want me to do that? 🌟
