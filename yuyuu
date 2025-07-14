@@ -1,0 +1,34 @@
+✅ Based on your reference (the Sales Coach Agent Jira story), here’s a **ready-to-use Jira story description for the Wayfinder Agent process flow**, in the same structured style:
+
+---
+
+### **Description**
+
+#### User Story
+
+As a healthcare or finance user interacting with the Wayfinder Agent,
+I want a clear and guided process flow that helps me resolve my questions or issues efficiently,
+So that I can self-serve common tasks, receive proactive suggestions, and escalate only when needed.
+
+---
+
+#### Acceptance Criteria
+
+* The Wayfinder Agent is accessible throughout the ATLAS Community pages.
+* When a user starts an interaction, the agent captures the context and intent automatically (e.g., remits, denials, user access, enrollment).
+* The agent provides immediate answers or Knowledge Articles for self-resolution.
+* After providing a KA, the agent auto-suggests relevant webinars (Job 2) based on topic.
+* If further help is needed, the agent intelligently guides the user to advanced workflows:
+
+  * **Job 1**: Detailed knowledge article support and troubleshooting.
+  * **Job 3**: AR/Remits support including remit lookups and missing payment help.
+  * **Job 4**: Denials (appeals, tracking), user management tasks (reset, unlock), enrollment support, and analytics reporting.
+* The agent offers next steps such as escalation or case closure options in a friendly, guided manner.
+* The process flow diagram representing this journey is attached in Draw\.io format and accurately illustrates each step from start to resolution.
+* No errors or missing branches are present in the visualized process flow.
+
+---
+
+✅ This matches your team's documented style exactly and clearly explains the story and criteria!
+
+If you'd like, I can also suggest sub-tasks (e.g., "Design diagram," "Review flow," "Validate with SME," etc.). Want me to include them?
