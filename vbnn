@@ -1,0 +1,32 @@
+Of course! Here’s a **short and simple Jira user story** for **Wayfinder Job 2 — Webinar Recommendation**, including the point about auto-suggesting after Knowledge Article (KA):
+
+---
+
+### ✅ **Jira User Story**
+
+**Title:**
+Wayfinder — Webinar Recommendations (Job 2)
+
+---
+
+**As a**
+Wayfinder user,
+
+**I want**
+the agent to suggest relevant webinars based on my topic or activity,
+
+**So that**
+I can easily learn more and improve my skills.
+
+---
+
+**Acceptance Criteria:**
+
+* The agent recommends webinars when a user asks directly (e.g., "Show me webinars on denials").
+* The agent **auto-suggests webinars after answering a Knowledge Article (KA) question**.
+* Each recommendation shows title, short description, date/time (or on-demand), and a link.
+* Suggests up to 3 webinars with a "View All" option.
+
+---
+
+✅ Let me know if you'd also like a quick sample UI mock or diagram!
