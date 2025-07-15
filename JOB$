@@ -12,3 +12,18 @@ If the action is Update Role, ask for the new role to assign and confirm before 
 =============
 
 Executes user management actions such as unlocking, deactivating, reactivating, and updating roles based on the user’s request.
+
+
+
+
+++++++++
+1️⃣ varActionType
+Instruction: "Identify the type of user management action requested (e.g., Unlock, Deactivate, Reactivate, Update Role, View Login History)."
+
+2️⃣ varNewRole
+Instruction: "If the request is to update the user role, ask the user to specify the new role. Examples: Admin, Billing, Reporting Analyst, Support."
+
+3️⃣ varUserEmail
+Instruction: "Ask the user to provide the email address associated with the user profile that needs to be updated."
+
+
