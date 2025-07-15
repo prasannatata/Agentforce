@@ -8,3 +8,7 @@ Ask the admin what action they would like to perform (Unlock, Deactivate, Reacti
 Collect the user's email address to identify the account.
 
 If the action is Update Role, ask for the new role to assign and confirm before proceeding.
+
+=============
+
+Executes user management actions such as unlocking, deactivating, reactivating, and updating roles based on the user’s request.
