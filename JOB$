@@ -27,3 +27,7 @@ Instruction: "If the request is to update the user role, ask the user to specify
 Instruction: "Ask the user to provide the email address associated with the user profile that needs to be updated."
 
 
+Provide a clear summary message confirming the user management action performed (e.g., "User account successfully unlocked", "User role updated to Admin", or "User account deactivated successfully").
+
+
+
