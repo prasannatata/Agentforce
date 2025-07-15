@@ -1,1 +1,7 @@
 Analyze the provided user profile and suggest recommended actions, such as deactivation or role adjustments, based on login activity and security settings
+
+
+Please provide the user's email address to analyze their login activity and generate proactive recommendations.
+
+Enter the number of days of inactivity to use for recommendations (default is 90 days).
+Specify a new role to suggest for this user, if applicable. Leave blank to skip.
