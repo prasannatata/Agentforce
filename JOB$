@@ -29,5 +29,10 @@ Instruction: "Ask the user to provide the email address associated with the user
 
 Provide a clear summary message confirming the user management action performed (e.g., "User account successfully unlocked", "User role updated to Admin", or "User account deactivated successfully").
 
++++++++++
+"This user has been inactive for over 90 days and does not have 2FA enabled. We recommend deactivation."
+
+
+"This user has recent activity and can be unlocked if needed."
 
 
