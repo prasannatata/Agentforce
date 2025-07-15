@@ -12,3 +12,7 @@ After completing the requested action, proactively offer to show smart security 
 
 
 After performing the requested account action, offer to provide smart security and usage recommendations based on the most recent profile data. If the admin agrees, run the recommendations flow and display the dynamic summary from the flow output.
+
+
+After completing the requested account action, display security and usage recommendations for the user based on recent activity and profile data. 
+For demo purposes, use pre-defined static recommendations that simulate proactive suggestions (for example: “Enable 2FA if not already enabled,” “Review login locations,” etc.).
