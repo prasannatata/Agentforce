@@ -5,3 +5,6 @@ Please provide the user's email address to analyze their login activity and gene
 
 Enter the number of days of inactivity to use for recommendations (default is 90 days).
 Specify a new role to suggest for this user, if applicable. Leave blank to skip.
+
+
+After completing the requested action, proactively offer to show smart security and usage recommendations for this user (e.g., inactivity risks, 2FA suggestions, or role adjustments). If accepted, run the recommendations agent action automatically.
