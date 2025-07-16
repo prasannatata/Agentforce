@@ -1,0 +1,231 @@
+Absolutely! Here’s the **final, fully integrated version** — formatted *exactly* like your example (with 💡 Problem, 🛠️ Solution, 🔗 Technical Components, etc.) for each job, plus all additional technical tables and appendices.
+
+---
+
+# 🌟 **Waystar Agentforce Implementation — Comprehensive Technical Documentation**
+
+---
+
+## 💼 **Job 1: Knowledge Article Support**
+
+💡 **Problem**
+Users struggled to navigate 20K+ knowledge articles, requiring manual searches and support tickets.
+
+🛠️ **Solution**
+Integrated a Retriever-based Prompt Template to dynamically summarize and return relevant article content.
+Enabled fallback detection and escalation to human support seamlessly.
+
+🔗 **Technical Components**
+
+* **Prompt Template**: `Get_Article_Summary_With_Fallback` — dynamically summarizes and handles fallback phrases.
+* **Flow**: `Knowledge_Fallback_Flow` — escalates to a Case if user requests more help.
+* **Standard Object**: Knowledge object used directly.
+
+✅ **Steps**
+1️⃣ Retrieve article using Retriever logic.
+2️⃣ Generate summary with the prompt.
+3️⃣ Present structured response to the user.
+4️⃣ Detect fallback signals (e.g., "I still need help") → execute escalation flow.
+5️⃣ Create a Case and route via Omni-Channel.
+
+---
+
+## 💼 **Job 2: Webinar Recommendation**
+
+💡 **Problem**
+Users were unsure which webinars matched their interests, leading to low engagement.
+
+🛠️ **Solution**
+Implemented proactive webinar recommendations using topic context (from knowledge articles or chat context) and dynamic prompt generation.
+
+🔗 **Technical Components**
+
+* **Custom Object**: `Webinar__c` — stores webinar metadata.
+* **Fields**:
+
+  * `Name` (Text)
+  * `Topic__c` (Picklist)
+  * `Date__c` (DateTime)
+  * `URL__c` (URL)
+  * `Is_On_Demand__c` (Checkbox)
+* **Prompt Template**: `Recommend_Webinar_By_Topic_Auto`.
+* **Flow**: `Push_Webinar_Recommendation` — appends suggestions post-answer.
+
+✅ **Steps**
+1️⃣ Detect user context (topic from chat).
+2️⃣ Query `Webinar__c` records matching topic.
+3️⃣ Format recommendation with prompt template.
+4️⃣ Present options: "🎥 Register" or "View on-demand".
+5️⃣ Log interaction in flow for analytics.
+
+---
+
+## 💼 **Job 3: Accounts Receivable (AR) Support**
+
+💡 **Problem**
+Manual AR inquiries and Oracle ERP checks delayed responses and required finance team triage.
+
+🛠️ **Solution**
+Integrated with Oracle ERP via an auto-launched Flow to pull real-time AR status and balances.
+Built fallback logic to escalate unresolved issues to the Finance team.
+
+🔗 **Technical Components**
+
+* **Custom Object**: `AR_Inquiry__c`.
+* **Fields**:
+
+  * `Name` (Auto Number)
+  * `Invoice__c` (Text)
+  * `Status__c` (Picklist)
+  * `Balance__c` (Currency)
+  * `Inquiry_Date__c` (DateTime)
+* **Auto-launched Flow**: `Get_Oracle_AR_Status`.
+* **Escalation Flow**: `Escalate_AR_To_Finance`.
+* **Prompt Template**: `Summarize_AR_Status_Response`.
+
+✅ **Steps**
+1️⃣ Capture invoice number from user.
+2️⃣ Call `Get_Oracle_AR_Status` to retrieve Oracle data.
+3️⃣ Save record to `AR_Inquiry__c`.
+4️⃣ Generate response using `Summarize_AR_Status_Response`.
+5️⃣ If unresolved → run `Escalate_AR_To_Finance` → create Task for finance.
+
+---
+
+## 💼 **Job 4: Missing Remits Investigation**
+
+💡 **Problem**
+Investigating missing remittance advices required manual cross-team follow-ups and took significant time.
+
+🛠️ **Solution**
+Implemented a guided Prompt Template for step-by-step investigation support.
+Used a custom Flow to verify remit presence and escalate if not found.
+
+🔗 **Technical Components**
+
+* **Custom Object**: `Remit__c`.
+* **Fields**:
+
+  * `Name` (Auto Number)
+  * `Payment_ID__c` (Text)
+  * `Found__c` (Checkbox)
+  * `Status__c` (Picklist)
+* **Flow**: `Check_Remittance_Availability`.
+* **Escalation Flow**: `Create_Remittance_Case`.
+* **Prompt Template**: `Investigate_Missing_Remits_Steps`.
+
+✅ **Steps**
+1️⃣ Request payment reference ID from user.
+2️⃣ Check remit record via `Check_Remittance_Availability`.
+3️⃣ If found → guide next steps using prompt template.
+4️⃣ If not found → execute `Create_Remittance_Case` → open support case.
+
+---
+
+## 🔒 **Security & Permissions**
+
+* **Permission Sets & Profiles**:
+
+  * Created `Waystar_AR_Agent_Permission`, `Waystar_Knowledge_Agent_Permission`, `Waystar_Finance_Restricted`.
+  * Profiles separated by department (Finance, Support, General).
+* **Object Permissions**:
+
+  * Restricted CRUD on `AR_Inquiry__c` and `Remit__c`.
+* **Flow Permissions**:
+
+  * Controlled access to flows using Permission Set assignments.
+
+💬 **Confluence Explanation**:
+
+> "We created custom Permission Sets like `Waystar_AR_Agent_Permission`, assigned them to the Finance profile, and restricted other internal profiles from accessing AR and Remittance flows via explicit object and flow permissions."
+
+---
+
+## 🛡️ **Fallback & Escalations**
+
+* Omni-Channel routing used for seamless escalation to live agents.
+* Fallback phrases configured in prompt templates for smooth handoff.
+* Automated flows: `Create_Remittance_Case_Auto`, `Escalate_AR_To_Finance`.
+
+---
+
+## 💬 **Tone & UX Enhancements**
+
+* Natural chat-style responses with dynamic emojis (✅, 🎉).
+* Structured confirmations (e.g., "✅ Would you like to escalate this now?").
+* Clear stepwise prompts to reduce confusion.
+
+---
+
+## 📊 **Logging & Analytics**
+
+* Custom fields:
+
+  * `Resolution_Status__c` (Outcome tracking)
+  * `Fallback_Used__c` (Flag fallback usage)
+  * `Escalation_Reason__c` (Capture escalation reasons)
+* Conversation transcripts exported to Data Cloud for analysis.
+
+---
+
+## 🚀 **Summary of Technical Value**
+
+✅ Automated AR and Remittance support, reducing manual workload.
+✅ Proactive webinar and knowledge article recommendations.
+✅ Strengthened governance via granular permissions.
+✅ Scalable fallback and audit mechanisms.
+
+---
+
+## 💼 **Appendix: Full Technical Tables**
+
+### 🔁 **Flows**
+
+| **Flow Name**                   | **Purpose**                          |
+| ------------------------------- | ------------------------------------ |
+| `Knowledge_Fallback_Flow`       | Escalate unresolved article queries  |
+| `Push_Webinar_Recommendation`   | Suggest webinars dynamically         |
+| `Get_Oracle_AR_Status`          | Query AR data from Oracle ERP        |
+| `Escalate_AR_To_Finance`        | Escalate AR issues to finance        |
+| `Check_Remittance_Availability` | Validate remit data                  |
+| `Create_Remittance_Case`        | Create support case if remit missing |
+
+---
+
+### 💬 **Prompt Templates**
+
+| **Template Name**                   | **Purpose**                                           |
+| ----------------------------------- | ----------------------------------------------------- |
+| `Get_Article_Summary_With_Fallback` | Summarize article content and detect fallback phrases |
+| `Recommend_Webinar_By_Topic_Auto`   | Suggest webinars based on topic                       |
+| `Summarize_AR_Status_Response`      | Generate conversational AR status summary             |
+| `Investigate_Missing_Remits_Steps`  | Guide remit investigation step-by-step                |
+
+---
+
+### 🗂️ **Custom Objects & Key Fields**
+
+| **Object**      | **Fields**                                                        |
+| --------------- | ----------------------------------------------------------------- |
+| `Webinar__c`    | Name, Topic\_\_c, Date\_\_c, URL\_\_c, Is\_On\_Demand\_\_c        |
+| `AR_Inquiry__c` | Name, Invoice\_\_c, Status\_\_c, Balance\_\_c, Inquiry\_Date\_\_c |
+| `Remit__c`      | Name, Payment\_ID\_\_c, Found\_\_c, Status\_\_c                   |
+
+---
+
+## 📥 **Attachments & References**
+
+* ✅ Waystar Agentforce Flow Diagrams
+* ✅ YAML files for prompt templates
+* ✅ Screenshots of permission assignments
+* ✅ Example transcripts and escalation logs
+
+---
+
+## ✅ **Conclusion**
+
+This document acts as the **single source of technical truth** for the Waystar Agentforce project, covering each component, flow, and integration in detail — ready to be published on Confluence.
+
+---
+
+🎁 **If you'd like, I can also create visual flow diagrams, export YAML samples, or prepare presentation-style overviews — just say "Yes, add them"!**
