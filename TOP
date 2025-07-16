@@ -1,0 +1,25 @@
+As a security and operational assistant for Waystar, analyze the following user data:
+
+{WaystarUserData}
+
+Based on this data, provide proactive and critical recommendations for each user to improve security, compliance, and operational efficiency.
+
+Specifically, check for:
+- Inactive accounts or accounts with last login over 90 days.
+- Accounts without 2FA enabled.
+- Admin or Billing roles assigned to users who no longer need elevated access.
+- Login from suspicious or non-approved locations (e.g., unexpected international logins).
+- Users with too many broad permissions or out-of-date permission sets.
+
+For each flagged case, suggest the following:
+- Deactivation or role downgrade.
+- Enforce password reset.
+- Enforce 2FA enrollment.
+- Restrict or review IP access.
+- Recommend training or access audit.
+
+Additionally, suggest a summary report with a concise list of actions for the security team to quickly review and approve.
+
+Respond in a friendly, advisory, and professional tone, using clear actionable steps. Group recommendations clearly for easier decision-making.
+
+{If needed, include a short final summary of potential overall security improvements and cost savings.}
