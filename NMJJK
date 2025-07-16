@@ -247,3 +247,48 @@ Security	Permission Sets, Profiles, RBAC (Role-Based Access Control)
 Fallback Handling	Omni-Channel escalation and Task creation flows
 
 
+💡 Problem
+Handling user actions like unlocking, reactivating, or updating roles was a manual process, often delayed due to limited visibility into user profiles and permissions.
+
+🛠️ Solution
+Built an LLM-powered agent experience to review user profiles and guide admins through next steps like unlocking accounts, updating roles, or viewing login activity.
+Combined dynamic Prompt Templates with Flows to perform actions while offering smart recommendations.
+
+🔗 Technical Components
+
+Custom Object: User_Profile__c
+
+Fields:
+
+Name (Text)
+
+Email__c (Email)
+
+Role__c (Picklist)
+
+2FA_Enabled__c (Checkbox)
+
+Last_Login_Date__c (Date)
+
+License_Type__c (Picklist)
+
+Last_Activity__c (Text)
+
+Login_Location__c (Text)
+
+Flows:
+
+Perform_User_Action (Unlock, Deactivate, Update Role)
+
+Verify_User_And_Trigger_Prompt
+
+Prompt Template: Recommend_User_Actions_And_Security_Updates
+
+✅ Steps
+1️⃣ Capture user's email and fetch matching User_Profile__c.
+2️⃣ Analyze activity: login date, role, 2FA, and last actions.
+3️⃣ If user says "unlock/deactivate/update role", call Perform_User_Action Flow.
+4️⃣ Prompt Template recommends additional steps (e.g., review access, enable 2FA).
+5️⃣ All actions gated by permission checks to ensure only authorized internal users can proceed.
+
+
