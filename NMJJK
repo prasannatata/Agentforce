@@ -229,3 +229,21 @@ This document acts as the **single source of technical truth** for the Waystar A
 ---
 
 🎁 **If you'd like, I can also create visual flow diagrams, export YAML samples, or prepare presentation-style overviews — just say "Yes, add them"!**
+
+
+
++++
+📄 Overview
+This document captures the technical implementation details of the Waystar Agentforce AI assistant project. It outlines each supported job (use case), the technical components leveraged (Flows, Prompt Templates, Agent Actions, Data Cloud, etc.), and supporting configurations such as permissions, fallback mechanisms, and special integrations.
+
+⚙️ Technical Architecture Summary
+Component	Details
+Agent Framework	Salesforce Agentforce (Einstein Copilot-based)
+Orchestration	Salesforce Flows (Auto-launched and Screen Flows)
+Language Understanding	Prompt Templates with dynamic context and Retriever-based data
+Data Layer	Salesforce core objects, custom objects (e.g., Claim, Webinar), Data Cloud connectors
+External Integrations	Oracle ERP for AR status, Knowledge Article API, Webinar API
+Security	Permission Sets, Profiles, RBAC (Role-Based Access Control)
+Fallback Handling	Omni-Channel escalation and Task creation flows
+
+
