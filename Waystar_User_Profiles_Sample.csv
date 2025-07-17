@@ -1,0 +1,31 @@
+Waystar_User_Profile_Name,User_Name,Email,Status,Role,Last_Login_Date,2FA_Enabled,Access_Level,Notes,Case,Owner
+Test User 1,Test User 1,testuser1@waystar.com,Active,User,04/03/2024 01:00 PM,Yes,Read-Only,Manually updated,,Prasanna Lakshmi
+Test User 2,Test User 2,testuser2@waystar.com,Active,Admin,04/23/2024 01:00 PM,Yes,Read-Only,Manually updated,,John Smith
+Test User 3,Test User 3,testuser3@waystar.com,Active,User,01/16/2024 01:00 PM,Yes,Full,,,Prasanna Lakshmi
+Test User 4,Test User 4,testuser4@waystar.com,Inactive,User,01/17/2024 01:00 PM,No,Limited,Manually updated,,John Smith
+Test User 5,Test User 5,testuser5@waystar.com,Active,Manager,08/28/2024 01:00 PM,Yes,Read-Only,Auto-synced from ERP,,Emily Chen
+Test User 6,Test User 6,testuser6@waystar.com,Active,User,05/25/2024 01:00 PM,Yes,Full,,,John Smith
+Test User 7,Test User 7,testuser7@waystar.com,Inactive,User,10/24/2024 01:00 PM,Yes,Limited,Deactivated via Wayfinder agent flow,,Emily Chen
+Test User 8,Test User 8,testuser8@waystar.com,Active,Manager,05/27/2024 01:00 PM,Yes,Full,Deactivated via Wayfinder agent flow,,Emily Chen
+Test User 9,Test User 9,testuser9@waystar.com,Inactive,User,07/04/2024 01:00 PM,No,Full,Manually updated,,Prasanna Lakshmi
+Test User 10,Test User 10,testuser10@waystar.com,Active,Admin,03/22/2024 01:00 PM,No,Limited,Auto-synced from ERP,,John Smith
+Test User 11,Test User 11,testuser11@waystar.com,Active,Manager,07/17/2024 01:00 PM,No,Read-Only,Manually updated,,Emily Chen
+Test User 12,Test User 12,testuser12@waystar.com,Active,Manager,05/02/2024 01:00 PM,No,Full,Auto-synced from ERP,,John Smith
+Test User 13,Test User 13,testuser13@waystar.com,Inactive,Manager,10/02/2024 01:00 PM,No,Full,Manually updated,,Prasanna Lakshmi
+Test User 14,Test User 14,testuser14@waystar.com,Active,User,01/02/2024 01:00 PM,Yes,Read-Only,Deactivated via Wayfinder agent flow,,Emily Chen
+Test User 15,Test User 15,testuser15@waystar.com,Inactive,User,05/26/2024 01:00 PM,Yes,Full,Auto-synced from ERP,,John Smith
+Test User 16,Test User 16,testuser16@waystar.com,Active,Admin,11/11/2024 01:00 PM,Yes,Read-Only,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 17,Test User 17,testuser17@waystar.com,Inactive,User,02/27/2024 01:00 PM,Yes,Read-Only,Deactivated via Wayfinder agent flow,,John Smith
+Test User 18,Test User 18,testuser18@waystar.com,Active,Admin,05/12/2024 01:00 PM,No,Full,Deactivated via Wayfinder agent flow,,Emily Chen
+Test User 19,Test User 19,testuser19@waystar.com,Active,Admin,12/28/2023 01:00 PM,Yes,Full,,,Prasanna Lakshmi
+Test User 20,Test User 20,testuser20@waystar.com,Inactive,Manager,11/12/2024 01:00 PM,Yes,Read-Only,Deactivated via Wayfinder agent flow,,Prasanna Lakshmi
+Test User 21,Test User 21,testuser21@waystar.com,Active,Admin,02/22/2024 01:00 PM,Yes,Full,Manually updated,,Emily Chen
+Test User 22,Test User 22,testuser22@waystar.com,Inactive,Admin,03/24/2024 01:00 PM,Yes,Full,,,John Smith
+Test User 23,Test User 23,testuser23@waystar.com,Inactive,Admin,01/31/2024 01:00 PM,No,Read-Only,Manually updated,,Prasanna Lakshmi
+Test User 24,Test User 24,testuser24@waystar.com,Inactive,Admin,04/30/2024 01:00 PM,No,Full,Deactivated via Wayfinder agent flow,,John Smith
+Test User 25,Test User 25,testuser25@waystar.com,Inactive,User,10/02/2024 01:00 PM,Yes,Full,Deactivated via Wayfinder agent flow,,John Smith
+Test User 26,Test User 26,testuser26@waystar.com,Active,User,07/07/2024 01:00 PM,Yes,Read-Only,,,John Smith
+Test User 27,Test User 27,testuser27@waystar.com,Inactive,User,12/22/2023 01:00 PM,Yes,Full,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 28,Test User 28,testuser28@waystar.com,Inactive,Admin,04/28/2024 01:00 PM,No,Limited,Manually updated,,Prasanna Lakshmi
+Test User 29,Test User 29,testuser29@waystar.com,Active,Manager,10/11/2024 01:00 PM,No,Read-Only,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 30,Test User 30,testuser30@waystar.com,Active,Manager,12/01/2024 01:00 PM,No,Read-Only,Deactivated via Wayfinder agent flow,,Emily Chen
