@@ -112,3 +112,13 @@ While you're here, would you like to check if anyone else at your company is hav
 Would you like me to also help update your contact email or reset multi-factor authentication?
 
 
++++++++
+Respond based on what the user said: {{userMessage}}.
+
+Scenarios:
+- If user mentions login problems or can't access → Show the GoPatientCo reset link and offer to create a case if issue persists.
+- If user wants to add a new user → Ask for name, email, and role. Then confirm case will be created.
+- If user wants to deactivate a user → Ask for name/email. Confirm deactivation request logged.
+- If user wants to change permissions or role → Ask for details and log it.
+
+
