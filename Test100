@@ -1,0 +1,38 @@
+Objective:
+The primary goal of this Proof of Concept (POC) is to demonstrate the capabilities of the WayFinder Agent—an intelligent, conversational AI assistant built using Salesforce’s Agentforce platform. The WayFinder Agent provides real-time self-service support for Waystar's ATLAS Community, a network consisting of more than 75,000 community users and 30,000 healthcare and financial clients. Leveraging Waystar’s extensive Knowledge Base, Salesforce Experience Cloud, and advanced Agentforce functionalities, the agent proactively resolves common inquiries, reduces manual effort, and enhances client satisfaction through personalized guidance and efficient automation.
+
+Scope:
+This POC specifically includes the implementation, testing, and refinement of four targeted automation scenarios (Jobs #1–#4):
+
+Job #1 – Knowledge-Driven Case Deflection:
+Automatically answers common questions (e.g., password resets, login issues, general Waystar knowledge queries) by retrieving and presenting relevant information from over 2,000 existing Waystar knowledge articles.
+
+Job #2 – Intelligent Webinar Recommendations:
+Uses client profiles and past interactions to suggest relevant client and sales webinars. This personalized approach showcases Waystar’s products and expertise, fostering client engagement and education.
+
+Job #3 – Accounts Receivable (AR) Inquiry Automation:
+Enables community users, especially direct clients, to perform self-service checks on basic AR-related inquiries, such as remittance availability, payment status verification, and finance-related follow-ups. If the data isn't readily available, the agent automatically creates and routes support cases to appropriate finance teams for follow-up.
+
+Job #4 – User Management Automation (Internal & Customer Facing):
+Provides differentiated experiences based on user type:
+
+Job #4 – User Management Automation (Internal & Customer Facing):
+Provides differentiated experiences based on user type:
+
+Internal Users (Support Staff, IT Admins):
+WayFinder Agent enables internal staff to perform common user management tasks efficiently, reducing reliance on manual interventions and IT helpdesk tickets. Specifically, internal users can:
+
+Unlock locked user accounts directly through the agent.
+
+Deactivate or suspend user access as needed.
+
+Update or change user roles and permissions promptly.
+
+Customer-Facing Users (External Clients):
+For external clients accessing Waystar’s systems, WayFinder Agent simplifies user account issues by providing instant self-service support options, enhancing customer satisfaction. External users can:
+
+Easily reset their forgotten or expired passwords through guided prompts.
+
+Request new access or additional permissions without direct support team involvement.
+
+Seamlessly escalate more complex access issues to a live support representative via automated case creation.
