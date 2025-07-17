@@ -1,0 +1,31 @@
+Waystar_User_Profile_Name,User_Name,Email,Status,Role,Last_Login_Date,2FA_Enabled,Access_Level,Notes,Case,Owner
+Test User 1,Test User 1,testuser1@waystar.com,Inactive,Support,05/20/2024 01:00 PM,TRUE,Full,Deactivated via Wayfinder agent flow,,Emily Chen
+Test User 2,Test User 2,testuser2@waystar.com,Inactive,Reporting Analyst,07/09/2024 01:00 PM,FALSE,Restricted,,,Prasanna Lakshmi
+Test User 3,Test User 3,testuser3@waystar.com,Active,Support,10/29/2024 01:00 PM,FALSE,Read Only,,,John Smith
+Test User 4,Test User 4,testuser4@waystar.com,Active,Reporting Analyst,04/08/2024 01:00 PM,FALSE,Full,Auto-synced from ERP,,John Smith
+Test User 5,Test User 5,testuser5@waystar.com,Inactive,Support,05/27/2024 01:00 PM,FALSE,Full,,,John Smith
+Test User 6,Test User 6,testuser6@waystar.com,Inactive,Billing,07/10/2024 01:00 PM,FALSE,Read Only,Auto-synced from ERP,,John Smith
+Test User 7,Test User 7,testuser7@waystar.com,Inactive,Billing,07/01/2024 01:00 PM,FALSE,Read Only,Auto-synced from ERP,,Emily Chen
+Test User 8,Test User 8,testuser8@waystar.com,Locked,Other,06/27/2024 01:00 PM,TRUE,Full,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 9,Test User 9,testuser9@waystar.com,Locked,Reporting Analyst,05/31/2024 01:00 PM,FALSE,Read Only,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 10,Test User 10,testuser10@waystar.com,Inactive,Admin,08/14/2024 01:00 PM,FALSE,Full,,,John Smith
+Test User 11,Test User 11,testuser11@waystar.com,Locked,Reporting Analyst,01/05/2024 01:00 PM,TRUE,Read Only,,,Emily Chen
+Test User 12,Test User 12,testuser12@waystar.com,Inactive,Other,10/03/2024 01:00 PM,FALSE,Restricted,Deactivated via Wayfinder agent flow,,John Smith
+Test User 13,Test User 13,testuser13@waystar.com,Inactive,Other,07/13/2024 01:00 PM,TRUE,Full,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 14,Test User 14,testuser14@waystar.com,Locked,Billing,06/01/2024 01:00 PM,TRUE,Read Only,,,John Smith
+Test User 15,Test User 15,testuser15@waystar.com,Active,Admin,08/24/2024 01:00 PM,FALSE,Restricted,Auto-synced from ERP,,Emily Chen
+Test User 16,Test User 16,testuser16@waystar.com,Active,Billing,05/20/2024 01:00 PM,TRUE,Full,Deactivated via Wayfinder agent flow,,John Smith
+Test User 17,Test User 17,testuser17@waystar.com,Inactive,Billing,11/12/2024 01:00 PM,TRUE,Read Only,Manually updated,,John Smith
+Test User 18,Test User 18,testuser18@waystar.com,Inactive,Other,02/09/2024 01:00 PM,FALSE,Read Only,Auto-synced from ERP,,Prasanna Lakshmi
+Test User 19,Test User 19,testuser19@waystar.com,Inactive,Billing,08/25/2024 01:00 PM,TRUE,Full,Deactivated via Wayfinder agent flow,,Prasanna Lakshmi
+Test User 20,Test User 20,testuser20@waystar.com,Inactive,Reporting Analyst,05/10/2024 01:00 PM,TRUE,Restricted,Auto-synced from ERP,,John Smith
+Test User 21,Test User 21,testuser21@waystar.com,Inactive,Reporting Analyst,04/10/2024 01:00 PM,FALSE,Full,,,Prasanna Lakshmi
+Test User 22,Test User 22,testuser22@waystar.com,Active,Support,07/23/2024 01:00 PM,FALSE,Restricted,Deactivated via Wayfinder agent flow,,Prasanna Lakshmi
+Test User 23,Test User 23,testuser23@waystar.com,Locked,Reporting Analyst,02/12/2024 01:00 PM,TRUE,Read Only,Auto-synced from ERP,,Emily Chen
+Test User 24,Test User 24,testuser24@waystar.com,Locked,Support,03/29/2024 01:00 PM,FALSE,Restricted,Deactivated via Wayfinder agent flow,,Emily Chen
+Test User 25,Test User 25,testuser25@waystar.com,Locked,Support,10/04/2024 01:00 PM,FALSE,Restricted,Manually updated,,Emily Chen
+Test User 26,Test User 26,testuser26@waystar.com,Locked,Billing,03/21/2024 01:00 PM,TRUE,Full,,,Prasanna Lakshmi
+Test User 27,Test User 27,testuser27@waystar.com,Active,Other,08/07/2024 01:00 PM,TRUE,Full,Deactivated via Wayfinder agent flow,,Prasanna Lakshmi
+Test User 28,Test User 28,testuser28@waystar.com,Inactive,Billing,04/23/2024 01:00 PM,FALSE,Full,Manually updated,,John Smith
+Test User 29,Test User 29,testuser29@waystar.com,Locked,Other,08/14/2024 01:00 PM,FALSE,Restricted,,,Emily Chen
+Test User 30,Test User 30,testuser30@waystar.com,Inactive,Support,10/18/2024 01:00 PM,TRUE,Full,Deactivated via Wayfinder agent flow,,Emily Chen
