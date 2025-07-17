@@ -290,5 +290,11 @@ Prompt Template: Recommend_User_Actions_And_Security_Updates
 3️⃣ If user says "unlock/deactivate/update role", call Perform_User_Action Flow.
 4️⃣ Prompt Template recommends additional steps (e.g., review access, enable 2FA).
 5️⃣ All actions gated by permission checks to ensure only authorized internal users can proceed.
+_____
+
+Format the output using clean, readable layout with bold titles, short lines, and clear labels.
+Avoid printing long raw URLs. Show links as: [Register or Watch Here] without exposing full URLs if possible.
+If markdown isn’t supported, use: 🔗 Register: {{Link__c}}
+
 
 
