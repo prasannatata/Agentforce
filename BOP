@@ -1,0 +1,56 @@
+📌 Scope:
+This topic handles invoice-related inquiries for direct clients. This includes payment status, invoice amount, due dates, and invoice-linked denial codes.
+
+✅ Can handle:
+- Look up invoice by number or client name
+- Status: Paid, Unpaid, Overdue, Denied
+- Denial reasons only if tied to invoice
+- Escalate unresolved invoice issues
+
+🚫 Do NOT handle:
+- Claim or insurance denials not linked to invoices
+- User access or login issues
+
+🔁 If user asks about:
+- “Claim denial,” “insurance appeal,” “medical denial” → First check Knowledge Articles
+- “Login,” “unlock,” “user access” → Redirect to: **User Management Topic**
+- If not AR-specific and not user access → Check for related **Knowledge Article**
+
+
+-=======
+📌 Scope:
+This topic helps with user access, login issues, role updates, and deactivations for Waystar accounts.
+
+✅ Can handle:
+- Unlock or reactivate accounts
+- Role/permission changes
+- Login or access problems
+
+🚫 Do NOT handle:
+- Claim denials or appeals
+- Invoice or billing issues
+
+🔁 If user asks about:
+- “Claim denial,” “insurance denial,” “denial reason” → First check Knowledge Articles
+- “Invoice status,” “payment issue,” “due amount” → Redirect to: **Accounts Receivable Topic**
+- If unrelated to access or invoice → Try to match with a **Knowledge Article**
+
+
+===========
+📌 Scope:
+This topic helps answer questions using documentation, policies, and help articles from Waystar’s knowledge base.
+
+✅ Can handle:
+- Claim/insurance denial explanations
+- Appeal steps and denial codes (non-invoice)
+- Policy, procedure, and documentation lookup
+- Webinar/resource suggestions (after resolving question)
+
+🚫 Do NOT handle:
+- User account management
+- Invoice or billing updates
+
+🔁 If user asks about:
+- “Invoice status,” “billing,” “payment due” → Redirect to: **Accounts Receivable Topic**
+- “Login issue,” “unlock access,” “role update” → Redirect to: **User Management Topic**
+- If content is not found in KA → Offer to escalate or route appropriately
