@@ -57,3 +57,27 @@ If code is not found:
 
 Would you like me to generate a **Guardrail Checklist Table** for your Confluence page or team review deck?
 
+
+
+
+++++++++++++++
+
+| **Job**                                               | **What It Does**                                                                                           | **Main Risks**                                                                                                                                               | **What We Can Do (Mitigation)**                                                                                                                                                           |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Job 1**<br>Knowledge Article Support                | Uses Knowledge Articles to answer user questions and reduce tickets.                                       | - Some articles may be outdated or hard to understand.<br>- Poor formatting can confuse the agent.<br>- If no answer is found, the user may get stuck.       | - Review and improve the top articles used in support.<br>- Use a consistent format for articles.<br>- Add fallback message: *“Would you like to contact support?”*                       |
+| **Job 2**<br>Webinar Recommendation                   | Suggests webinars based on user’s profile or needs.                                                        | - Outdated or untagged webinars may show up.<br>- Suggestions may feel too general.<br>- Users may ignore them if not useful.                                | - Work with Marketing to tag webinars by role/topic.<br>- Use role-based filters (e.g., Finance users → AR webinars).<br>- Track which webinars users click on.                           |
+| **Job 3**<br>Remittance (AR Support)                  | Checks if a remittance was received. If not, escalates the issue.                                          | - Based on mock data, not live ERP.<br>- If not found, may not escalate properly.<br>- Could show sensitive info.                                            | - Use sample data that reflects real-world edge cases.<br>- Ensure escalation flow always works.<br>- Don’t show private billing details.                                                 |
+| **Job 4**<br>User Management<br>(Internal & Customer) | Helps with account actions:<br>Unlock, deactivate, reset password.<br>Behavior changes based on user type. | - If roles are not identified correctly, wrong options may show.<br>- Sensitive actions must be logged.<br>- External users may ask for internal-only tasks. | - Use Salesforce profiles to detect internal vs. external users.<br>- Log every action (unlock, deactivate, etc.).<br>- Add fallback: *“This request has been sent to the support team.”* |
+
+
+
+
+| **Area**                       | **Risk**                                                     | **How to Handle It**                                               |
+| ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------------ |
+| Agent Guessing (Hallucination) | Agent may make up answers if content is missing.             | Set it to only respond from uploaded PDFs and Knowledge Articles.  |
+| Disconnected Data              | Webinar, remittance, and user data live in different places. | Store mock data in Salesforce objects or use Data Cloud.           |
+| Unclear Input                  | Agent might trigger wrong flows.                             | Add follow-up questions to confirm user’s intent.                  |
+| No Escalation Path             | User may get stuck if agent fails.                           | Use fallback flow to create a support case and alert staff.        |
+| Trust Issues                   | Bad or confusing answers may reduce adoption.                | Use clear language and always offer next steps or support options. |
+
+
