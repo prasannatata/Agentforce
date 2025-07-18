@@ -1,0 +1,27 @@
+triggerPhrases:
+  - What’s the status of invoice 12345?
+  - Is invoice 45678 paid?
+  - Check invoice #78910
+  - Has my invoice been processed?
+  - Get details of invoice 000123
+  - Did I pay invoice 23456?
+  - When was my payment posted?
+  - Confirm payment for invoice 87654
+  - How much did I pay?
+  - Payment not showing
+  - When is my invoice due?
+  - How much do I owe?
+  - What’s the outstanding balance?
+  - Invoice due date for 98765
+  - Get invoice total
+  - Why was my invoice denied?
+  - What’s the denial reason for invoice 34567?
+  - I got a denial code—what does it mean?
+  - Denied invoice help
+  - Show invoices for [client name]
+  - All AR details for [client name]
+  - Status of invoices linked to [company]
+  - I need billing help
+  - Talk to someone about this invoice
+  - This invoice is wrong
+  - Need to connect with Finance
