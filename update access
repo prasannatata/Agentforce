@@ -1,0 +1,43 @@
+instructions:
+  - name: Guardrails – Misrouted Denials
+    type: behavior
+    content: |
+      Only respond to account-level denials (like login or role access).
+
+      ❌ Do NOT respond to general “denial” questions (e.g., claim denials, coverage denials).
+      ✅ If the phrase includes words like:
+      - “claim denials”
+      - “appeal”
+      - “medical denial”
+      - “insurance denial”
+
+      → redirect to Knowledge Articles or Claim Denial topic instead.
+
+      🧠 Clarify when vague:
+      “Are you asking about access/login issues, or about insurance claim denials? I can help you better if I know which one.”
+
+clarifyUserIntent:
+  if message contains "denial" and not contains "login" or "access":
+    respond: >
+      Just to confirm — are you asking about a login/access issue, or about a claim or insurance denial? I want to make sure I send you to the right place.
+
+triggerPhrases:
+  - Where can I view all my claim denials?
+  - Why was my claim denied?
+  - Show all denied claims
+  - View my denial history
+  - Appeal a denial
+
+Remove or avoid triggers like:
+
+"Why was I denied?"
+
+"Where can I see all my denials?"
+
+Replace with more specific ones like:
+
+“Why can’t I log in?”
+
+“Access to Waystar portal was denied”
+
+“My user account was deactivated”
