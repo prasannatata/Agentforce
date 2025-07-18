@@ -12,3 +12,48 @@ If no match is found, then redirect or ask the user to clarify.
 If a valid knowledge article match is found, answer the user's question clearly and concisely.
 Even if the topic is normally considered off-topic, valid matches from the knowledge base should still be shared.
 
+
+
+Here’s a detailed breakdown of the **Agentforce Guardrails** used in the **Waystar WayFinder POC**, tailored to your project with clear examples and reasoning.
+
+---
+
+## 🛡️ Agent Guardrails – WayFinder Agent (Detailed)
+
+These guardrails ensure the WayFinder Agent behaves responsibly, consistently, and safely, especially when handling sensitive or incomplete inputs.
+
+| **Guardrail Type**             | **Purpose**                                                              | **How It’s Implemented in Waystar POC**                                                                                                                                                                                  |
+| ------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **1. Scope Enforcement**       | Prevents the agent from responding to unsupported or off-topic requests. | - If a user asks something unrelated (e.g., “Set up payroll”), the agent replies:  \n→ *“I’m not configured to assist with that request. Please contact our support team.”*  \n- Handled via fallback prompt logic.      |
+| **2. Response Boundaries**     | Avoids hallucinations or made-up responses. Only uses verified content.  | - All responses must come from:  \n  • Uploaded PDFs (e.g., DenialReasonCodes.pdf)  \n  • Approved Knowledge Articles (over 2k available)  \n- Responses are never generated from scratch.                               |
+| **3. Intent Validation**       | Confirms that user inputs are complete and understandable before acting. | - For remittance checks:  \n→ *“Please provide a valid Payment ID to continue.”*  \n- For denial code explanations:  \n→ *“Can you confirm the denial code or claim number?”*                                            |
+| **4. Role-Based Controls**     | Ensures different user experiences for internal vs. external users.      | - Internal users see options like *“Unlock user,” “Deactivate”*.  \n- External users see *“Reset password,” “Request access,” “Contact Support.”*  \n- Controlled via user permission sets and dynamic prompt branching. |
+| **5. Data Sensitivity**        | Prevents agent from exposing or processing PHI/PII directly.             | - Agent avoids showing raw data like SSNs, emails, or patient names.  \n- If sensitive info is required, agent responds:  \n→ *“Please contact our live support team to complete this request securely.”*                |
+| **6. Escalation Logic (HITL)** | Ensures agent knows when to escalate to a human agent.                   | - For unsupported, unclear, or failed flows, a case is automatically created via the `Create_Support_Case` flow.  \n- User is informed:  \n→ *“I’ve sent your request to a live agent. You’ll be contacted soon.”*       |
+| **7. Missing Data Handling**   | Prevents broken or unclear flows when input is incomplete.               | - Agent uses fallback prompts like:  \n→ *“It looks like that Payment ID doesn't exist. Would you like to try again?”*  \n→ *“We couldn’t find records yet. Try again after an update.”*                                 |
+| **8. Template-Based Output**   | Maintains consistent tone, structure, and clarity.                       | - All responses follow a set structure:  \n→ **Denial Summary**, **Remittance Result**, **Webinar List**, etc.  \n- Reduces ambiguity and improves UX.                                                                   |
+| **9. Audit & Logging**         | Tracks user actions for security and troubleshooting.                    | - All user interactions and agent decisions are logged via Flow audit fields (e.g., Request, Result, Escalated\_Y/N).  \n- Helps validate performance during UAT and real usage.                                         |
+
+---
+
+## ✅ Example Guardrail in Action: Denial Code Explanation
+
+**User:**
+
+> “Why was my claim denied with CO-50?”
+
+**Agent (via Prompt Template):**
+
+> *“Denial Code CO-50 means: ‘These are non-covered services because this is not deemed a medical necessity by the payer.’*
+> Would you like to:
+> • 📄 View more details?
+> • 📞 Escalate to a support agent?”\_
+
+If code is not found:
+
+> *“I couldn’t find information for that code. Please check if the code is correct or contact support.”*
+
+---
+
+Would you like me to generate a **Guardrail Checklist Table** for your Confluence page or team review deck?
+
