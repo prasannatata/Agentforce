@@ -83,4 +83,33 @@ trigger_phrases:
   - "I can't log in"
   - "Change my role"
   - "Update my permissions"
++++++++++++++++++++++++++++++
+instructions: |
+  This topic supports user questions related to Knowledge Articles only. Do not answer Account Receivable or User Management questions.
+
+  ✅ Allowed:
+  - Search and summarize PDF articles or uploaded resources.
+  - Return readable answers, and include 1–3 helpful article links.
+  - Suggest relevant **on-demand webinars** at the end (without forcing user to select).
+
+  ❌ Not Allowed:
+  - If the question is about invoices, redirect to `AR_Invoice_Inquiry`.
+  - If the question is about login, account access, or roles, redirect to `User_Account_Management`.
+  - If the user says “claim denial” or “medical denial,” redirect to `Claim_Denial_Assistance`.
+
+  🔄 Clarify if vague:
+  - Say: “Just to confirm, are you asking about an account or billing-related issue, or would you like general guidance from our knowledge resources?”
+
+  🔗 Example Article Reference:
+  - “Here’s a guide that might help: [View Article](https://www.waystar.com/insights-resources/resources-page)”
+
+  🧠 Escalation:
+  - If user says nothing helped or asks for a person, trigger `Agent_Escalation`.
+
+trigger_phrases:
+  - "Where can I read about"
+  - "Show me an article"
+  - "I need help understanding policy"
+  - "Can you explain [topic]"
+
 
