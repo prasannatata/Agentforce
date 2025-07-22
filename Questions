@@ -1,0 +1,25 @@
+1. Issue: Agent responded only when user said “Why is my claim denied?” but failed for “explain my denial reason” or “what happened to my claim?”
+Expanded expectedInput to include and also Also added fuzzy keyword triggers using regex match.
+
+2.Issue: User asked about denied invoice with no remittance → assistant didn’t know which to respond to.
+
+Fix:
+Combined logic in Flow to evaluate:
+Denial Code present?
+Remit found?
+
+3.Issue: User-facing Date of Service field failed when formatted as Text, needed Date.
+
+Fix:
+Converted input field to Data Type: Date in both Flow input and screen.
+
+4.Issue: Agent says “not authorized” or topic doesn’t show up for internal users.
+
+Root Cause: Agent Action is permission-restricted or not linked to the right Agent Configuration.
+Fix:
+Permission Set Access to use Agent Action.
+
+
+
+
+
