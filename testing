@@ -1,0 +1,14 @@
+Waystar provides revenue cycle solutions for healthcare organizations, helping manage claims, billing, and patient payments. This POC was focused on building an AI assistant using Salesforce Agentforce to support Waystar’s ATLAS Community of 75K+ users and 30K+ clients.
+
+The assistant was designed to:
+
+Provide real-time answers to common client and user questions
+
+Surface knowledge articles, invoice data, and webinar recommendations
+
+Automate account tasks like password resets and unlocks
+
+Reduce manual support by guiding users through self-service flows
+
+The POC confirmed that Agentforce could effectively automate support tasks and improve the overall experience for both internal staff and external users.
+
