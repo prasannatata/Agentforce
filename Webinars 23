@@ -8,3 +8,15 @@ If the user asks for webinars that are available in both Live and On-demand form
 3. Then suggest:
    - The closest upcoming Live webinar related to their topic
    - Top relevant On-demand sessions they can watch anytime
+
+
+If the user asks for webinars that are available in both Live and On-demand formats:
+
+- Try to find webinars that match both types using fields like `Type__c` or `Delivery_Format__c`.
+- If no webinars match both types, display this heads-up message before suggesting available results:
+
+📝 Just a heads-up: Not all webinars are available in both formats at the same time. Some start as live-only and become available on-demand afterward. Let me show you the best options available now.
+
+Then:
+- Suggest the nearest Live webinar (if any upcoming)
+- Show top On-demand webinars based on the input topic
