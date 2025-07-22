@@ -1,0 +1,77 @@
+Here are **test prompts grouped by each WayFinder Agent job**, covering both standard (happy path) and a few edge or fallback cases to help you test thoroughly:
+
+---
+
+### 🧠 **Job #1 – Knowledge Answers (FAQs, Self-Help)**
+
+**✅ Happy Path:**
+
+* “How do I reset my ATLAS password?”
+* “Where can I find my Explanation of Benefits?”
+* “Is there a guide to submitting a new claim?”
+* “How do I update my organization’s contact details?”
+* “What is the process to set up auto-pay?”
+
+**⚠️ Edge/Fallback Cases:**
+
+* “I need help but don’t know what to search.”
+* “Explain everything about ATLAS.”
+* “Why is my payment missing?” (might get misrouted if not clearly AR-related)
+
+---
+
+### 🎓 **Job #2 – Recommend Webinars**
+
+**✅ Happy Path:**
+
+* “Are there any upcoming webinars on claim workflows?”
+* “Suggest an on-demand webinar for AR topics.”
+* “Do you have webinars about payment reconciliation?”
+* “What training sessions are available for new clients?”
+* “I want to learn more about denial management.”
+
+**⚠️ Edge/Fallback Cases:**
+
+* “Schedule a webinar for me.” (Agent should redirect or clarify)
+* “Can I get a Zoom link for next week’s session?” (Check if handled)
+* “Record my attendance for the last webinar.”
+
+---
+
+### 💰 **Job #3 – Accounts Receivable (Invoice Status, Billing Help)**
+
+**✅ Happy Path:**
+
+* “What’s the status of invoice INV-12345?”
+* “Why is invoice INV-56789 still unpaid?”
+* “Show me all open invoices.”
+* “Is invoice INV-78910 marked as overdue?”
+* “Can I download the invoice copy?”
+
+**⚠️ Edge/Fallback Cases:**
+
+* “Tell me all invoices for the year.” (Too broad)
+* “Update invoice status to paid.” (Agent should not allow)
+* “I forgot my invoice number.” (Should suggest help)
+
+---
+
+### 📥 **Job #4 – Missing Remits / Internal Support**
+
+**✅ Happy Path:**
+
+* “I didn’t receive a remittance for REF-98765.”
+* “Why is the payment amount different from the deposit?”
+* “Check if a remittance was sent for this payment.”
+* “Help me log a ticket for a missing remittance.”
+* “There’s no EOB attached to this transaction.”
+
+**⚠️ Edge/Fallback Cases:**
+
+* “Generate a full payment report.” (Out of scope)
+* “Email me the remittance.” (Should route appropriately or guide)
+* “Something’s wrong with my money.” (Too vague—agent should prompt for more)
+
+---
+
+Let me know if you'd like these in Excel format for test logging or converted into test case scripts!
