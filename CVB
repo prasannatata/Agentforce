@@ -1,0 +1,54 @@
+Absolutely! Here’s a more natural, human-written version of the **Outcomes & Learnings** section for the **WayFinder Agent**—in intermediate-level English and with friendly, real-sounding phrasing like how you might explain it in a deck or meeting note:
+
+---
+
+### 📈 **Outcomes & Learnings – WayFinder Agent**
+
+#### ✅ Success Criteria
+
+We looked at a few key things to measure if the agent was working well:
+
+* How many questions were answered directly by the agent (without needing a human)
+* How accurate or helpful the answers were
+* If people were able to solve their issues faster
+* How many users started using the self-help options after launch
+
+These helped us understand if the WayFinder agent actually made a difference for clients and community users.
+
+---
+
+#### 📊 Results Summary
+
+* Most of the traffic went to **Job #1 – Knowledge Answers**, and we saw a good number of cases getting resolved just from article suggestions.
+* For **Job #3 – AR Questions**, clients really liked getting invoice status quickly without creating tickets.
+* **Webinar suggestions (Job #2)** got decent clicks, especially when the webinar matched a product they recently used.
+* The more complex flows like **Job #4 (Missing Remits)** had fewer users, but those who used it got guided well through the steps or logged a case quickly.
+
+---
+
+#### ⚠️ Challenges
+
+* Some backend systems like AR and Finance had delay issues, so the agent didn’t always get real-time data.
+* A few prompts from users were too vague (e.g., “What’s happening with my payment?”), so we had to tweak the agent to ask better follow-up questions.
+* Also had to add guardrails to make sure the agent doesn’t respond to things like legal questions or unrelated topics.
+
+---
+
+#### 🔁 Lessons for Scaling
+
+* Start small and test each job before rolling out to a wider audience—it helped us catch issues early.
+* Get compliance and legal teams involved from the beginning so there are no surprises later.
+* Have a few human reviewers monitor agent performance in the early stages to keep quality high, especially for jobs tied to finance or support tickets.
+
+---
+
+### 📂 Linked Assets
+
+* A **demo video** walking through each of the 4 core use cases
+* Our internal **prompt template library** with sample responses and syntax
+* Sample **integration setups**, including Flow screenshots and how we called APIs for invoice and remittance lookups
+* Supporting **docs we created internally**, like FAQs, fallback examples, and decision trees
+
+---
+
+Let me know if you want this in Confluence format or styled as a slide!
