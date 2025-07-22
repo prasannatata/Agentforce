@@ -1,0 +1,121 @@
+**Waystar Agentforce POC Implementation**
+
+**Overview**
+The goal of this Proof of Concept (POC) is to demonstrate the capability of the WayFinder Agent, a smart conversational assistant built using Salesforce Agentforce. It helps over 75,000 community users and 30,000 healthcare and financial clients of Waystar find answers, resolve issues, and complete tasks using AI-powered guidance.
+
+**Scope**
+This POC includes the implementation of 4 use cases:
+
+1. Knowledge Article Support
+2. Webinar Recommendation
+3. Accounts Receivable (AR) Inquiry Automation
+4. User Management Automation (Internal & Customer Facing)
+
+---
+
+**Job 1: Knowledge Article Support**
+
+* **Problem**: Users found it hard to search through 2000+ articles.
+* **Solution**: Used Retriever-based Prompt Template to show answers. Fallback detection handled escalations.
+* **Steps**:
+
+  1. Retrieve article with Retriever.
+  2. Summarize with Prompt Template.
+  3. Show structured response.
+
+**Job 2: Webinar Recommendation**
+
+* **Problem**: Users didn’t know which webinars matched their needs.
+* **Solution**: Recommended webinars using topic context from chat and user profile.
+* **Steps**:
+
+  1. Get topic from user.
+  2. Query `Webinar__c` object.
+  3. Recommend using Prompt Template.
+  4. Present options (Live/On-Demand).
+
+**Job 3: AR Inquiry Support**
+
+* **Problem**: AR checks were manual and slow.
+* **Solution**: Used Flow with Oracle integration to show invoice status. Escalated if no data found.
+* **Steps**:
+
+  1. Get invoice number.
+  2. Query `Account_Receivable`.
+  3. Store in `AR_Inquiry__c`.
+  4. Summarize with Prompt.
+  5. Escalate if unresolved.
+
+**Job 4: User Management**
+
+* **Problem**: Manual account unlock, role change, and 2FA tasks.
+* **Solution**: Agent showed next steps and triggered flows for internal/external users.
+* **Steps**:
+
+  1. Get user email.
+  2. Analyze login activity.
+  3. Detect intent (e.g. unlock, role update).
+  4. Recommend/trigger flow.
+
+---
+
+**POC Summary**
+
+| Attribute   | Description                                    |
+| ----------- | ---------------------------------------------- |
+| POC Name    | WayFinder Agent – ATLAS Community AI Assistant |
+| Industry    | Healthcare Payments                            |
+| Modules     | Prompt Template, Instructions, Actions         |
+| Clouds Used | Experience, Service, Data Cloud                |
+| Duration    | 3 Weeks                                        |
+
+**Architecture Summary**
+
+| Component | Details                            |
+| --------- | ---------------------------------- |
+| Framework | Agentforce (Einstein Copilot)      |
+| Flows     | Auto-launched                      |
+| Language  | Prompt Templates + Retriever       |
+| Data      | Core & Custom Objects + Data Cloud |
+| Security  | Profiles, Roles, Permission Sets   |
+| Fallback  | Escalation flows, prompt checks    |
+
+**Agent Guardrails**
+
+| Guardrail Type    | Purpose               | How it’s Handled               |
+| ----------------- | --------------------- | ------------------------------ |
+| Scope Enforcement | Blocks off-topic      | Fallback: “Not configured”     |
+| Response Limits   | Prevents fake answers | Use only PDFs & Knowledge      |
+| Intent Check      | Confirms user input   | Ask for missing info           |
+| Role Control      | Shows proper actions  | Based on profile               |
+| Data Sensitivity  | Avoids PII exposure   | Mask or skip sensitive data    |
+| Escalation Logic  | Sends to live agent   | Flow-based fallback            |
+| Missing Input     | Handles gaps          | Prompt user to re-enter        |
+| Standard Output   | Keeps tone clear      | Same structure for all replies |
+
+**Agent Behavior Examples**
+
+| Job       | Example                                                      |
+| --------- | ------------------------------------------------------------ |
+| Knowledge | “How do I reset password?” → “Here’s a guide: {link}”        |
+| Webinar   | “Any webinar on payment?” → “Yes: Mastering Reconciliation”  |
+| AR        | “Status of INV-123?” → “Overdue. Last updated July 10.”      |
+| User Mgmt | “Unlock account” → Agent checks profile & unlocks if allowed |
+
+**Results Summary**
+
+* Job 1 saw most traffic; many cases were resolved using articles.
+* Job 3 helped users quickly check invoice status.
+* Job 2 got good clicks when webinar matched the product used.
+* Job 4 helped internal users act faster.
+
+**Challenges & Lessons**
+
+* Some delays due to backend data sync.
+* Users gave vague questions, required follow-ups.
+* Guardrails helped prevent errors.
+* For rollout, test each job early and get legal involved.
+
+---
+
+**End of Document**
