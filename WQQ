@@ -1,0 +1,49 @@
+Sure! Below are **a couple of example agent behaviors for each of the 4 WayFinder jobs**, following the same structured format (Scenario, Agent Response).
+
+---
+
+### 🤖 **Job #1 – Knowledge Answers**
+
+Help clients self-resolve common questions using Waystar knowledge articles.
+
+| **Scenario**                                  | **Agent Response**                                                                                      |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| “How do I reset my ATLAS password?”           | “Here’s a step-by-step guide to reset your password: \[Knowledge Article Link].”                        |
+| “I can’t find the EOB report for last month.” | “You can view EOB reports from your Finance tab under ‘Reports’. Would you like help navigating there?” |
+
+---
+
+### 🎓 **Job #2 – Recommend Webinars**
+
+Suggest relevant webinars or learning content based on user type or past interactions.
+
+| **Scenario**                                        | **Agent Response**                                                                                                                    |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| “Any upcoming webinars for Payment Reconciliation?” | “Yes! You might be interested in this session: *‘Mastering Payment Reconciliation’ – July 25th at 2 PM.* Would you like to register?” |
+| “Can I watch something on claims automation?”       | “Here’s an on-demand webinar: *‘Claims Automation in Action’*. \[Watch Now]”                                                          |
+
+---
+
+### 💰 **Job #3 – Accounts Receivable Support**
+
+Answer questions on receivables and guide clients to Finance if needed.
+
+| **Scenario**                                                   | **Agent Response**                                                                                                                       |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| “What’s the status of invoice INV-10234?”                      | “Invoice INV-10234 is marked as *Overdue*. Would you like to contact the Finance team for next steps?”                                   |
+| “Can you help me understand why this invoice is still unpaid?” | “The last payment was received on \[date], but this invoice hasn’t been reconciled. You can reach out to Finance here: \[Contact Link].” |
+
+---
+
+### 📥 **Job #4 – Advanced Internal Inquiries (e.g., Missing Remits)**
+
+Support more complex Waystar-specific workflows and edge cases.
+
+| **Scenario**                                                   | **Agent Response**                                                                                                     |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| “I didn’t receive the remittance advice for payment REF12345.” | “It looks like remittance advice is missing. I’ll help you log a support case to investigate.”                         |
+| “Why does this payment not match the deposit amount?”          | “There may be an adjustment or denial associated. Let me guide you through a quick check or escalate this to Support.” |
+
+---
+
+Let me know if you'd like this in a table format for slides or Confluence, or if you want YAML-ready version for Agentforce config!
