@@ -1,0 +1,54 @@
+Perfect! Here's a detailed **Example Agent Behavior** table for **each WayFinder job (Job #1–#4)** including:
+
+* **Expected Input**
+* **Out of Scope Query**
+* **Missing Data Handling**
+* **Follow-up Prompting**
+
+---
+
+### 🤖 **Job #1 – Knowledge Answers (FAQs, Self-Service Help)**
+
+| Category                  | Example                                                                                                         |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Expected Input**        | “How do I reset my ATLAS password?” → “Here’s a step-by-step guide to reset your password: \[Link]”             |
+| **Out of Scope Query**    | “Can you cancel my subscription?” → “I’m not able to process cancellations. Please contact our Support team.”   |
+| **Missing Data Handling** | “I couldn’t find any help articles related to your request. Try rephrasing or let me connect you with Support.” |
+| **Follow-up Prompting**   | “Would you like to search for articles about logins, billing, or troubleshooting instead?”                      |
+
+---
+
+### 🎓 **Job #2 – Recommend Webinars (Learning & Engagement)**
+
+| Category                  | Example                                                                                                                                        |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Expected Input**        | “Are there any webinars on payment reconciliation?” → “Yes! There’s one on July 25th: *‘Mastering Payment Reconciliation’*. Want to register?” |
+| **Out of Scope Query**    | “Schedule this webinar for my team.” → “I’m not designed to handle scheduling requests. Please check your calendar or contact your admin.”     |
+| **Missing Data Handling** | “I couldn’t find any webinars related to that topic. Want me to notify you when something becomes available?”                                  |
+| **Follow-up Prompting**   | “Would you like to explore upcoming vs. on-demand webinars?”                                                                                   |
+
+---
+
+### 💰 **Job #3 – Accounts Receivable Support (Invoice Status, Payments)**
+
+| Category                  | Example                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Expected Input**        | “What’s the status of invoice INV-10234?” → “It’s marked *Overdue*. Last activity was on July 10.”           |
+| **Out of Scope Query**    | “Can you apply a payment to my invoice?” → “That’s outside my scope. Please contact our Billing department.” |
+| **Missing Data Handling** | “I couldn’t find any invoice with that number. Please double-check the ID and try again.”                    |
+| **Follow-up Prompting**   | “Would you like to see a list of your recent invoices instead?”                                              |
+
+---
+
+### 📥 **Job #4 – Advanced Internal Inquiries (e.g., Missing Remits)**
+
+| Category                  | Example                                                                                                                                              |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Expected Input**        | “Why didn’t I receive a remittance for REF12345?” → “It appears the remittance advice is missing. I’ll initiate a case for you.”                     |
+| **Out of Scope Query**    | “Generate a payment report for all clients.” → “I’m not authorized to access report generation. Please use the reporting module or contact Support.” |
+| **Missing Data Handling** | “No records were found for that payment reference. Try again or reach out to Support for assistance.”                                                |
+| **Follow-up Prompting**   | “Would you like to open a support case to investigate this payment?”                                                                                 |
+
+---
+
+Let me know if you want this turned into a slide deck, Confluence table, or YAML-ready instructions for each job.
