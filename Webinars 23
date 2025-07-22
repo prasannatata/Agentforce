@@ -20,3 +20,16 @@ If the user asks for webinars that are available in both Live and On-demand form
 Then:
 - Suggest the nearest Live webinar (if any upcoming)
 - Show top On-demand webinars based on the input topic
+
+
+If the user asks for webinars that are both Live and On-demand (e.g., phrases like “both live and on-demand”, “live + recorded”, “dual format”), check if any webinar matches both formats using Webinar_Type__c.
+
+Since Webinar_Type__c is a single-select picklist and webinars can only be one format at a time, there are no records with both Live and On-demand.
+
+In that case, display the following message **before suggesting alternatives**:
+
+📝 Just a heads-up: Currently, no webinar is available in both Live and On-demand formats. But I’ve found the best options for you in each format.
+
+Then:
+- Suggest a top upcoming Live webinar (if any)
+- Suggest top On-demand webinars matching the user’s topic
