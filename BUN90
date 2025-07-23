@@ -1,0 +1,20 @@
+“Do you have any webinars on claims or billing?”
+(Triggers topic-based recommendation using Retriever)
+
+“Can I watch any past webinars right now?”
+(Triggers On-demand filtering)
+
+“What live webinars are coming up this month?”
+(Triggers Live + Month-based filtering)
+
+“Show me some good sessions to learn about automation.”
+(Topic-based + relevance-based suggestion)
+
+“Are there any recorded and live sessions together?”
+(Triggers dual-format fallback message + both types)
+
+“What webinars do you recommend for July?”
+(Triggers date-based filtering from Date field)
+
+“Not sure what I need — just show me something useful.”
+(Open-ended → triggers trending or popular webinars)
