@@ -1,0 +1,1 @@
+"Client: " & {!Account_Receivable__c.Client_Name__c} & CHAR(10) & "Invoice Date: " & TEXT({!Account_Receivable__c.Invoice_Date__c}) & CHAR(10) & "Payment Status: " & {!Account_Receivable__c.Payment_Status__c}
