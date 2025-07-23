@@ -39,4 +39,21 @@ Use this output format:
   • Time: [10AM]  
   • [Register or Watch Here]({{Link__c}})
 
+++++++++
+
+
+If the user specifies both a topic (e.g., "claims") and asks for live webinars, filter Webinar__c where:
+- Webinar_Type__c = "Live"
+- Topic__c contains the provided topic keyword
+
+If matches are found, return up to 3 results with:
+- Title
+- Date
+- Description
+- Register link
+
+If no live webinars match, suggest relevant on-demand webinars as a fallback, prefaced by a helpful message like:
+> "There aren’t any live sessions on [topic] right now, but here are a few on-demand options you may like."
+
+
 
