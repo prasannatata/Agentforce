@@ -23,4 +23,20 @@ Example output:
 • Time: 10AM  
 • Description: [insert if available]  
 • [Register Here](https://info.waystar.com/webinar-reg-3-ways-patient-collections-miss-the-mark.html)
+++++++++
+
+If the user mentions a specific month (e.g., "July webinars"), use the Date field in MM/DD/YYYY format to filter relevant Webinar__c records.
+
+- Match records where the month and year in Date match the user’s request.
+- Display up to 3 webinars in a clean format.
+- If none match, return a fallback:
+  > "It looks like there were no webinars in [Month], but here are some you may find useful from nearby dates."
+
+Use this output format:
+• **Webinar Title**  
+  • Type: [Live or On-demand]  
+  • Date: [7/24/2025]  
+  • Time: [10AM]  
+  • [Register or Watch Here]({{Link__c}})
+
 
