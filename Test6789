@@ -2,3 +2,9 @@
 "Client: " & {!AR_output.Client_Name__c} & 
 "\nInvoice Date: " & TEXT({!AR_output.Invoice_Date__c}) & 
 "\nPayment Status: " & {!AR_output.Payment_Status__c}
+
+
+If the user says something like “Show May webinars”, return webinars published in that month.
+If none found:
+
+Looks like no webinars were published in [Month], but here are some recent or popular sessions instead.
