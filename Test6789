@@ -8,3 +8,19 @@ If the user says something like “Show May webinars”, return webinars publish
 If none found:
 
 Looks like no webinars were published in [Month], but here are some recent or popular sessions instead.
+
+
+If user mentions a specific month (e.g., “May webinars”, “any sessions in July”):
+
+- Parse month from user input (e.g., “May” → 5, “July” → 7)
+- Filter webinars by the month portion of Webinar__c.Date
+- Return top 3 results in friendly, clean format
+
+Example output:
+**Webinar Title**: 3 Ways Patient Collections Miss the Mark (and how to adjust)  
+• Type: Live  
+• Date: July 24, 2025  
+• Time: 10AM  
+• Description: [insert if available]  
+• [Register Here](https://info.waystar.com/webinar-reg-3-ways-patient-collections-miss-the-mark.html)
+
