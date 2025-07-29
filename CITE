@@ -3,3 +3,9 @@ SELECT Id, CaseId, StartTime, EndTime, Status,
 FROM MessagingSession
 WHERE CaseId != null
 LIMIT 10
+
+
+
+SELECT Id, CaseId, Status, StartTime, EndTime
+FROM MessagingSession
+WHERE CaseId = '00001186'
