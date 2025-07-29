@@ -1,0 +1,5 @@
+SELECT Id, CaseId, StartTime, EndTime, Status, 
+       AgentMessageCount, EndUserMessageCount, MessagingEndUserId, MessagingChannelId
+FROM MessagingSession
+WHERE CaseId != null
+LIMIT 10
