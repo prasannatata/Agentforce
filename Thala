@@ -1,0 +1,45 @@
+
+### **Story Title**
+
+Redesign Case Record Page to Prioritize Relevant Case Data
+
+---
+
+### **Description**
+
+As a **Waystar support agent**,
+I want the Case Record Page to highlight the most relevant and actionable case data,
+so that I can resolve issues faster and with improved accuracy while minimizing the need to scroll or search for details.
+
+---
+
+### **Acceptance Criteria**
+
+1. The Case Record Page layout is updated to display **key fields** (Case ID, Client Name, Issue Category, Priority, Status, and Next Action) at the top.
+2. Related lists (Comments, Work Logs, Attachments) are **organized in tabs** for quick navigation.
+3. Display of less frequently used fields is minimized or collapsible to reduce clutter.
+4. Ensure compatibility with **Agentforce / WayFinder integration**, so contextual data (e.g., AR inquiries, subscription details) can surface when needed.
+5. Updated design should be responsive and accessible for both desktop and Experience Cloud users.
+
+---
+
+### **Technical Details**
+
+* Build a **Lightning Record Page** configuration for the Case object using the Lightning App Builder.
+* Leverage **Dynamic Forms** to conditionally display fields based on Case Type or Priority.
+* Implement **tabbed navigation** for Related Lists using standard Lightning components.
+* Configure **visibility rules** so that advanced/less-used fields are collapsible.
+* Optimize page load time by limiting the number of components loading by default.
+* Ensure the layout is **Agentforce-compatible**, allowing contextual data surfaces when triggered by the WayFinder agent.
+
+---
+
+### **Expected Outcome**
+
+* Support agents can immediately view the most relevant case information without scrolling.
+* Case handling time is reduced due to easier access to contextual data.
+* Improved **data prioritization** leads to fewer errors and faster resolution.
+* The design is scalable to accommodate future **WayFinder agent features** such as proactive upsell prompts or AR status insights.
+* Users report improved efficiency and satisfaction in UAT feedback.
+
+
