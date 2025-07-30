@@ -1,0 +1,47 @@
+
+### **Description**
+
+As a **Waystar support agent**,
+I want to see the associated **Messaging Session details** directly on the Case Record Page,
+so that I can review customer communication history in one place without switching tabs or searching manually.
+
+---
+
+### **Acceptance Criteria**
+
+1. The Case Record Page displays a **related Messaging Session component** linked to the Case.
+2. Messaging Session should include key fields:
+
+   * Session ID
+   * Customer Name / Contact
+   * Conversation Date & Time
+   * Transcript / Message Preview
+   * Current Status (Active, Closed, Escalated)
+3. If multiple Messaging Sessions exist, they display in descending chronological order.
+4. Support agents can access the **latest session context** without leaving the Case.
+5. Layout is responsive and does not impact Case Record Page performance.
+
+---
+
+### **Technical Details**
+
+* Use a **Record-Triggered Flow** on **Case** object to:
+
+  * Automatically find and link related **MessagingSession\_\_c** records when a Case is created or updated.
+  * Match on `CaseId` and optionally `MessagingUserId` to ensure the correct conversation is associated.
+  * Update a **lookup field** on the Case (e.g., `Latest_Messaging_Session__c`) with the most recent Messaging Session.
+* Configure a **Lightning Component / Related List** on the Case Record Page to display the linked Messaging Session details.
+* Ensure the Flow logic checks for multiple sessions and selects the most recent one.
+* Add **error handling** in the Flow to avoid breaking the Case layout if no Messaging Session exists.
+* Validate that the solution works seamlessly with **Agentforce / WayFinder agent context**, so messaging transcripts can be surfaced dynamically during interactions.
+
+---
+
+### **Expected Outcome**
+
+* Agents can instantly view **real-time and historical messaging interactions** within the Case Record Page.
+* Reduction in navigation effort and increased **case resolution efficiency**.
+* Ensures **Agentforce WayFinder** can leverage Messaging Session context when assisting agents or customers.
+* Improved customer support experience due to better context awareness and faster handling.
+
+---
