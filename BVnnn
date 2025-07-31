@@ -1,0 +1,68 @@
+Perfect — I’ll rewrite the list in **intermediate English** so it’s professional, clear, and easy to read without being too technical or too casual.
+
+---
+
+# 🔑 Agentforce – Key Lessons Learned
+
+## 1. Data and Context
+
+* **Use the Semantic Layer Wisely**
+  Create fields that explain complex terms (like “employee churn rate”) so the agent can understand and calculate them.
+* **Avoid Too Much Data Masking**
+  Hiding all details for privacy can make answers less accurate. The agent needs some real data to work correctly.
+* **Be Specific in Queries**
+  Write clear instructions telling the agent exactly which objects and fields to use. This reduces mistakes.
+
+---
+
+## 2. Topics and Instructions
+
+* **Give Topics Clear Names**
+  Each topic should have a unique title and description. If they’re too similar, the agent may pick the wrong one.
+* **Don’t Put Everything in One Topic**
+  Create separate topics for different needs (like invoices, support cases, or user management). This helps the agent choose correctly.
+* **Use Custom Actions for Special Cases**
+  If users usually look at only a few objects, build a custom Flow or Apex action for them. It’s faster and more reliable.
+
+---
+
+## 3. Reliability and Testing
+
+* **Expect Sandbox Changes**
+  Agentforce updates often in sandboxes, and things that worked yesterday may break today. Keep a checklist for quick testing after updates.
+* **Trailhead Is Only a Start**
+  The Trailhead modules are useful but not enough. Real success comes from combining them with strong Flow, Apex, and testing skills.
+
+---
+
+## 4. Guardrails and Safety
+
+* **Tell the Agent What Not to Do**
+  Add clear rules for off‑limits topics. For example:
+  *“If someone asks for financial advice, politely say you cannot answer and suggest contacting support.”*
+* **Check for Confident but Wrong Answers**
+  Sometimes the agent gives answers that *sound* right but are wrong. Review conversations often and update instructions to prevent this.
+
+---
+
+## 5. Managing Expectations
+
+* **Set Realistic Goals**
+  People may think Agentforce works like a “magic chatbot.” In truth, it depends on clean data and well‑written instructions.
+* **Always Have a Backup Demo**
+  Since the agent is not 100% predictable, keep a simple demo ready (like a hardcoded case lookup) in case the live one fails.
+
+---
+
+## 📌 Extra Helpful Tips
+
+* Use **API field names** (not just labels) in instructions to avoid confusion.
+* Topic descriptions act like **first prompts** — write them carefully because they guide the engine before any flow starts.
+* Sometimes you need to **restructure objects** in Salesforce, not just clean data, for the agent to give good results.
+* Updates can happen without notice, so **regularly monitor sandboxes** to catch changes early.
+
+---
+
+This version keeps the **unique insights** but makes them easy to understand in intermediate English.
+
+⚡ Do you want me to also create a **bullet‑point quick reference sheet (1‑pager)** so your manager can scan it quickly?
