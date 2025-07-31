@@ -1,0 +1,226 @@
+Perfect — thanks for clarifying 👍. What you want is for me to take your **Claims Inquiry Assistant requirement** and reframe it fully in the **Agentforce POC Documentation template style** (like in your first set of images), making it more **detailed, polished, and demo‑ready**.
+
+Here’s the full documentation draft adapted for your use case:
+
+---
+
+# 🌸 Confluence Template: Agentforce POC Documentation
+
+## 📌 Title
+
+**Agentforce POC – Claims Inquiry Assistant**
+
+---
+
+## 🌺 Purpose & Overview
+
+**Objective**
+Reduce call center volume by providing members with a **self-service channel** for claims-related inquiries such as:
+
+* Claim status
+* Claim summaries
+* Denial reasons
+* Escalations to live agents
+
+**Scope**
+
+* **Included**:
+
+  * Claim Status Retrievals
+  * Recent Claim Summaries
+  * Denial Reason Explanations
+  * Claim Issue Escalations (routing to Live Agent)
+  * Member Identity Verification
+* **Excluded**:
+
+  * Direct claim modifications (billing adjustments, claim resubmissions)
+  * Processing PHI/PII without member verification
+
+**Audience**
+
+* Customer Support Representatives
+* Claims Operations Teams
+* Salesforce Admins & Developers
+* Healthcare Members (end users)
+* Compliance and Security Stakeholders
+
+---
+
+## 🌼 POC Summary
+
+| **Attribute**          | **Description**                                                                          |
+| ---------------------- | ---------------------------------------------------------------------------------------- |
+| **POC Name**           | Claims Inquiry Assistant                                                                 |
+| **Domain/Industry**    | Healthcare / Health Insurance                                                            |
+| **Agentforce Modules** | Decision Engine, Prompt Resolver, Escalation Agent                                       |
+| **Salesforce Clouds**  | Health Cloud, Service Cloud, Experience Cloud                                            |
+| **Key Features**       | Automated claim lookups, denial explanations, live agent escalation, secure PHI handling |
+| **POC Duration**       | \[Insert Start Date] – \[Insert End Date]                                                |
+| **Contributors**       | Business Analysts, Salesforce Admins, Compliance Team, Contact Center Supervisors        |
+
+---
+
+## 🔧 Technical Architecture
+
+**Agent Design & Flow**
+
+1. **Input Source**
+
+   * Member initiates via Experience Cloud page (chat widget).
+2. **Prompt Handler**
+
+   * NLP interprets intent: *“What’s my claim status?”*.
+3. **Decision Logic**
+
+   * Routes request to Claims Data model or escalation workflow.
+4. **Output**
+
+   * Returns claim summary or denial reason; escalates if unresolved.
+
+**Salesforce Integration Points**
+
+* **Objects**: Claim, Member (Person Account), Denial Codes
+* **Flows**:
+
+  * Get Claim Status Flow
+  * Explain Denial Reason Flow
+  * Escalation to Live Agent Flow
+* **Apex/External Services**:
+
+  * Email service for claim summaries
+  * Optional integration with payer denial code APIs
+
+**Input Modalities**
+
+* Natural language (chat)
+* Structured forms (record-triggered flows)
+* Escalation API endpoints
+
+---
+
+## 🛡️ Agent Guardrails
+
+| **Guardrail Type**          | **Description**                                                       |
+| --------------------------- | --------------------------------------------------------------------- |
+| **Scope Enforcement**       | If out-of-scope → *“I’m not configured to assist with that request.”* |
+| **Response Boundaries**     | No hallucination; responses templated or data-backed                  |
+| **User Intent Validation**  | All inputs validated (e.g., Claim ID, Date of Service) before lookup  |
+| **Data Sensitivity Checks** | PHI/PII not shown unless identity verified                            |
+| **Audit Logging**           | All interactions logged for compliance                                |
+
+---
+
+## 📄 Output Templates
+
+**Example – Claim Inquiry Summary**
+
+```
+Agentforce Claim Summary
+- Member: Jane Doe
+- Claim ID: CLM-00123
+- Provider: Dr. Roberts
+- Date of Service: 03/12/2025
+- Status: Denied
+- Amount Billed: $1,200
+- Amount Paid: $0
+- Denial Code: CO-50
+- Reason: “Service not covered under plan”
+```
+
+**Format Considerations**
+
+* Use bullet points for clarity
+* Provide fallback: *“We couldn’t locate this claim. Please verify your Claim ID.”*
+
+---
+
+## 🤖 Example Agent Behavior
+
+| **Scenario**              | **Agent Response**                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| **Expected Input**        | “What’s the status of my cardiology claim?” → *Displays claim summary*                  |
+| **Out of Scope Query**    | “Can you adjust my bill?” → *“I’m not designed for that task. Please contact billing.”* |
+| **Missing Data Handling** | “We couldn’t find records for Claim ID CLM-999. Please confirm details.”                |
+| **Follow-up Prompting**   | Suggest actions: *“Would you like me to explain the denial reason?”*                    |
+
+---
+
+## 📊 Outcomes & Learnings
+
+**Success Criteria**
+
+* Reduce call center claim inquiries by X%
+* Increase member self-service resolution rate
+* Reduce average call handle time
+* Ensure compliance with HIPAA/PHI handling
+
+**Results Summary**
+
+* Members successfully retrieved claim status and denial explanations
+* Escalation rate decreased by \[X%] after POC launch
+
+**Challenges**
+
+* Handling vague user inputs
+* Standardizing payer denial code explanations
+* Ensuring identity verification before displaying PHI
+
+**Lessons for Scaling**
+
+* Build reusable denial code libraries
+* Automate proactive claim status notifications
+* Expand support to billing inquiries
+
+---
+
+## 📂 Linked Assets
+
+* Demo video
+* Prompt template library
+* Salesforce Flow configurations
+* Apex snippets (claim lookup, denial reason mapping)
+* Compliance guidelines
+
+---
+
+## 🚀 Future Direction
+
+**Enhancement Ideas**
+
+* Add proactive notifications: *“Your claim was updated today.”*
+* Integrate machine learning to predict claim denial likelihood
+* Extend to other use cases (e.g., coverage eligibility, benefits lookups)
+
+**Ownership & Maintenance**
+
+* Primary Contact: \[Name]
+* Update Cadence: Quarterly reviews
+* Versioning: Maintain release notes and change logs
+
+---
+
+## 📑 Appendix A: Sample Claims Data Schema
+
+| **Object**                  | **Fields**      | **Sample Data**                               |
+| --------------------------- | --------------- | --------------------------------------------- |
+| **Member (Person Account)** | Name            | Jane Doe                                      |
+|                             | Email           | [jane.doe@test.com](mailto:jane.doe@test.com) |
+|                             | Phone           | 444-123-4567                                  |
+|                             | Member ID       | 123-456-123                                   |
+| **Claim**                   | Claim ID        | CLM-00123                                     |
+|                             | Member (Lookup) | Jane Doe                                      |
+|                             | Provider        | Dr. Roberts                                   |
+|                             | Date of Service | 03/12/2025                                    |
+|                             | Status          | Denied                                        |
+|                             | Amount Billed   | \$1,200                                       |
+|                             | Amount Paid     | \$0                                           |
+|                             | Denial Code     | CO-50                                         |
+
+---
+
+✅ This version mirrors your **Agentforce POC Documentation template** but is tailored specifically for the **Claims Inquiry Assistant**, making it structured, professional, and demo-ready.
+
+---
+
+⚡Question for you:
+Do you want me to also create a **diagram (swimlane flow)** for *“Member → Agent → Salesforce Objects → Output”* so you can add it in the **Technical Architecture** section? That would make it even more compelling.
