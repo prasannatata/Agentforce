@@ -1,0 +1,234 @@
+Perfect Prasanna 👍 — thanks for clarifying.
+I’ll take into account all our previous conversations about your **Clinical Trial Recruitment & Eligibility Assistant in Agentforce** (covering Candidate records, Trial Protocols, Pre-Screening, Eligibility Flows, OTP verification, Referrals, multilingual pre-screening, PDF-based trial criteria, etc.) and produce a **polished, Confluence-style Agentforce POC Documentation** — the same style we used for your Claims Inquiry Assistant.
+
+Here’s the comprehensive documentation:
+
+---
+
+# 🌸 Confluence Template: Agentforce POC Documentation
+
+## 📌 Title
+
+**Agentforce POC – Clinical Trial Recruitment & Eligibility Assistant**
+
+---
+
+## 🌺 Purpose & Overview
+
+**Objective**
+Streamline patient recruitment for clinical trials by using **Agentforce** to guide candidates through pre-screening, eligibility evaluation, and referral workflows. The solution reduces manual effort for site coordinators, improves trial matching accuracy, and ensures compliance with consent and PHI/PII regulations.
+
+**Scope**
+
+* Candidate registration & profile lookup
+* OTP-based identity verification
+* Dynamic pre-screening questionnaire (based on trial protocol PDFs)
+* Eligibility evaluation (using inclusion/exclusion criteria)
+* Referral record creation & site coordinator handoff
+* Trial progress updates (screening, enrollment, withdrawal)
+
+**Audience**
+
+* Clinical Operations Teams
+* Site Coordinators
+* Salesforce Admins & Developers
+* Compliance Officers
+* Patients / Trial Candidates
+
+---
+
+## 🌼 POC Summary
+
+| **Attribute**          | **Description**                                                                                             |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **POC Name**           | Clinical Trial Recruitment & Eligibility Assistant                                                          |
+| **Domain/Industry**    | Healthcare / Life Sciences                                                                                  |
+| **Agentforce Modules** | Prompt Resolver, Decision Engine, Eligibility Screening Agent                                               |
+| **Salesforce Clouds**  | Life Sciences Cloud, Health Cloud, Experience Cloud                                                         |
+| **Key Features**       | Pre-screening automation, PDF-driven eligibility, OTP verification, multilingual support, referral tracking |
+| **POC Duration**       | \[Insert Start – End Date]                                                                                  |
+| **Contributors**       | Clinical Operations SMEs, Salesforce Admins, Regulatory & Compliance Teams                                  |
+
+---
+
+## 🔧 Technical Architecture
+
+**Agent Design & Flow**
+
+1. **Input Source**: Candidate initiates via Experience Cloud page
+2. **Identity Verification**: Candidate ID or Email → OTP authentication
+3. **Prompt Handler**: Generates trial-specific pre-screening questions (from PDFs)
+4. **Decision Logic**:
+
+   * Evaluate eligibility rules
+   * Create Referral if eligible
+   * Log screening results if not eligible
+5. **Output**: Candidate receives trial matches, referral details, or escalation
+
+**Salesforce Integration Points**
+
+* **Objects**:
+
+  * `Candidate__c` → Demographics, contact info, consent status
+  * `Pre_Screening_Response__c` → Stores questionnaire responses
+  * `Trial_Protocol__c` → Inclusion/exclusion criteria, linked trial documents
+  * `Eligibility_Rule__c` → Defines logic for eligibility checks
+  * `Referral__c` → Records referral to study site
+  * `Site__c` → Linked clinical sites
+* **Flows**:
+
+  * EligibilityScreening\_Auto
+  * Pre\_Screening\_Check
+  * Send\_Email\_Verification\_Code
+  * Verify\_Email\_OTP
+  * GenerateTrialQuestions\_ByFileLabel
+  * EligibilityScreening\_WithLLM
+* **External Integration**: Trial PDFs ingested for inclusion/exclusion retrieval
+
+**Input Modalities**
+
+* Natural language (chat)
+* Dynamic form questions
+* Multilingual prompts (if configured)
+
+---
+
+## 🛡️ Agent Guardrails
+
+| **Guardrail Type**          | **Description**                                                    |
+| --------------------------- | ------------------------------------------------------------------ |
+| **Scope Enforcement**       | Out-of-scope → *“I’m not configured to assist with that request.”* |
+| **Response Boundaries**     | No hallucinations; only trial PDF-backed or flow-based responses   |
+| **User Intent Validation**  | Validate Candidate ID or Email + OTP before showing PHI            |
+| **Data Sensitivity Checks** | Avoid PHI/PII exposure until identity verified                     |
+| **Consent Enforcement**     | Enrollment requires verified consent status                        |
+
+---
+
+## 📄 Output Templates
+
+**Eligibility Screening Result Example**
+
+```
+🎉 Good news — you’re eligible for a clinical trial!  
+- Candidate: Jane Doe  
+- Age: 45  
+- Condition: Autoimmune Uveitis  
+- Trial Matched: Bronchodilators Phase III  
+- Site: Mayo Clinic, AZ  
+- Next Step: Referral created → Coordinator will contact you  
+```
+
+Fallback if not eligible:
+
+```
+❌ Unfortunately, you don’t meet eligibility requirements for this trial.  
+Would you like me to check related studies or notify a coordinator?  
+```
+
+---
+
+## 🤖 Topics Implemented
+
+* **Candidate Identity Verification**: Uses Candidate ID/Email + OTP
+* **Pre-Screening Questionnaire**: Generates questions dynamically from trial PDFs
+* **Eligibility Evaluation**: Uses Eligibility\_Rule\_\_c + trial protocol inclusion/exclusion criteria
+* **Referral Generation**: Creates Referral\_\_c linked to Site\_\_c
+* **Trial Progress Inquiry**: Returns referral or enrollment status
+* **Profile Update**: Prompts candidate if demographics or consent status missing
+* **Withdrawal or Decline**: Candidate can request withdrawal from referral
+
+---
+
+## 🔎 Flows Implemented
+
+* `EligibilityScreening_Auto` – Automated eligibility check
+* `Pre_Screening_Check` – Ensures candidate profile completeness
+* `Send_Email_Verification_Code` – Sends OTP to candidate email
+* `Verify_Email_OTP` – Validates OTP for secure access
+* `GenerateTrialQuestions_ByFileLabel` – Pulls trial questions from uploaded PDFs
+* `EligibilityScreening_WithLLM` – Uses LLM for nuanced eligibility evaluation
+* `Log_Screening_Response` – Records candidate responses for audit trail
+
+---
+
+## 📡 Omni-Channel & Escalations
+
+* **Route to Site Coordinator**: If eligibility ambiguous
+* **Route to Queue**: Assign to preconfigured Clinical Ops team
+* **Escalation Flag**: Triggered if candidate requests human follow-up
+
+---
+
+## 🔐 Security & Compliance
+
+* OTP-based identity verification before PHI display
+* Consent status required for eligibility checks
+* Field-level security enforced on sensitive objects
+* Audit trail maintained for regulatory compliance
+
+---
+
+## 📊 Outcomes & Learnings
+
+**Success Criteria**
+
+* Reduce manual pre-screening workload by X%
+* Improve eligibility match accuracy
+* Shorten referral timelines
+* Maintain HIPAA and regulatory compliance
+
+**Results Summary**
+
+* Candidates successfully matched to trials using PDF-driven screening
+* Referrals auto-generated, reducing site coordinator workload
+* Feedback loop established for candidates flagged as ineligible
+
+**Challenges**
+
+* Handling vague or incomplete candidate responses
+* PDF-based criteria standardization across multiple studies
+* Ensuring dynamic multilingual support
+
+**Lessons for Scaling**
+
+* Automate retrieval of trial updates from sponsor databases
+* Incorporate predictive eligibility scoring models
+* Enable cross-site referral for multi-site studies
+
+---
+
+## 📂 Linked Assets
+
+* Demo video (Eligibility Screening flow)
+* Trial Protocol PDFs (e.g., Autoimmune Uveitis, SCIEX 7500)
+* Sample Pre\_Screening\_Response\_\_c schema
+* Flow diagrams (EligibilityScreening\_Auto, Referral Creation)
+
+---
+
+## 🚀 Future Direction
+
+* Add predictive **no-show scoring** for scheduling backup appointments
+* Expand eligibility engine to support **rare disease trials**
+* Enable **patient-facing mobile access** for pre-screening
+* Integrate EHR data feeds for real-time eligibility validation
+
+---
+
+## 📑 Appendix A: Sample Candidate Data Schema
+
+| **Object**                        | **Fields**                                              | **Sample Data**                                                                            |
+| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Candidate\_\_c**                | Name, Email, DOB, Gender, Location, Consent\_Status     | Jane Doe, [jane.doe@test.com](mailto:jane.doe@test.com), 01/15/1980, Female, AZ, Consented |
+| **Pre\_Screening\_Response\_\_c** | Question, Answer, Linked Trial                          | “Do you currently take immunosuppressants?” → Yes                                          |
+| **Trial\_Protocol\_\_c**          | Name, Condition, Inclusion Criteria, Exclusion Criteria | Autoimmune Uveitis Trial, Must be 18–65, No prior biologic use                             |
+| **Referral\_\_c**                 | Candidate, Trial, Site, Status                          | Jane Doe, Uveitis Trial, Mayo Clinic, Pending Coordinator Contact                          |
+
+---
+
+✅ This version is in the **exact style of your Agentforce POC Documentation** (like your Claims Inquiry doc) but tailored for your **Clinical Trial Recruitment Assistant**.
+
+---
+
+⚡ Do you want me to also **design a process swimlane diagram** (Candidate → Agent → Verification → Pre-Screening → Eligibility Check → Referral) so you can paste it under *Technical Architecture* in Confluence? That would make your documentation demo-ready.
