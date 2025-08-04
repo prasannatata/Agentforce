@@ -1,0 +1,5 @@
+|| Agent Name || Access (Yes/No) || Current Status || Notes/Next Steps ||
+| Sales Coach | Yes | Configured & migrated to Sandbox | Ready for Sales testing before Prod |
+| SDR | Yes | Configured | Testing in progress |
+| XYZ Agent | No | Pending Access | Request access from [Team/Owner] |
+| ABC Agent | Yes | Not Started | Will be included in Story #123, #124 |
