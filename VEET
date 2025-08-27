@@ -1,0 +1,10 @@
+"Claim " & Claim_Number__c &
+" • " & TEXT(Service_Date__c) &
+" • " & Provider__c &
+" • Status: " & TEXT(Status__c) &
+IF(TEXT(Status__c)="Denied",
+   " • Denied: " & BLANKVALUE(Denial_Reason__c,"N/A"),
+   " • Paid: $" & TEXT(Paid_Amount__c)
+) &
+" • Billed: $" & TEXT(Billed_Amount__c) &
+" • Member OOP: $" & TEXT(MAX(Billed_Amount__c - Paid_Amount__c, 0))
