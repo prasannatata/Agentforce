@@ -1,0 +1,72 @@
+Here’s a polished **Sprint 13 playback script** with your refinements worked in (intermittent issue → updated instructions, sandbox testing limits, and dependency on PSE-219):
+
+---
+
+# Sprint 13 Playback – Script
+
+### Opening
+
+“Hi everyone—this is Prasanna. I’ll walk through the three items from Sprint 13:
+
+* **PSE-345** Payer Testing Issues (completed),
+* **PSE-274** Update Consumption Flow to Email Presales (blocked), and
+* **PSE-194** Eligibility & Benefits Checker Enhancements (draft, with dependency on PSE-219).
+
+I’ll cover outcomes, quick demos, blockers, and next-sprint asks.”
+
+---
+
+### PSE-345 – Payer Testing Issues (Completed ✅)
+
+* “We were seeing the payer test flow fail **intermittently**—sometimes returning mismatched or incomplete status.”
+* “As a workaround, I’ve updated the **instructions and error handling** so responses are normalized and retries are built in.”
+* “After these changes, runs are now **consistent and reproducible**. This is marked Done.”
+
+---
+
+### PSE-274 – Update Consumption Flow to Email Presales (Blocked ⛔)
+
+* “I’ve **updated the flow** so the output routes to **Presales DL** instead of the system mailbox.”
+* “However, this cannot be fully tested in our **sandbox environment**, since external email delivery is restricted.”
+* “We’ll need approval and a test path in staging/prod-like environment before this can be completed.”
+
+---
+
+### PSE-194 – Eligibility & Benefits Checker Enhancements (Draft 📝)
+
+* “Enhancements include:
+
+  * Allow lookup by Member ID or Email,
+  * Provide cleaner eligibility details (plan, deductible, copay, OON flag),
+  * Add transcript logging for audit.”
+* “Currently in **draft**, but progress depends on **PSE-219**, which handles the base integration layer. Without that dependency, full validation isn’t possible yet.”
+
+---
+
+### Risks / Dependencies
+
+* PSE-274: Sandbox limits prevent end-to-end email testing.
+* PSE-194: Dependent on **PSE-219** integration work.
+
+---
+
+### Next Sprint Plan
+
+* **PSE-274**: Retest once email settings are enabled in a staging environment.
+* **PSE-194**: Continue enhancements once PSE-219 is delivered; finalize eligibility field list.
+* Hardening: Expand payer test coverage for consistency.
+
+---
+
+### Closing
+
+“That’s Sprint 13. Key asks:
+
+1. Enable testing path for Presales email (PSE-274).
+2. Prioritize PSE-219 to unblock Eligibility enhancements (PSE-194).
+
+Happy to take questions.”
+
+---
+
+Would you like me to also create a **1-slide visual (status, blockers, dependencies, asks)** for you to use in the playback deck? That way you can present instead of reading the script line-by-line.
