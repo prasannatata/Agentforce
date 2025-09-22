@@ -1,0 +1,28 @@
+
+## How It Works
+
+1. **Claim Lookup**
+
+   * Agent retrieves claim details using Claim ID or Member info.
+
+2. **Status Check**
+
+   * Agent provides real-time claim status (processed, pending, denied).
+
+3. **Denial Explanation**
+
+   * Agent explains denial reason codes in plain language.
+   * Recommends next steps to resolve or appeal.
+
+4. **Reimbursement Estimate**
+
+   * Agent calculates expected reimbursement and timelines.
+
+5. **Risk / Appeal Support**
+
+   * Agent detects risks proactively.
+   * Provides claims summary and supports appeal process.
+
+6. **Escalation / Support**
+
+   * Agent enables escalation to support team or creates a case.
