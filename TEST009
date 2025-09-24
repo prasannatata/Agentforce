@@ -1,0 +1,224 @@
+Awesome—let’s stand up a **single Agentforce agent** that implements the high-level architecture you just finalized (Salesforce Data Objects, no Data Cloud). I’ll give you the **agent definition**, **topics & actions**, **prompt templates**, **flows**, and **deployment steps** so you can build it end-to-end today.
+
+---
+
+# Agentforce Agent – Definition
+
+**Name:** Clinical Trial Assistant
+**Audience:** Patients (portal/chat) & Coordinators (console)
+**Mission:** Guide enrollment, drive adherence, surface risk, and help coordinators schedule and follow up—powered by Salesforce Data Objects + AI Models (Risk, Scheduling, NLP).
+
+**Primary records used (standard/custom OK):**
+
+* `Candidate__c / Patient__c`
+* `Care_Program__c / Trial_Protocol__c`
+* `ServiceAppointment` (or `Visit__c`)
+* `Adherence_Log__c`
+* `Risk_Alert__c` (with fields: Score, Reason, Status, Owner)
+* `Task`, `Case`
+
+**Channels:** Experience Cloud Web Chat (MIAW), SMS, Email, Console widget (optional)
+
+---
+
+# Topics → Actions (What the agent can do)
+
+1. **Enrollment & Onboarding**
+
+   * **Intent examples:** “I want to join the study,” “How do I enroll?”
+   * **Agent Actions:**
+
+     * `Start_Enrollment_OmniScript` (OmniScript screen flow)
+     * `Answer_Enrollment_Questions` (Prompt Template – FAQ/NLP)
+   * **Outputs:** Candidate created/updated, consent captured, appointment suggestion (optional).
+
+2. **Adherence & Reminder Coaching**
+
+   * **Intent:** “Remind me to take my meds,” “I missed my dose.”
+   * **Actions:**
+
+     * `Log_Adherence_Form` (OmniScript for quick logging)
+     * `Send_Reminder` (Flow: create outbound SMS/Email via Messaging)
+     * `Coach_User_With_NLP` (Prompt Template – motivational micro-coaching)
+   * **Outputs:** Adherence\_Log\_\_c, reminder scheduled.
+
+3. **Scheduling & Rescheduling**
+
+   * **Intent:** “Reschedule my visit,” “What slots are available?”
+   * **Actions:**
+
+     * `Get_Schedule_Options` (Prompt Template → calls **Scheduling Model**)
+     * `CreateOrUpdate_Appointment` (Flow on `ServiceAppointment`)
+   * **Outputs:** Confirmed appointment with time/room/resource.
+
+4. **Risk Alert Triage (Coordinator)**
+
+   * **Intent:** “Show high-risk patients today,” “Why is John high risk?”
+   * **Actions:**
+
+     * `Get_High_Risk_List` (Flow + List)
+     * `Explain_Risk` (Prompt Template → calls **Risk Model** + formats reasons)
+     * `Create_Followup_Task` (Flow)
+   * **Outputs:** Triage view, Tasks, Cases, status updates on `Risk_Alert__c`.
+
+5. **Support & FAQ (NLP)**
+
+   * **Intent:** “Is fasting required?” “What if I have a headache?”
+   * **Action:** `Answer_FAQ` (Prompt Template grounded to allowed docs)
+   * **Outputs:** Safe, short answers + escalation offer.
+
+6. **Check-in at Site (Kiosk)**
+
+   * **Intent:** “I’m here for my visit.”
+   * **Actions:** `Kiosk_CheckIn` (OmniScript to log visit; updates Adherence if needed)
+   * **Outputs:** Visit status updated, coordinator notified.
+
+7. **Insights** (Coordinator)
+
+   * **Intent:** “Show adherence trend for John,” “Open the risk dashboard.”
+   * **Actions:**
+
+     * `Open_Dashboard_Link` (Prompt Template returns deep-link)
+     * `Summarize_Last_30_Days` (Prompt Template over recent logs)
+
+---
+
+# Agent Actions – concrete implementations
+
+### A) Prompt Template: **Answer\_Enrollment\_Questions**
+
+* **Input vars:** `userQuestion`, `trialName`, `protocolURL`
+* **Grounding:** `Trial_Protocol__c` summary + allowed enrollment FAQ doc.
+* **System rules (snippet):**
+
+  ```
+  You are Clinical Trial Enrollment Assistant. Answer only from the provided protocol/FAQ.
+  If unknown or clinical advice is requested, say you can’t answer and offer to contact a coordinator.
+  Format: brief answer + 1 follow-up option (Enroll now / Ask coordinator).
+  ```
+* **Output:** `answer`, `followUpSuggestion`
+
+### B) Prompt Template: **Coach\_User\_With\_NLP**
+
+* **Inputs:** `lastMissedCount`, `sideEffectsFlag`, `userMessage`
+* **Behavior:** empathetic micro-coaching; never medical advice; suggest contact if side-effects.
+
+### C) Prompt Template: **Get\_Schedule\_Options**
+
+* **Inputs:** `requestedDateTime`, `duration`, `resourceSkills[]`
+* **Tool call:** your **Scheduling Optimization Model** (or a Flow invocable that returns slots).
+* **Output:** `slotOptions[]` (ISO start/end)
+
+### D) Prompt Template: **Explain\_Risk**
+
+* **Inputs:** `riskAlertId` → query fields (score, top\_features, last\_logs)
+* **Output:** short reason list + recommended next step.
+
+---
+
+# Flows (autolaunched unless noted)
+
+1. **CreateOrUpdate\_Appointment**
+
+   * Inputs: `patientId`, `slot`
+   * Steps: find/create `ServiceAppointment`, set resource, return confirmation.
+
+2. **Send\_Reminder**
+
+   * Inputs: `patientId`, `channel`, `template`
+   * Steps: create `MessagingSession`/`Task`/`Comms`, schedule via Omni-Channel.
+
+3. **Kiosk\_CheckIn** (screen flow via OmniScript wrapper)
+
+   * Inputs: `AppointmentId` OR `Email + Date`
+   * Steps: mark as Arrived, create `Adherence_Log__c` if applicable, notify coordinator.
+
+4. **Get\_High\_Risk\_List**
+
+   * Query `Risk_Alert__c` where Status = `Open` & `Score >= threshold`, return list + deep links.
+
+5. **Create\_Followup\_Task**
+
+   * Inputs: `riskAlertId`, `owner`, `dueDate`
+   * Steps: create `Task`, update `Risk_Alert__c.Status = In Progress`.
+
+6. **Platform Event Wiring (optional orchestration)**
+
+   * Event: `Adherence_Missed_Streak__e`, `Risk_Alert_Created__e`
+   * Subscriber: `Send_Reminder` / `Create_Followup_Task`.
+
+---
+
+# Minimal data model tips (objects/fields)
+
+* `Risk_Alert__c`: `Patient__c` (Lookup), `Score__c` (Number), `Reason__c` (Long Text), `Status__c` (Picklist: Open/In Progress/Closed), `Source__c` (Picklist: AI/Manual).
+* `Adherence_Log__c`: `Patient__c`, `DateTime__c`, `Type__c` (Taken/Missed), `Notes__c`.
+* `Care_Program__c` ↔ `Trial_Protocol__c` (Lookup or junction if you need many-to-many).
+* `ServiceAppointment` fields you already use for visits.
+
+---
+
+# Agentforce Setup – step by step
+
+1. **Create the Agent**
+
+   * App Launcher → **Agentforce** → **Agents** → **New Agent**
+   * Name: *Clinical Trial Assistant*; Persona: *Helpful, concise, safe-guarded*.
+   * Add **Topics** above; map each topic to **Agent Actions** (Prompt Template or Flow).
+
+2. **Create Agent Actions**
+
+   * **Prompt Builder** → create the four Prompt Templates listed (A–D).
+   * **Flow Builder** → build the six flows; mark as **invocable** where needed.
+   * Back in Agentforce, **Add Agent Action** for each Prompt/Flow and wire inputs/outputs.
+
+3. **Grounding**
+
+   * Add **Allowed Files**: protocol PDFs, enrollment FAQ, site contact policy.
+   * For medical safety, add a **content policy** instruction: *no clinical advice; escalate to coordinator*.
+
+4. **Channels**
+
+   * **Messaging** (MIAW): enable in Setup; add widget to Experience Cloud.
+   * **Omni-Channel**: set routing + skills; create queue for “Coordinator Outreach”.
+   * **SMS/Email** (optional): map `Send_Reminder` flow to templates.
+
+5. **Security**
+
+   * Permission Sets: agent can **read/write** to the custom objects above; portal users limited to their data.
+   * Enable **Guest/Authenticated** access for public pre-enroll if needed (careful with PII).
+
+6. **Experience Cloud Deployment**
+
+   * Add the **Agent widget** to your portal.
+   * Add **OmniScripts** pages: Enrollment, Missed Dose, Check-In.
+
+7. **AI Models**
+
+   * Register model endpoints (Risk, Scheduling, NLP) as **External Credentials + Named Credentials** or via **Apex invocable**.
+   * In Prompt Templates, call the model action or invoke a Flow that calls it.
+
+8. **Observability**
+
+   * Log key events to `Agent_Interaction__c` (topic, action, outcome, latency, errors).
+   * Dashboard cards for: Open Risk Alerts, Missed-dose streaks, Appointment utilization.
+
+---
+
+# Quick test scripts
+
+**Patient (portal):**
+
+1. “I want to enroll in the diabetes study.” → OmniScript launches, Candidate created.
+2. “I missed last night’s dose.” → Log created; agent suggests micro-coaching + schedules reminder.
+3. “Reschedule my visit to tomorrow morning.” → Returns 3 slots; selects one; confirmation.
+
+**Coordinator (console):**
+
+1. “Show high-risk patients today.” → List from `Risk_Alert__c`.
+2. “Why is John marked high risk?” → `Explain_Risk` returns 2–3 factors; button to create Task.
+3. “Open adherence dashboard.” → Deep-link card opens LWC dashboard.
+
+---
+
+If you want, I can turn this into a **copy-paste Agentforce “Topics & Actions” table** and **Prompt Template YAML** blocks exactly in the format you use in your org.
