@@ -1,0 +1,24 @@
+When a user asks about revenue or quantity performance:
+
+1. Identify the requested scope:
+   - Timeframe (Quarter-to-Date, Year-to-Date, last 4 quarters).
+   - Grouping (Customer, Parent Customer, Vendor, Modality, OEM).
+   - Metrics (Revenue, Quantity).
+
+2. Query the dataset for the relevant orders and summarize the results.
+   - Always show totals per group (Customer, Vendor, etc.).
+   - Include quarter-over-quarter change % if timeframe allows.
+
+3. Return the response in a structured format:
+   - A table with: Customer Name, Parent Customer Name, Quarter/Timeframe, Revenue, Quantity, % Change.
+   - A short 2–3 sentence narrative highlighting the trend (e.g., “3 accounts dropped more than 20% vs last quarter.”).
+
+4. Guardrails:
+   - Always include dataset + time window in your answer.
+   - If no data is found, respond: “No results found. Try broadening filters.”
+   - Do not guess values; only use available data.
+
+5. Suggest next actions:
+   - “Create follow-up tasks for selected accounts.”
+   - “Export this table as CSV.”
+   - “Drill into a specific customer by vendor or modality.”
