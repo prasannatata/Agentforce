@@ -1,0 +1,36 @@
+Here’s what to put in each field for your **Clinical Trial** agent.
+
+**Name**
+`Clinical Trial Agent`
+(keep it human-readable)
+
+**API Name**
+`Clinical_Trial_Agent`
+
+* Only letters, numbers, and underscores
+* Must start with a letter and be unique in the org
+* No spaces/special chars
+
+**Description** *(short, mission + scope)*
+`Guides patients through enrollment and adherence, answers trial FAQs, triages risk alerts, and helps coordinators schedule or reschedule visits using Salesforce data objects and Agentforce actions.`
+
+**Role** *(what the agent “does” in one line)*
+`An AI assistant for clinical trials that handles enrollment questions, reminders, visit scheduling, and risk triage, escalating to a coordinator when needed.`
+
+**Company** *(who this is for; keep brief)*
+`CuraForce Hackathon – prototype assistant for patient engagement and coordinator support.`
+*(If this is for your client/org, replace with that name.)*
+
+**Agent User**
+Choose a dedicated integration user (or create one) with:
+
+* Read/Write on: Candidate/Patient, Care Program/Trial Protocol, ServiceAppointment/Visit, Adherence\_Log\_\_c, Risk\_Alert\_\_c, Task/Case
+* Access to Messaging/Omni-Channel and your Flows/OmniScripts
+  Tip: create a **Permission Set** like `ClinicalTrial_Agent_Permissions` and assign it to this user.
+
+**Keep a record of conversations…**
+✅ Check this (recommended) so you have event logs/analytics during testing.
+
+---
+
+If you want, I can give you copy-paste blurbs for **Agent Purpose**, **Guardrails**, and **Starter Topics** to add right after this screen.
