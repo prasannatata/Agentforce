@@ -1,0 +1,8 @@
+| Scope Area                    | Topic(s) that Handle It               | What Happens                                                                                            |
+| ----------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Identify drop-offs**        | *Revenue Trends*, *Customer Insights* | Prompt Templates query Data Cloud → show customers/accounts whose orders declined vs last quarter/year. |
+| **Summarize trends**          | *Revenue Trends*                      | Group and summarize revenue/quantity by **Modality, Vendor, OEM**.                                      |
+| **Surface accounts**          | *Customer Insights*                   | Show accounts with growth/decline patterns to target for outreach.                                      |
+| **Create Salesforce actions** | *Follow-up Actions*                   | Flows (or Apex if advanced) create **Tasks**, **assign to Owner**, **send follow-up Emails**.           |
+| **Reporting/export**          | *Export Reports*                      | Optionally Apex to generate/download CSV for sales teams.                                               |
+| **Grounding**                 | All topics                            | All queries pull from **OrderLine data in Data Cloud** (currently mock CSV → later retriever).          |
