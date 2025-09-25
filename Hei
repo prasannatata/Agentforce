@@ -1,0 +1,5 @@
+IF(
+  ISBLANK(TEXT({!Get_Research_Study.EligibleGender})),
+  "Any",
+  TEXT({!Get_Research_Study.EligibleGender})
+)
