@@ -1,1 +1,10 @@
 TEXT({!Get_ResearchStudy.EligibleMinimumAge}) & "-" & TEXT({!Get_ResearchStudy.EligibleMaximumAge})
+
+{
+  "answers": [
+    {"id": "Q1", "text": "What is your age?", "value": "34"},
+    {"id": "Q2", "text": "What is your gender?", "value": "Male"},
+    {"id": "Q3", "text": "Are you currently in good health?", "value": "Yes"}
+  ]
+}
+
