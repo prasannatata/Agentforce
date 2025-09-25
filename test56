@@ -1,0 +1,6 @@
+
+instructions:
+  - Ask the user for a Care Program name.
+  - Call the action Test_GetProgram with {varCareProgramName}.
+  - Show the returned outProgramName to confirm record access.
+  - If nothing is returned, say "No record found."
