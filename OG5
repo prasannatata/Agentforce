@@ -1,0 +1,268 @@
+public with sharing class TestDataQueryAction {
+
+    // ===============================
+    // 1. Inner Classes
+    // ===============================
+    public class QueryRequest {
+        public String query;
+        public QueryRequest(String q) {
+            this.query = q;
+        }
+    }
+
+    public class QueryResult {
+        public String queryExecuted;
+        public Boolean success;
+        public Integer recordCount;
+        public String formattedResults;
+        public String insights;
+        public List<String> suggestedActions;
+        public String errorMessage;
+    }
+
+    // ===============================
+    // 2. Main Dispatcher
+    // ===============================
+    public static List<QueryResult> runQueries(List<QueryRequest> requests) {
+        List<QueryResult> results = new List<QueryResult>();
+
+        for (QueryRequest req : requests) {
+            QueryResult res = new QueryResult();
+            res.queryExecuted = req.query;
+            res.success = true;
+            res.recordCount = 0;
+            res.formattedResults = '';
+            res.insights = '';
+            res.suggestedActions = new List<String>();
+            res.errorMessage = '';
+
+            try {
+                String q = req.query.toLowerCase();
+
+                if (q.contains('pending')) {
+                    res.formattedResults = generatePendingOrders();
+                    res.recordCount = res.formattedResults.split('\n').size();
+                    res.insights = 'Pending orders retrieved from dataset.';
+                    res.suggestedActions.add('Escalate to fulfillment team');
+                    res.suggestedActions.add('Notify sales rep');
+                }
+                else if (q.contains('details for')) {
+                    String orderRef = req.query.replace('give details for', '').trim();
+                    res.formattedResults = findOrderByRef(orderRef);
+                    res.recordCount = res.formattedResults == null ? 0 : 1;
+                    res.insights = 'Detailed order info retrieved.';
+                }
+                else if (q.contains('compare')) {
+                    // Extract two order IDs
+                    List<String> parts = req.query.replace('compare', '').replace('and', ',').split(',');
+                    if (parts.size() == 2) {
+                        String a = parts[0].trim();
+                        String b = parts[1].trim();
+                        res.formattedResults = compareOrders(a, b);
+                        res.recordCount = 2;
+                        res.insights = 'Comparison generated for ' + a + ' and ' + b;
+                    } else {
+                        res.success = false;
+                        res.errorMessage = 'Could not parse order references for comparison.';
+                    }
+                }
+                else if (q.contains('customer revenue')) {
+                    res.formattedResults = generateCustomerRevenue();
+                    res.insights = 'Customer revenue analysis complete.';
+                }
+                else if (q.contains('vendor performance')) {
+                    res.formattedResults = generateVendorPerformance();
+                    res.insights = 'Vendor performance comparison complete.';
+                }
+                else if (q.contains('modality performance')) {
+                    res.formattedResults = generateModalityPerformance();
+                    res.insights = 'Modality performance analysis complete.';
+                }
+                else if (q.contains('status')) {
+                    // Example: "show orders with status in progress"
+                    String status = req.query.substringAfter('status').trim();
+                    res.formattedResults = getOrdersByStatus(status);
+                    res.insights = 'Orders retrieved with status ' + status;
+                }
+                else {
+                    res.success = false;
+                    res.errorMessage = 'No matching query type found.';
+                }
+            }
+            catch (Exception e) {
+                res.success = false;
+                res.errorMessage = e.getMessage();
+            }
+
+            results.add(res);
+        }
+        return results;
+    }
+
+    // ===============================
+    // 3. Helper Query Methods
+    // ===============================
+
+    // Pending orders
+    private static String generatePendingOrders() {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = 'Pending'
+            LIMIT 20
+        ];
+
+        if (orders.isEmpty()) return 'No pending orders found.';
+
+        String output = '**PENDING ORDERS**\n\n| OrderRef | Customer | Revenue | Modality |\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            output += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                      ' | $' + o.Revenue_TXT__c + ' | ' + o.Modality__c + ' |\n';
+        }
+        return output;
+    }
+
+    // Orders by Status
+    private static String getOrdersByStatus(String status) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = :status
+        ];
+
+        if (orders.isEmpty()) return 'No orders found with status ' + status;
+
+        String output = '**' + status.toUpperCase() + ' ORDERS**\n\n| OrderRef | Customer | Revenue | Modality |\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            output += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                      ' | $' + o.Revenue_TXT__c + ' | ' + o.Modality__c + ' |\n';
+        }
+        return output;
+    }
+
+    // Order details
+    private static String findOrderByRef(String orderRef) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OEM__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c = :orderRef
+            LIMIT 1
+        ];
+        if (orders.isEmpty()) return 'No order found for reference ' + orderRef;
+
+        Realistic_OrderLine_Datacsv__dlm o = orders[0];
+        return '**ORDER DETAILS**\nOrderRef: ' + o.OrderRefNumber__c +
+               '\nCustomer: ' + o.CustomerName__c +
+               '\nRevenue: $' + o.Revenue_TXT__c +
+               '\nModality: ' + o.Modality__c +
+               '\nVendor: ' + o.Vendor__c +
+               '\nOEM: ' + o.OEM__c +
+               '\nStatus: ' + o.OrderStatus__c;
+    }
+
+    // Order comparison
+    private static String compareOrders(String aRef, String bRef) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OEM__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c IN :new List<String>{aRef, bRef}
+        ];
+        if (orders.size() < 2) return 'One or both orders not found.';
+
+        Realistic_OrderLine_Datacsv__dlm a = orders[0];
+        Realistic_OrderLine_Datacsv__dlm b = orders[1];
+
+        return '**ORDER COMPARISON**\n' +
+               'A: ' + a.OrderRefNumber__c + ' | ' + a.CustomerName__c + ' | $' + a.Revenue_TXT__c + ' | ' + a.Modality__c + '\n' +
+               'B: ' + b.OrderRefNumber__c + ' | ' + b.CustomerName__c + ' | $' + b.Revenue_TXT__c + ' | ' + b.Modality__c;
+    }
+
+    // Customer Revenue
+    private static String generateCustomerRevenue() {
+        Map<String, Decimal> customerRevenue = new Map<String, Decimal>();
+        for (Realistic_OrderLine_Datacsv__dlm o : [
+            SELECT CustomerName__c, Revenue__c FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE CustomerName__c != null
+        ]) {
+            Decimal rev = (o.Revenue__c != null) ? o.Revenue__c : 0;
+            customerRevenue.put(o.CustomerName__c,
+                customerRevenue.containsKey(o.CustomerName__c) ? customerRevenue.get(o.CustomerName__c) + rev : rev);
+        }
+        String output = '**CUSTOMER REVENUE ANALYSIS**\n\n| Customer | Total Revenue |\n';
+        for (String c : customerRevenue.keySet()) {
+            output += '| ' + c + ' | $' + customerRevenue.get(c) + ' |\n';
+        }
+        return output;
+    }
+
+    // Vendor Performance
+    private static String generateVendorPerformance() {
+        Map<String, Decimal> vendorRevenue = new Map<String, Decimal>();
+        Map<String, Integer> vendorCount = new Map<String, Integer>();
+
+        for (Realistic_OrderLine_Datacsv__dlm o : [
+            SELECT Vendor__c, Revenue__c FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE Vendor__c != null
+        ]) {
+            Decimal rev = (o.Revenue__c != null) ? o.Revenue__c : 0;
+            vendorRevenue.put(o.Vendor__c, vendorRevenue.containsKey(o.Vendor__c) ? vendorRevenue.get(o.Vendor__c) + rev : rev);
+            vendorCount.put(o.Vendor__c, vendorCount.containsKey(o.Vendor__c) ? vendorCount.get(o.Vendor__c) + 1 : 1);
+        }
+
+        String output = '**VENDOR PERFORMANCE**\n\n| Vendor | Order Count | Total Revenue |\n';
+        for (String v : vendorRevenue.keySet()) {
+            output += '| ' + v + ' | ' + vendorCount.get(v) + ' | $' + vendorRevenue.get(v) + ' |\n';
+        }
+        return output;
+    }
+
+    // Modality Performance
+    private static String generateModalityPerformance() {
+        Map<String, Decimal> modalityRevenue = new Map<String, Decimal>();
+        Map<String, Integer> modalityCount = new Map<String, Integer>();
+
+        for (Realistic_OrderLine_Datacsv__dlm o : [
+            SELECT Modality__c, Revenue__c FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE Modality__c != null
+        ]) {
+            Decimal rev = (o.Revenue__c != null) ? o.Revenue__c : 0;
+            modalityRevenue.put(o.Modality__c, modalityRevenue.containsKey(o.Modality__c) ? modalityRevenue.get(o.Modality__c) + rev : rev);
+            modalityCount.put(o.Modality__c, modalityCount.containsKey(o.Modality__c) ? modalityCount.get(o.Modality__c) + 1 : 1);
+        }
+
+        String output = '**MODALITY PERFORMANCE**\n\n| Modality | Order Count | Total Revenue |\n';
+        for (String m : modalityRevenue.keySet()) {
+            output += '| ' + m + ' | ' + modalityCount.get(m) + ' | $' + modalityRevenue.get(m) + ' |\n';
+        }
+        return output;
+    }
+}
+
+++++
+
+
+List<TestDataQueryAction.QueryRequest> requests = new List<TestDataQueryAction.QueryRequest>();
+
+requests.add(new TestDataQueryAction.QueryRequest('Show me pending orders'));
+requests.add(new TestDataQueryAction.QueryRequest('Give details for ORD-1009'));
+requests.add(new TestDataQueryAction.QueryRequest('Compare ORD-1008 and ORD-1009'));
+requests.add(new TestDataQueryAction.QueryRequest('Show customer revenue analysis'));
+requests.add(new TestDataQueryAction.QueryRequest('Show vendor performance comparison'));
+requests.add(new TestDataQueryAction.QueryRequest('Show modality performance'));
+requests.add(new TestDataQueryAction.QueryRequest('Show orders with status In Progress'));
+requests.add(new TestDataQueryAction.QueryRequest('Show orders with status Completed'));
+
+List<TestDataQueryAction.QueryResult> results = TestDataQueryAction.runQueries(requests);
+
+for (TestDataQueryAction.QueryResult res : results) {
+    System.debug('==============================================');
+    System.debug('Query Executed: ' + res.queryExecuted);
+    System.debug('Success: ' + res.success);
+    System.debug('Record Count: ' + res.recordCount);
+    System.debug('Formatted Results:\n' + res.formattedResults);
+    System.debug('Insights: ' + res.insights);
+    System.debug('Suggested Actions: ' + String.join(res.suggestedActions, ', '));
+    if (!res.success) {
+        System.debug('Error Message: ' + res.errorMessage);
+    }
+}
