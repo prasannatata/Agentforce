@@ -86,3 +86,23 @@ public class TestDataQueryAction {
         public String errorMessage;
     }
 }
+
+
+
+=================
+// Test the mock data version of your Apex class
+TestDataQueryAction.QueryRequest req = new TestDataQueryAction.QueryRequest();
+req.query = 'show me pending orders';
+
+List<TestDataQueryAction.QueryRequest> requests = new List<TestDataQueryAction.QueryRequest>{req};
+List<TestDataQueryAction.QueryResult> results = TestDataQueryAction.executeTestDataQuery(requests);
+
+System.debug('=== TEST RESULTS ===');
+for (TestDataQueryAction.QueryResult result : results) {
+    System.debug('Success: ' + result.success);
+    System.debug('Query Executed: ' + result.queryExecuted);
+    System.debug('Record Count: ' + result.recordCount);
+    System.debug('Results: ' + result.formattedResults);
+    System.debug('Insights: ' + result.insights);
+    System.debug('Suggested Actions: ' + result.suggestedActions);
+}
