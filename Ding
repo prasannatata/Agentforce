@@ -20,3 +20,21 @@ Task:
 Output:
 - Table: CustomerName | Quarter | Revenue | Quantity | % change vs prior quarter
 - 2–3 sentence summary of top drop-offs/growth
+
++++++
+
+public class CustomerRevenueComparator implements Comparator<String> {
+    Map<String, Decimal> revenueMap;
+
+    public CustomerRevenueComparator(Map<String, Decimal> revenueMap) {
+        this.revenueMap = revenueMap;
+    }
+
+    public Integer compare(String a, String b) {
+        Decimal revA = (revenueMap.containsKey(a) && revenueMap.get(a) != null) ? revenueMap.get(a) : 0;
+        Decimal revB = (revenueMap.containsKey(b) && revenueMap.get(b) != null) ? revenueMap.get(b) : 0;
+
+        // Explicit cast to Integer fixes "not visible" error
+        return Integer.valueOf(revB.compareTo(revA));
+    }
+}
