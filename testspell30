@@ -1,0 +1,182 @@
+public class TestDataQueryAction {
+    
+    @InvocableMethod(label='Query Order Line Test Data' 
+                     description='Execute natural language queries against test order data')
+    public static List<QueryResult> executeTestDataQuery(List<QueryRequest> requests) {
+        List<QueryResult> results = new List<QueryResult>();
+        
+        for (QueryRequest request : requests) {
+            try {
+                // Parse the natural language query
+                QueryContext context = parseNaturalLanguage(request.query);
+                
+                // Build SOQL for your actual Data Cloud object
+                String soqlQuery = buildSOQLQuery(context);
+                
+                // Execute query against your data
+                List<SObject> queryResults = Database.query(soqlQuery);
+                
+                // Generate results and insights
+                QueryResult result = new QueryResult();
+                result.queryExecuted = soqlQuery;
+                result.recordCount = queryResults.size();
+                result.formattedResults = formatResults(queryResults, context);
+                result.insights = generateInsights(queryResults, context);
+                result.suggestedActions = generateActions(queryResults, context);
+                result.success = true;
+                
+                results.add(result);
+                
+            } catch (Exception e) {
+                QueryResult result = new QueryResult();
+                result.success = false;
+                result.errorMessage = 'Query failed: ' + e.getMessage();
+                results.add(result);
+            }
+        }
+        
+        return results;
+    }
+    
+    private static QueryContext parseNaturalLanguage(String naturalQuery) {
+        QueryContext context = new QueryContext();
+        String queryLower = naturalQuery.toLowerCase();
+        
+        if (queryLower.contains('pending')) {
+            context.queryType = 'PENDING_ORDERS';
+        } else if (queryLower.contains('modality')) {
+            context.queryType = 'MODALITY_ANALYSIS';
+        } else if (queryLower.contains('customer')) {
+            context.queryType = 'CUSTOMER_ANALYSIS';
+        } else if (queryLower.contains('vendor')) {
+            context.queryType = 'VENDOR_ANALYSIS';
+        } else {
+            context.queryType = 'GENERAL';
+        }
+        
+        return context;
+    }
+    
+    private static String buildSOQLQuery(QueryContext context) {
+        String soql = '';
+        
+        if (context.queryType == 'PENDING_ORDERS') {
+            soql = 'SELECT OrderRefNumber__c, CustomerName__c, OrderPODate__c, Revenue_TXT__c, Modality__c FROM Realistic_OrderLine_Data__csv WHERE OrderStatus__c = \'Pending\' LIMIT 10';
+        } else if (context.queryType == 'MODALITY_ANALYSIS') {
+            soql = 'SELECT Modality__c, COUNT(Id) orderCount FROM Realistic_OrderLine_Data__csv GROUP BY Modality__c LIMIT 10';
+        } else if (context.queryType == 'CUSTOMER_ANALYSIS') {
+            soql = 'SELECT CustomerName__c, ParentCustomerName__c, Revenue_TXT__c FROM Realistic_OrderLine_Data__csv LIMIT 10';
+        } else if (context.queryType == 'VENDOR_ANALYSIS') {
+            soql = 'SELECT Vendor__c, OEM__c FROM Realistic_OrderLine_Data__csv GROUP BY Vendor__c, OEM__c LIMIT 10';
+        } else {
+            soql = 'SELECT CustomerName__c, Revenue_TXT__c, OrderStatus__c, Modality__c FROM Realistic_OrderLine_Data__csv LIMIT 10';
+        }
+        
+        return soql;
+    }
+    
+    private static String formatResults(List<SObject> results, QueryContext context) {
+        if (results.isEmpty()) {
+            return 'No data found matching your criteria.';
+        }
+        
+        String formatted = '**QUERY RESULTS** (' + results.size() + ' records)\n\n';
+        
+        if (context.queryType == 'PENDING_ORDERS') {
+            formatted += '| Order Ref | Customer | PO Date | Revenue | Modality |\n';
+            formatted += '|-----------|----------|---------|---------|----------|\n';
+            
+            for (SObject record : results) {
+                formatted += '| ' + String.valueOf(record.get('OrderRefNumber__c'));
+                formatted += ' | ' + String.valueOf(record.get('CustomerName__c'));
+                formatted += ' | ' + String.valueOf(record.get('OrderPODate__c'));
+                formatted += ' | $' + String.valueOf(record.get('Revenue_TXT__c'));
+                formatted += ' | ' + String.valueOf(record.get('Modality__c')) + ' |\n';
+            }
+        } else if (context.queryType == 'MODALITY_ANALYSIS') {
+            formatted += '| Modality | Order Count |\n';
+            formatted += '|----------|-------------|\n';
+            
+            for (SObject record : results) {
+                formatted += '| ' + String.valueOf(record.get('Modality__c'));
+                formatted += ' | ' + String.valueOf(record.get('orderCount')) + ' |\n';
+            }
+        } else {
+            formatted += 'Found ' + results.size() + ' records matching your query.\n';
+            for (SObject record : results) {
+                formatted += 'Customer: ' + String.valueOf(record.get('CustomerName__c'));
+                formatted += ', Revenue: $' + String.valueOf(record.get('Revenue_TXT__c'));
+                formatted += ', Status: ' + String.valueOf(record.get('OrderStatus__c')) + '\n';
+            }
+        }
+        
+        return formatted;
+    }
+    
+    private static String generateInsights(List<SObject> results, QueryContext context) {
+        String insights = '**KEY INSIGHTS:**\n\n';
+        
+        if (context.queryType == 'PENDING_ORDERS') {
+            insights += '• ' + results.size() + ' orders are currently pending\n';
+            insights += '• These orders require immediate attention\n';
+        } else if (context.queryType == 'MODALITY_ANALYSIS') {
+            insights += '• ' + results.size() + ' different modalities found\n';
+            if (!results.isEmpty()) {
+                insights += '• Analysis shows modality distribution in your data\n';
+            }
+        } else {
+            insights += '• Analysis completed with ' + results.size() + ' records\n';
+        }
+        
+        return insights;
+    }
+    
+    private static List<String> generateActions(List<SObject> results, QueryContext context) {
+        List<String> actions = new List<String>();
+        
+        if (context.queryType == 'PENDING_ORDERS') {
+            actions.add('Contact customers with pending orders');
+            actions.add('Create follow-up tasks for sales team');
+        } else if (context.queryType == 'MODALITY_ANALYSIS') {
+            actions.add('Analyze modality performance trends');
+            actions.add('Focus resources on key modalities');
+        } else {
+            actions.add('Review analysis results');
+            actions.add('Create action plan based on findings');
+        }
+        
+        return actions;
+    }
+    
+    public class QueryRequest {
+        @InvocableVariable(required=true)
+        public String query;
+    }
+    
+    public class QueryResult {
+        @InvocableVariable
+        public String queryExecuted;
+        
+        @InvocableVariable
+        public Integer recordCount;
+        
+        @InvocableVariable
+        public String formattedResults;
+        
+        @InvocableVariable
+        public String insights;
+        
+        @InvocableVariable
+        public List<String> suggestedActions;
+        
+        @InvocableVariable
+        public Boolean success;
+        
+        @InvocableVariable
+        public String errorMessage;
+    }
+    
+    public class QueryContext {
+        public String queryType;
+    }
+}
