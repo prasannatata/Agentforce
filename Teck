@@ -1,0 +1,22 @@
+// Create a request
+TestDataQueryAction.QueryRequest req = new TestDataQueryAction.QueryRequest();
+req.queryType = 'PendingOrders';   // 🔹 Change this to test different functions
+// req.queryType = 'VendorPerformance';
+// req.queryType = 'CustomerRevenue';
+// req.queryType = 'ModalityPerformance';
+// req.queryType = 'OrdersByStatus'; req.status = 'In Progress';
+// req.queryType = 'OrdersByDateRange'; req.startDate = Date.newInstance(2025,1,1); req.endDate = Date.today();
+// req.queryType = 'CompareOrders'; req.orderRef = 'ORD-1001'; req.orderRef2 = 'ORD-1003';
+// req.queryType = 'GetOrderDetails'; req.orderRef = 'ORD-1005';
+
+// Put it in a list
+List<TestDataQueryAction.QueryRequest> requests = new List<TestDataQueryAction.QueryRequest>{ req };
+
+// Call the invocable method
+List<TestDataQueryAction.QueryResponse> responses = TestDataQueryAction.runAnalysis(requests);
+
+// Debug results
+for (TestDataQueryAction.QueryResponse res : responses) {
+    System.debug('===== QUERY RESULT =====');
+    System.debug(res.result);
+}
