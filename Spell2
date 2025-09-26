@@ -1,0 +1,123 @@
+public class TestDataQueryAction {
+    
+    @InvocableMethod(label='Query Order Line Test Data' 
+                     description='Execute natural language queries against test order data')
+    public static List<QueryResult> executeTestDataQuery(List<QueryRequest> requests) {
+        List<QueryResult> results = new List<QueryResult>();
+        
+        for (QueryRequest request : requests) {
+            try {
+                // Parse the natural language query
+                QueryContext context = parseNaturalLanguage(request.query);
+                
+                // Build SOQL for your actual Data Cloud object
+                String soqlQuery = buildSOQLQuery(context);
+                
+                // Execute query against your data
+                List<SObject> queryResults = Database.query(soqlQuery);
+                
+                // Generate results and insights
+                QueryResult result = new QueryResult();
+                result.queryExecuted = soqlQuery;
+                result.recordCount = queryResults.size();
+                result.formattedResults = formatResults(queryResults, context);
+                result.insights = generateInsights(queryResults, context);
+                result.suggestedActions = generateActions(queryResults, context);
+                result.success = true;
+                
+                results.add(result);
+                
+            } catch (Exception e) {
+                QueryResult result = new QueryResult();
+                result.success = false;
+                result.errorMessage = 'Query failed: ' + e.getMessage();
+                results.add(result);
+            }
+        }
+        
+        return results;
+    }
+    
+    private static QueryContext parseNaturalLanguage(String naturalQuery) {
+        QueryContext context = new QueryContext();
+        String queryLower = naturalQuery.toLowerCase();
+        
+        if (queryLower.contains('pending')) {
+            context.queryType = 'PENDING_ORDERS';
+        } else if (queryLower.contains('modality')) {
+            context.queryType = 'MODALITY_ANALYSIS';
+        } else if (queryLower.contains('customer')) {
+            context.queryType = 'CUSTOMER_ANALYSIS';
+        } else {
+            context.queryType = 'GENERAL';
+        }
+        
+        return context;
+    }
+    
+    private static String buildSOQLQuery(QueryContext context) {
+        String soql = '';
+        
+        if (context.queryType == 'PENDING_ORDERS') {
+            soql = 'SELECT OrderRefNumber__c, CustomerName__c, Revenue__c FROM Realistic_OrderLine_Data__csv WHERE OrderStatus__c = \'Pending\' LIMIT 10';
+        } else if (context.queryType == 'MODALITY_ANALYSIS') {
+            soql = 'SELECT Modality__c, COUNT(Id) orderCount FROM Realistic_OrderLine_Data__csv GROUP BY Modality__c LIMIT 10';
+        } else {
+            soql = 'SELECT CustomerName__c, Revenue__c FROM Realistic_OrderLine_Data__csv LIMIT 10';
+        }
+        
+        return soql;
+    }
+    
+    private static String formatResults(List<SObject> results, QueryContext context) {
+        if (results.isEmpty()) {
+            return 'No data found.';
+        }
+        
+        String formatted = 'Results found: ' + results.size() + ' records\n';
+        return formatted;
+    }
+    
+    private static String generateInsights(List<SObject> results, QueryContext context) {
+        return 'Analysis complete with ' + results.size() + ' records processed.';
+    }
+    
+    private static List<String> generateActions(List<SObject> results, QueryContext context) {
+        List<String> actions = new List<String>();
+        actions.add('Review results');
+        actions.add('Take follow-up action');
+        return actions;
+    }
+    
+    public class QueryRequest {
+        @InvocableVariable(required=true)
+        public String query;
+    }
+    
+    public class QueryResult {
+        @InvocableVariable
+        public String queryExecuted;
+        
+        @InvocableVariable
+        public Integer recordCount;
+        
+        @InvocableVariable
+        public String formattedResults;
+        
+        @InvocableVariable
+        public String insights;
+        
+        @InvocableVariable
+        public List<String> suggestedActions;
+        
+        @InvocableVariable
+        public Boolean success;
+        
+        @InvocableVariable
+        public String errorMessage;
+    }
+    
+    public class QueryContext {
+        public String queryType;
+    }
+}
