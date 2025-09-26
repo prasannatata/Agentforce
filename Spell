@@ -303,3 +303,12 @@ public class TestDataQueryAction {
         public String limitClause;
     }
 }
+
+
+
+
+TestDataQueryAction.QueryRequest req = new TestDataQueryAction.QueryRequest();
+req.query = 'show me pending orders';
+List<TestDataQueryAction.QueryRequest> requests = new List<TestDataQueryAction.QueryRequest>{req};
+List<TestDataQueryAction.QueryResult> results = TestDataQueryAction.executeTestDataQuery(requests);
+System.debug('Results: ' + results);
