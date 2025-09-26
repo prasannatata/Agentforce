@@ -1,0 +1,305 @@
+public class TestDataQueryAction {
+    
+    @InvocableMethod(label='Query Order Line Test Data' 
+                     description='Execute natural language queries against test order data')
+    public static List<QueryResult> executeTestDataQuery(List<QueryRequest> requests) {
+        List<QueryResult> results = new List<QueryResult>();
+        
+        for (QueryRequest request : requests) {
+            try {
+                // Parse the natural language query
+                QueryContext context = parseNaturalLanguage(request.query);
+                
+                // Build SOQL for your actual Data Cloud object
+                String soqlQuery = buildSOQLQuery(context);
+                
+                // Execute query against your data
+                List<SObject> queryResults = Database.query(soqlQuery);
+                
+                // Generate results and insights
+                QueryResult result = new QueryResult();
+                result.queryExecuted = soqlQuery;
+                result.recordCount = queryResults.size();
+                result.formattedResults = formatResults(queryResults, context);
+                result.insights = generateInsights(queryResults, context);
+                result.suggestedActions = generateActions(queryResults, context);
+                result.success = true;
+                
+                results.add(result);
+                
+            } catch (Exception e) {
+                QueryResult result = new QueryResult();
+                result.success = false;
+                result.errorMessage = 'Query failed: ' + e.getMessage();
+                results.add(result);
+            }
+        }
+        
+        return results;
+    }
+    
+    private static QueryContext parseNaturalLanguage(String naturalQuery) {
+        QueryContext context = new QueryContext();
+        String queryLower = naturalQuery.toLowerCase();
+        
+        // Detect query type based on keywords
+        if (queryLower.contains('revenue') && queryLower.contains('decline')) {
+            context.queryType = 'REVENUE_ANALYSIS';
+            context.orderBy = 'Revenue__c DESC';
+        } else if (queryLower.contains('pending')) {
+            context.queryType = 'PENDING_ORDERS';
+            context.whereClause = 'OrderStatus__c = \'Pending\'';
+        } else if (queryLower.contains('modality')) {
+            context.queryType = 'MODALITY_ANALYSIS';
+            context.groupBy = 'Modality__c';
+        } else if (queryLower.contains('vendor')) {
+            context.queryType = 'VENDOR_ANALYSIS';
+            context.groupBy = 'Vendor__c';
+        } else if (queryLower.contains('customer')) {
+            context.queryType = 'CUSTOMER_ANALYSIS';
+            context.groupBy = 'CustomerName__c';
+        } else {
+            context.queryType = 'GENERAL';
+        }
+        
+        // Extract limits
+        if (queryLower.contains('top 20')) {
+            context.limitClause = 'LIMIT 20';
+        } else if (queryLower.contains('top 10')) {
+            context.limitClause = 'LIMIT 10';
+        } else {
+            context.limitClause = 'LIMIT 50';
+        }
+        
+        return context;
+    }
+    
+    private static String buildSOQLQuery(QueryContext context) {
+        StringBuilder soql = new StringBuilder();
+        
+        switch on context.queryType {
+            when 'REVENUE_ANALYSIS' {
+                soql.append('SELECT CustomerName__c, SUM(Revenue__c) totalRevenue, ');
+                soql.append('SUM(Quantity__c) totalQuantity, ParentCustomerName__c ');
+                soql.append('FROM Realistic_OrderLine_Data__csv ');
+                if (context.whereClause != null) {
+                    soql.append('WHERE ' + context.whereClause + ' ');
+                }
+                soql.append('GROUP BY CustomerName__c, ParentCustomerName__c ');
+                soql.append('ORDER BY SUM(Revenue__c) DESC ');
+            }
+            when 'PENDING_ORDERS' {
+                soql.append('SELECT OrderRefNumber__c, CustomerName__c, OrderPODate__c, ');
+                soql.append('Revenue__c, Quantity__c, Modality__c ');
+                soql.append('FROM Realistic_OrderLine_Data__csv ');
+                soql.append('WHERE OrderStatus__c = \'Pending\' ');
+                soql.append('ORDER BY OrderPODate__c ASC ');
+            }
+            when 'MODALITY_ANALYSIS' {
+                soql.append('SELECT Modality__c, COUNT(Id) orderCount, ');
+                soql.append('SUM(Revenue__c) totalRevenue, AVG(Revenue__c) avgRevenue ');
+                soql.append('FROM Realistic_OrderLine_Data__csv ');
+                if (context.whereClause != null) {
+                    soql.append('WHERE ' + context.whereClause + ' ');
+                }
+                soql.append('GROUP BY Modality__c ');
+                soql.append('ORDER BY SUM(Revenue__c) DESC ');
+            }
+            when 'VENDOR_ANALYSIS' {
+                soql.append('SELECT Vendor__c, OEM__c, COUNT(Id) orderCount, ');
+                soql.append('SUM(Revenue__c) totalRevenue ');
+                soql.append('FROM Realistic_OrderLine_Data__csv ');
+                if (context.whereClause != null) {
+                    soql.append('WHERE ' + context.whereClause + ' ');
+                }
+                soql.append('GROUP BY Vendor__c, OEM__c ');
+                soql.append('ORDER BY SUM(Revenue__c) DESC ');
+            }
+            when 'CUSTOMER_ANALYSIS' {
+                soql.append('SELECT CustomerName__c, ParentCustomerName__c, ');
+                soql.append('SUM(Revenue__c) totalRevenue, COUNT(Id) orderCount ');
+                soql.append('FROM Realistic_OrderLine_Data__csv ');
+                if (context.whereClause != null) {
+                    soql.append('WHERE ' + context.whereClause + ' ');
+                }
+                soql.append('GROUP BY CustomerName__c, ParentCustomerName__c ');
+                soql.append('ORDER BY SUM(Revenue__c) DESC ');
+            }
+            when else {
+                soql.append('SELECT CustomerName__c, Revenue__c, Quantity__c, ');
+                soql.append('OrderStatus__c, Modality__c FROM Realistic_OrderLine_Data__csv ');
+                if (context.whereClause != null) {
+                    soql.append('WHERE ' + context.whereClause + ' ');
+                }
+                soql.append('ORDER BY Revenue__c DESC ');
+            }
+        }
+        
+        if (context.limitClause != null) {
+            soql.append(context.limitClause);
+        }
+        
+        return soql.toString();
+    }
+    
+    private static String formatResults(List<SObject> results, QueryContext context) {
+        if (results.isEmpty()) {
+            return 'No data found matching your criteria.';
+        }
+        
+        StringBuilder formatted = new StringBuilder();
+        
+        // Add appropriate headers based on query type
+        switch on context.queryType {
+            when 'REVENUE_ANALYSIS' {
+                formatted.append('**REVENUE ANALYSIS RESULTS**\n\n');
+                formatted.append('| Customer | Total Revenue | Total Quantity | Parent Company |\n');
+                formatted.append('|----------|---------------|----------------|----------------|\n');
+                
+                for (SObject record : results) {
+                    formatted.append('| ' + record.get('CustomerName__c'));
+                    formatted.append(' | $' + String.valueOf(record.get('totalRevenue')));
+                    formatted.append(' | ' + String.valueOf(record.get('totalQuantity')));
+                    formatted.append(' | ' + String.valueOf(record.get('ParentCustomerName__c')));
+                    formatted.append(' |\n');
+                }
+            }
+            when 'PENDING_ORDERS' {
+                formatted.append('**PENDING ORDERS**\n\n');
+                formatted.append('| Order Ref | Customer | PO Date | Revenue | Modality |\n');
+                formatted.append('|-----------|----------|---------|---------|----------|\n');
+                
+                for (SObject record : results) {
+                    formatted.append('| ' + record.get('OrderRefNumber__c'));
+                    formatted.append(' | ' + record.get('CustomerName__c'));
+                    formatted.append(' | ' + String.valueOf(record.get('OrderPODate__c')).substring(0,10));
+                    formatted.append(' | $' + String.valueOf(record.get('Revenue__c')));
+                    formatted.append(' | ' + record.get('Modality__c'));
+                    formatted.append(' |\n');
+                }
+            }
+            when 'MODALITY_ANALYSIS' {
+                formatted.append('**MODALITY PERFORMANCE**\n\n');
+                formatted.append('| Modality | Order Count | Total Revenue | Avg Revenue |\n');
+                formatted.append('|----------|-------------|---------------|-------------|\n');
+                
+                for (SObject record : results) {
+                    formatted.append('| ' + record.get('Modality__c'));
+                    formatted.append(' | ' + String.valueOf(record.get('orderCount')));
+                    formatted.append(' | $' + String.valueOf(record.get('totalRevenue')));
+                    formatted.append(' | $' + String.valueOf(record.get('avgRevenue')));
+                    formatted.append(' |\n');
+                }
+            }
+        }
+        
+        return formatted.toString();
+    }
+    
+    private static String generateInsights(List<SObject> results, QueryContext context) {
+        StringBuilder insights = new StringBuilder();
+        insights.append('**KEY INSIGHTS:**\n\n');
+        
+        Decimal totalRevenue = 0;
+        Integer totalRecords = results.size();
+        
+        // Calculate totals for insights
+        for (SObject record : results) {
+            if (record.get('totalRevenue') != null) {
+                totalRevenue += (Decimal)record.get('totalRevenue');
+            } else if (record.get('Revenue__c') != null) {
+                totalRevenue += (Decimal)record.get('Revenue__c');
+            }
+        }
+        
+        switch on context.queryType {
+            when 'PENDING_ORDERS' {
+                insights.append('• ' + totalRecords + ' orders are currently pending\n');
+                insights.append('• Total pending revenue: $' + totalRevenue.setScale(2) + '\n');
+                if (totalRecords > 0) {
+                    insights.append('• Average pending order value: $' + (totalRevenue/totalRecords).setScale(2) + '\n');
+                }
+                if (totalRecords > 3) {
+                    insights.append('• HIGH PRIORITY: ' + totalRecords + ' pending orders need immediate attention\n');
+                }
+            }
+            when 'MODALITY_ANALYSIS' {
+                insights.append('• ' + totalRecords + ' modalities analyzed\n');
+                insights.append('• Total revenue across all modalities: $' + totalRevenue.setScale(2) + '\n');
+                if (!results.isEmpty()) {
+                    insights.append('• Top performing modality: ' + results[0].get('Modality__c') + '\n');
+                }
+            }
+            when 'REVENUE_ANALYSIS' {
+                insights.append('• ' + totalRecords + ' customers analyzed\n');
+                insights.append('• Total customer revenue: $' + totalRevenue.setScale(2) + '\n');
+                if (totalRecords > 0) {
+                    insights.append('• Average revenue per customer: $' + (totalRevenue/totalRecords).setScale(2) + '\n');
+                }
+            }
+        }
+        
+        return insights.toString();
+    }
+    
+    private static List<String> generateActions(List<SObject> results, QueryContext context) {
+        List<String> actions = new List<String>();
+        
+        switch on context.queryType {
+            when 'PENDING_ORDERS' {
+                actions.add('Create follow-up tasks for pending orders');
+                actions.add('Contact customers with overdue PO dates');
+                actions.add('Escalate high-value pending orders to management');
+            }
+            when 'REVENUE_ANALYSIS' {
+                actions.add('Schedule account review meetings for top customers');
+                actions.add('Create retention strategy for declining accounts');
+                actions.add('Develop expansion plans for high-value parent companies');
+            }
+            when 'MODALITY_ANALYSIS' {
+                actions.add('Focus sales efforts on top-performing modalities');
+                actions.add('Investigate underperforming modality segments');
+                actions.add('Create targeted campaigns for specific modalities');
+            }
+        }
+        
+        return actions;
+    }
+    
+    // Inner classes for structure
+    public class QueryRequest {
+        @InvocableVariable(required=true)
+        public String query;
+    }
+    
+    public class QueryResult {
+        @InvocableVariable
+        public String queryExecuted;
+        
+        @InvocableVariable
+        public Integer recordCount;
+        
+        @InvocableVariable
+        public String formattedResults;
+        
+        @InvocableVariable
+        public String insights;
+        
+        @InvocableVariable
+        public List<String> suggestedActions;
+        
+        @InvocableVariable
+        public Boolean success;
+        
+        @InvocableVariable
+        public String errorMessage;
+    }
+    
+    public class QueryContext {
+        public String queryType;
+        public String whereClause;
+        public String groupBy;
+        public String orderBy;
+        public String limitClause;
+    }
+}
