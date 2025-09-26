@@ -1,0 +1,59 @@
+I see the error in your Apex code. Let’s break it down:
+
+### The Error
+
+```
+Method is not visible: Integer Decimal.compareTo(Decimal)
+```
+
+This happens in your **CustomerRevenueComparator** class, specifically here:
+
+```apex
+public Integer compare(String a, String b) {
+    return revenueMap.get(b).compareTo(revenueMap.get(a));
+}
+```
+
+### Why It Happens
+
+* In Apex, `Decimal.compareTo(Decimal)` **returns an `Integer`**, not a `Boolean`.
+* But the `Comparator<T>.compare` method expects you to **return an Integer directly**.
+* What’s happening is that the compiler thinks you’re calling `Integer.compareTo(Decimal)`, which doesn’t exist (hence the “not visible” error).
+
+Basically, Apex is confused because you’re mixing return types.
+
+---
+
+### ✅ Fix
+
+Wrap the return so Apex knows it’s an Integer:
+
+```apex
+public Integer compare(String a, String b) {
+    Decimal revA = revenueMap.get(a) != null ? revenueMap.get(a) : 0;
+    Decimal revB = revenueMap.get(b) != null ? revenueMap.get(b) : 0;
+    return revB.compareTo(revA); // Descending order
+}
+```
+
+### Why This Fix Works
+
+* `revB.compareTo(revA)` returns an `Integer` (-1, 0, 1) → exactly what `Comparator.compare` expects.
+* Adding null checks (`!= null ? value : 0`) prevents `NullPointerException` if a customer has no revenue.
+
+---
+
+### 🔑 Best Practice
+
+If you want **ascending order**, flip it:
+
+```apex
+return revA.compareTo(revB);
+```
+
+---
+
+👉 So the root cause is **type mismatch confusion**.
+Your code was fine conceptually, but Apex needed explicit handling to ensure `Decimal.compareTo` outputs an `Integer` for the `Comparator`.
+
+Do you want me to rewrite your entire `CustomerRevenueComparator` class cleanly so you can just copy-paste without errors?
