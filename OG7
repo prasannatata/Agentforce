@@ -1,0 +1,33 @@
+// 🔹 Pending Orders
+System.debug('========== Pending Orders ==========');
+System.debug(TestDataQueryAction.generatePendingOrders());
+
+// 🔹 Orders by Status
+System.debug('========== Orders with Status = In Progress ==========');
+System.debug(TestDataQueryAction.getOrdersByStatus('In Progress'));
+
+System.debug('========== Orders with Status = Pending ==========');
+System.debug(TestDataQueryAction.getOrdersByStatus('Pending'));
+
+System.debug('========== Orders with Status = Cancelled ==========');
+System.debug(TestDataQueryAction.getOrdersByStatus('Cancelled'));
+
+// 🔹 Customer Revenue
+System.debug('========== Customer Revenue ==========');
+System.debug(TestDataQueryAction.generateCustomerRevenue());
+
+// 🔹 Vendor Performance
+System.debug('========== Vendor Performance ==========');
+System.debug(TestDataQueryAction.generateVendorPerformance());
+
+// 🔹 Modality Performance
+System.debug('========== Modality Performance ==========');
+System.debug(TestDataQueryAction.generateModalityPerformance());
+
+// 🔹 Find Order by Reference
+System.debug('========== Find Order by Ref ==========');
+System.debug(TestDataQueryAction.findOrderByRef('ORD-1009'));
+
+// 🔹 Compare Two Orders
+System.debug('========== Compare Two Orders ==========');
+System.debug(TestDataQueryAction.compareOrders('ORD-1009','ORD-1008'));
