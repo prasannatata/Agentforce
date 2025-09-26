@@ -1,0 +1,66 @@
+Perfect! I can see you're configuring the Agent Action parameters. Here are the exact values you should fill in for each field:
+
+## Agent Action Instructions (first large text box):
+```
+Execute sales data analysis queries using natural language. Process user requests for pending orders, modality analysis, customer revenue analysis, and vendor performance. Return formatted tables, key insights, and actionable recommendations.
+```
+
+## Loading Text:
+```
+Analyzing sales data...
+```
+
+Now for the Input/Output parameters, fill them as follows:
+
+## Input Section:
+- **query field**: Leave as is (it's already correctly mapped)
+- **Instructions**: 
+```
+Natural language query for sales data analysis (e.g., "show me pending orders", "analyze by modality", "top customers")
+```
+
+## Output Sections (for each field shown):
+
+**errorMessage - Instructions**:
+```
+Error details if query fails
+```
+
+**formattedResults - Instructions**:
+```
+Formatted table results of the sales data analysis
+```
+
+**insights - Instructions**:
+```
+Key insights and analysis summary from the data
+```
+
+**queryExecuted - Instructions**:
+```
+The actual query that was executed
+```
+
+**recordCount - Instructions**:
+```
+Number of records found in the analysis
+```
+
+**success - Instructions**:
+```
+Whether the query executed successfully
+```
+
+**suggestedActions - Instructions**:
+```
+Recommended follow-up actions based on the analysis results
+```
+
+Make sure to check **"Show in conversation"** for these key output fields:
+- ✅ formattedResults
+- ✅ insights 
+- ✅ suggestedActions
+
+Leave the other technical fields (errorMessage, queryExecuted, recordCount, success) unchecked so they don't clutter the conversation.
+
+Then click **"Finish"** to complete the action setup.
