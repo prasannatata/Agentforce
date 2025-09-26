@@ -1,21 +1,88 @@
-// Test different object name variations
-try {
-    List<SObject> results1 = Database.query('SELECT Id FROM Realistic_OrderLine_Data__dlm LIMIT 1');
-    System.debug('SUCCESS with __dlm: Found ' + results1.size() + ' records');
-} catch (Exception e) {
-    System.debug('FAILED with __dlm: ' + e.getMessage());
-}
-
-try {
-    List<SObject> results2 = Database.query('SELECT Id FROM Realistic_OrderLine_Data__c LIMIT 1');
-    System.debug('SUCCESS with __c: Found ' + results2.size() + ' records');
-} catch (Exception e) {
-    System.debug('FAILED with __c: ' + e.getMessage());
-}
-
-try {
-    List<SObject> results3 = Database.query('SELECT Id FROM RealisticOrderLineData__dlm LIMIT 1');
-    System.debug('SUCCESS with RealisticOrderLineData__dlm: Found ' + results3.size() + ' records');
-} catch (Exception e) {
-    System.debug('FAILED with RealisticOrderLineData__dlm: ' + e.getMessage());
+public class TestDataQueryAction {
+    
+    @InvocableMethod(label='Query Order Line Test Data')
+    public static List<QueryResult> executeTestDataQuery(List<QueryRequest> requests) {
+        List<QueryResult> results = new List<QueryResult>();
+        
+        for (QueryRequest request : requests) {
+            QueryResult result = new QueryResult();
+            result.success = true;
+            result.recordCount = 10;
+            result.queryExecuted = 'Mock query for: ' + request.query;
+            
+            // Generate mock results based on your test data
+            if (request.query.toLowerCase().contains('pending')) {
+                result.formattedResults = generateMockPendingOrders();
+                result.insights = 'Found 3 pending orders requiring attention';
+            } else if (request.query.toLowerCase().contains('modality')) {
+                result.formattedResults = generateMockModalityAnalysis();
+                result.insights = 'X-Ray and MRI are top performing modalities';
+            } else {
+                result.formattedResults = generateMockCustomerData();
+                result.insights = 'Customer analysis completed successfully';
+            }
+            
+            result.suggestedActions = new List<String>{'Create follow-up tasks', 'Schedule customer calls'};
+            results.add(result);
+        }
+        
+        return results;
+    }
+    
+    private static String generateMockPendingOrders() {
+        return '**PENDING ORDERS**\n\n' +
+               '| Order Ref | Customer | Revenue | Modality |\n' +
+               '|-----------|----------|---------|----------|\n' +
+               '| ORD-1001 | Customer 1 | $500 | MRI |\n' +
+               '| ORD-1005 | Customer 5 | $600 | PET |\n' +
+               '| ORD-10010 | Customer 10 | $1500 | PET |\n';
+    }
+    
+    private static String generateMockModalityAnalysis() {
+        return '**MODALITY PERFORMANCE**\n\n' +
+               '| Modality | Order Count | Total Revenue |\n' +
+               '|----------|-------------|---------------|\n' +
+               '| X-Ray | 2 | $4900 |\n' +
+               '| MRI | 2 | $3000 |\n' +
+               '| Ultrasound | 3 | $3100 |\n' +
+               '| PET | 2 | $2100 |\n' +
+               '| CT | 1 | $1200 |\n';
+    }
+    
+    private static String generateMockCustomerData() {
+        return '**CUSTOMER ANALYSIS**\n\n' +
+               'Customer 9: $4000 (X-Ray)\n' +
+               'Customer 7: $2500 (MRI)\n' +
+               'Customer 4: $2000 (Ultrasound)\n' +
+               'Customer 10: $1500 (PET)\n' +
+               'Customer 2: $1200 (CT)\n';
+    }
+    
+    public class QueryRequest {
+        @InvocableVariable(required=true)
+        public String query;
+    }
+    
+    public class QueryResult {
+        @InvocableVariable
+        public String queryExecuted;
+        
+        @InvocableVariable
+        public Integer recordCount;
+        
+        @InvocableVariable
+        public String formattedResults;
+        
+        @InvocableVariable
+        public String insights;
+        
+        @InvocableVariable
+        public List<String> suggestedActions;
+        
+        @InvocableVariable
+        public Boolean success;
+        
+        @InvocableVariable
+        public String errorMessage;
+    }
 }
