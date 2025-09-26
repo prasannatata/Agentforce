@@ -1,0 +1,218 @@
+public with sharing class TestDataQueryAction {
+
+    // ================================
+    // 🔧 Utility: Safe Revenue Parsing
+    // ================================
+    private static Decimal parseRevenue(String txt) {
+        if (String.isBlank(txt)) return 0;
+        try {
+            return Decimal.valueOf(txt.replaceAll('[$,]', ''));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    // ================================
+    // 🔎 1. Get Order Details
+    // ================================
+    public static String getOrderDetails(String orderRef) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, OrderStatus__c,
+                   Revenue_TXT__c, Quantity__c, PartNumber__c, PartDescription__c,
+                   Modality__c, Vendor__c, OEM__c, OrderCreateDate__c, OrderPODate__c, Requestor__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c = :orderRef
+            LIMIT 1
+        ];
+        if (orders.isEmpty()) return 'No order found for reference ' + orderRef;
+
+        Realistic_OrderLine_Datacsv__dlm o = orders[0];
+        return '**ORDER DETAILS**\nOrderRef: ' + o.OrderRefNumber__c +
+               '\nCustomer: ' + o.CustomerName__c +
+               '\nStatus: ' + o.OrderStatus__c +
+               '\nRevenue: $' + parseRevenue(o.Revenue_TXT__c) +
+               '\nQuantity: ' + o.Quantity__c +
+               '\nPart: ' + o.PartNumber__c + ' - ' + o.PartDescription__c +
+               '\nModality: ' + o.Modality__c +
+               '\nVendor: ' + o.Vendor__c +
+               '\nOEM: ' + o.OEM__c +
+               '\nCreated: ' + o.OrderCreateDate__c +
+               '\nPO Date: ' + o.OrderPODate__c +
+               '\nRequestor: ' + o.Requestor__c;
+    }
+
+    // ================================
+    // 🔄 2. Compare Two Orders
+    // ================================
+    public static String compareOrders(String orderA, String orderB) {
+        Map<String, Realistic_OrderLine_Datacsv__dlm> orders = new Map<String, Realistic_OrderLine_Datacsv__dlm>(
+            [SELECT OrderRefNumber__c, CustomerName__c, OrderStatus__c,
+                    Revenue_TXT__c, Quantity__c, Modality__c, Vendor__c
+             FROM Realistic_OrderLine_Datacsv__dlm
+             WHERE OrderRefNumber__c IN :new List<String>{orderA, orderB}]
+        );
+
+        if (!orders.containsKey(orderA) || !orders.containsKey(orderB)) {
+            return 'Could not find both orders for comparison.';
+        }
+
+        Realistic_OrderLine_Datacsv__dlm a = orders.get(orderA);
+        Realistic_OrderLine_Datacsv__dlm b = orders.get(orderB);
+
+        return '**ORDER COMPARISON**\n' +
+               'Metric | ' + a.OrderRefNumber__c + ' | ' + b.OrderRefNumber__c + '\n' +
+               '-------|-----------------|-----------------\n' +
+               'Customer | ' + a.CustomerName__c + ' | ' + b.CustomerName__c + '\n' +
+               'Status | ' + a.OrderStatus__c + ' | ' + b.OrderStatus__c + '\n' +
+               'Revenue | $' + parseRevenue(a.Revenue_TXT__c) + ' | $' + parseRevenue(b.Revenue_TXT__c) + '\n' +
+               'Quantity | ' + a.Quantity__c + ' | ' + b.Quantity__c + '\n' +
+               'Modality | ' + a.Modality__c + ' | ' + b.Modality__c + '\n' +
+               'Vendor | ' + a.Vendor__c + ' | ' + b.Vendor__c;
+    }
+
+    // ================================
+    // 📊 3. Orders by Status
+    // ================================
+    public static String getOrdersByStatus(String status) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE UPPER(OrderStatus__c) = :status.toUpperCase()
+        ];
+        if (orders.isEmpty()) return 'No orders found with status ' + status;
+
+        String output = '**' + status.toUpperCase() + ' ORDERS**\n\n| OrderRef | Customer | Revenue | Modality |\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            output += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                      ' | $' + parseRevenue(o.Revenue_TXT__c) +
+                      ' | ' + o.Modality__c + ' |\n';
+        }
+        return output;
+    }
+
+    // ================================
+    // 🏥 4. Customer Revenue Totals
+    // ================================
+    public static String getCustomerRevenue() {
+        Map<String, Decimal> totals = new Map<String, Decimal>();
+        for (Realistic_OrderLine_Datacsv__dlm o : [
+            SELECT CustomerName__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE CustomerName__c != null
+        ]) {
+            Decimal rev = parseRevenue(o.Revenue_TXT__c);
+            totals.put(o.CustomerName__c, totals.containsKey(o.CustomerName__c) ? totals.get(o.CustomerName__c) + rev : rev);
+        }
+
+        String output = '**CUSTOMER REVENUE**\nCustomer | Total Revenue\n';
+        for (String c : totals.keySet()) {
+            output += c + ' | $' + totals.get(c) + '\n';
+        }
+        return output;
+    }
+
+    // ================================
+    // 🏭 5. Vendor Performance
+    // ================================
+    public static String getVendorPerformance() {
+        Map<String, Decimal> revenue = new Map<String, Decimal>();
+        Map<String, Integer> counts = new Map<String, Integer>();
+
+        for (Realistic_OrderLine_Datacsv__dlm o : [
+            SELECT Vendor__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE Vendor__c != null
+        ]) {
+            Decimal rev = parseRevenue(o.Revenue_TXT__c);
+            String vendor = o.Vendor__c;
+            revenue.put(vendor, revenue.containsKey(vendor) ? revenue.get(vendor) + rev : rev);
+            counts.put(vendor, counts.containsKey(vendor) ? counts.get(vendor) + 1 : 1);
+        }
+
+        String output = '**VENDOR PERFORMANCE**\nVendor | Orders | Revenue\n';
+        for (String v : revenue.keySet()) {
+            output += v + ' | ' + counts.get(v) + ' | $' + revenue.get(v) + '\n';
+        }
+        return output;
+    }
+
+    // ================================
+    // 🖥️ 6. Modality Performance
+    // ================================
+    public static String getModalityPerformance() {
+        Map<String, Decimal> revenue = new Map<String, Decimal>();
+        Map<String, Integer> counts = new Map<String, Integer>();
+
+        for (Realistic_OrderLine_Datacsv__dlm o : [
+            SELECT Modality__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE Modality__c != null
+        ]) {
+            Decimal rev = parseRevenue(o.Revenue_TXT__c);
+            String modality = o.Modality__c;
+            revenue.put(modality, revenue.containsKey(modality) ? revenue.get(modality) + rev : rev);
+            counts.put(modality, counts.containsKey(modality) ? counts.get(modality) + 1 : 1);
+        }
+
+        String output = '**MODALITY PERFORMANCE**\nModality | Orders | Revenue\n';
+        for (String m : revenue.keySet()) {
+            output += m + ' | ' + counts.get(m) + ' | $' + revenue.get(m) + '\n';
+        }
+        return output;
+    }
+
+    // ================================
+    // ⚙️ 7. Orders by Part
+    // ================================
+    public static String getOrdersByPart(String partNumber) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, PartNumber__c, PartDescription__c, Revenue_TXT__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE PartNumber__c = :partNumber
+        ];
+        if (orders.isEmpty()) return 'No orders found for part ' + partNumber;
+
+        String output = '**ORDERS FOR PART ' + partNumber + '**\nOrderRef | Customer | Revenue | Part\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            output += o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' +
+                      parseRevenue(o.Revenue_TXT__c) + ' | ' + o.PartDescription__c + '\n';
+        }
+        return output;
+    }
+
+    // ================================
+    // 📅 8. Orders by Date Range
+    // ================================
+    public static String getOrdersByDateRange(Date startDate, Date endDate) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, OrderCreateDate__c, Revenue_TXT__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderCreateDate__c >= :startDate AND OrderCreateDate__c <= :endDate
+        ];
+        if (orders.isEmpty()) return 'No orders found in range.';
+
+        String output = '**ORDERS FROM ' + startDate + ' TO ' + endDate + '**\nOrderRef | Customer | Created | Revenue\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            output += o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                      ' | ' + o.OrderCreateDate__c +
+                      ' | $' + parseRevenue(o.Revenue_TXT__c) + '\n';
+        }
+        return output;
+    }
+
+    // ================================
+    // 📈 9. Aggregations
+    // ================================
+    public static String getAggregations() {
+        AggregateResult[] results = [
+            SELECT COUNT(Id) totalOrders,
+                   SUM(Revenue__c) totalRevenue,
+                   AVG(Revenue__c) avgRevenue
+            FROM Realistic_OrderLine_Datacsv__dlm
+        ];
+        if (results.isEmpty()) return 'No data.';
+
+        AggregateResult r = results[0];
+        return '**AGGREGATES**\n' +
+               'Total Orders: ' + r.get('totalOrders') + '\n' +
+               'Total Revenue: $' + r.get('totalRevenue') + '\n' +
+               'Average Revenue: $' + r.get('avgRevenue');
+    }
+}
