@@ -1,0 +1,14 @@
+List<Realistic_OrderLine_Datacsv__dlm> orders = [
+    SELECT Vendor__c, Revenue_TXT__c, Quantity_TXT__c
+    FROM Realistic_OrderLine_Datacsv__dlm
+    WHERE Vendor__c != null
+];
+
+for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+    Decimal revenue = parseRevenue(o.Revenue_TXT__c);
+    Integer qty = (o.Quantity_TXT__c != null) ? Integer.valueOf(o.Quantity_TXT__c) : 0;
+    String vendor = o.Vendor__c;
+
+    vendorRevenue.put(vendor, vendorRevenue.containsKey(vendor) ? vendorRevenue.get(vendor) + revenue : revenue);
+    vendorCount.put(vendor, vendorCount.containsKey(vendor) ? vendorCount.get(vendor) + qty : qty);
+}
