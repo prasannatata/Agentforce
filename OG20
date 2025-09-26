@@ -1,0 +1,117 @@
+public with sharing class OrdersAction {
+    // Request + Response classes
+    public class Request {
+        @InvocableVariable(required=true)
+        public String actionType;   // "Pending", "ByStatus", "ByDate", "Details"
+        @InvocableVariable
+        public String status;       // for ByStatus
+        @InvocableVariable
+        public Date startDate;      // for ByDate
+        @InvocableVariable
+        public Date endDate;        // for ByDate
+        @InvocableVariable
+        public String orderRef;     // for Details
+    }
+    public class Response {
+        @InvocableVariable
+        public String result;
+    }
+
+    @InvocableMethod(label='Orders Action')
+    public static List<Response> run(List<Request> reqs) {
+        List<Response> results = new List<Response>();
+        for (Request r : reqs) {
+            Response res = new Response();
+            if (r.actionType == 'Pending') {
+                res.result = getPendingOrders();
+            } else if (r.actionType == 'ByStatus') {
+                res.result = getOrdersByStatus(r.status);
+            } else if (r.actionType == 'ByDate') {
+                res.result = getOrdersByDate(r.startDate, r.endDate);
+            } else if (r.actionType == 'Details') {
+                res.result = getOrderDetails(r.orderRef);
+            } else {
+                res.result = 'Unknown action type: ' + r.actionType;
+            }
+            results.add(res);
+        }
+        return results;
+    }
+
+    // --- Helper Methods ---
+
+    private static String getPendingOrders() {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = 'Pending'
+            LIMIT 20
+        ];
+
+        if (orders.isEmpty()) return 'No pending orders found';
+
+        String out = '**PENDING ORDERS**\n\n| OrderRef | Customer | Revenue | Modality |\n';
+        out += '|---------|----------|---------|----------|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' +
+                   o.Revenue_TXT__c + ' | ' + o.Modality__c + ' |\n';
+        }
+        return out;
+    }
+
+    private static String getOrdersByStatus(String status) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = :status
+        ];
+
+        if (orders.isEmpty()) return 'No orders found with status ' + status;
+
+        String out = '**' + status + ' ORDERS**\n\n| OrderRef | Customer | Revenue | Modality |\n';
+        out += '|---------|----------|---------|----------|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' +
+                   o.Revenue_TXT__c + ' | ' + o.Modality__c + ' |\n';
+        }
+        return out;
+    }
+
+    private static String getOrdersByDate(Date startDate, Date endDate) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, OrderCreateDate__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderCreateDate__c >= :startDate AND OrderCreateDate__c <= :endDate
+        ];
+
+        if (orders.isEmpty()) return 'No orders found between ' + startDate + ' and ' + endDate;
+
+        String out = '**ORDERS FROM ' + startDate + ' TO ' + endDate + '**\n\n| OrderRef | Customer | Revenue | Date |\n';
+        out += '|---------|----------|---------|----------|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' +
+                   o.Revenue_TXT__c + ' | ' + o.OrderCreateDate__c + ' |\n';
+        }
+        return out;
+    }
+
+    private static String getOrderDetails(String orderRef) {
+        Realistic_OrderLine_Datacsv__dlm o = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Quantity__c, Modality__c, Vendor__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c = :orderRef
+            LIMIT 1
+        ];
+
+        if (o == null) return 'Order ' + orderRef + ' not found';
+
+        return '**ORDER DETAILS**\n' +
+               'OrderRef: ' + o.OrderRefNumber__c + '\n' +
+               'Customer: ' + o.CustomerName__c + '\n' +
+               'Revenue: $' + o.Revenue_TXT__c + '\n' +
+               'Quantity: ' + o.Quantity__c + '\n' +
+               'Modality: ' + o.Modality__c + '\n' +
+               'Vendor: ' + o.Vendor__c + '\n' +
+               'Status: ' + o.OrderStatus__c + '\n';
+    }
+}
