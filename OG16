@@ -1,0 +1,274 @@
+public with sharing class TestDataQueryAction {
+
+    // ========================
+    // Helper Classes for Invocable
+    // ========================
+
+    public class PendingRequest {}
+    public class PendingResponse { @InvocableVariable public String result; }
+
+    public class StatusRequest { @InvocableVariable public String status; }
+    public class StatusResponse { @InvocableVariable public String result; }
+
+    public class VendorRequest {}
+    public class VendorResponse { @InvocableVariable public String result; }
+
+    public class CustomerRequest {}
+    public class CustomerResponse { @InvocableVariable public String result; }
+
+    public class ModalityRequest {}
+    public class ModalityResponse { @InvocableVariable public String result; }
+
+    public class OrderRefRequest { @InvocableVariable public String orderRef; }
+    public class OrderRefResponse { @InvocableVariable public String result; }
+
+    public class CompareRequest { 
+        @InvocableVariable public String orderRef1;
+        @InvocableVariable public String orderRef2;
+    }
+    public class CompareResponse { @InvocableVariable public String result; }
+
+    public class DateRangeRequest { 
+        @InvocableVariable public Date startDate; 
+        @InvocableVariable public Date endDate; 
+    }
+    public class DateRangeResponse { @InvocableVariable public String result; }
+
+    public class AggregateRequest {}
+    public class AggregateResponse { @InvocableVariable public String result; }
+
+    // ========================
+    // Invocable Methods
+    // ========================
+
+    @InvocableMethod(label='Get Pending Orders')
+    public static List<PendingResponse> getPendingOrdersInvocable(List<PendingRequest> reqs) {
+        List<PendingResponse> resList = new List<PendingResponse>();
+        PendingResponse res = new PendingResponse();
+        res.result = getPendingOrders();
+        resList.add(res);
+        return resList;
+    }
+
+    @InvocableMethod(label='Get Orders by Status')
+    public static List<StatusResponse> getOrdersByStatusInvocable(List<StatusRequest> reqs) {
+        List<StatusResponse> resList = new List<StatusResponse>();
+        for (StatusRequest r : reqs) {
+            StatusResponse res = new StatusResponse();
+            res.result = getOrdersByStatus(r.status);
+            resList.add(res);
+        }
+        return resList;
+    }
+
+    @InvocableMethod(label='Vendor Performance')
+    public static List<VendorResponse> getVendorPerformanceInvocable(List<VendorRequest> reqs) {
+        List<VendorResponse> resList = new List<VendorResponse>();
+        VendorResponse res = new VendorResponse();
+        res.result = generateVendorPerformance();
+        resList.add(res);
+        return resList;
+    }
+
+    @InvocableMethod(label='Customer Revenue Analysis')
+    public static List<CustomerResponse> getCustomerRevenueInvocable(List<CustomerRequest> reqs) {
+        List<CustomerResponse> resList = new List<CustomerResponse>();
+        CustomerResponse res = new CustomerResponse();
+        res.result = generateCustomerRevenue();
+        resList.add(res);
+        return resList;
+    }
+
+    @InvocableMethod(label='Modality Performance')
+    public static List<ModalityResponse> getModalityPerformanceInvocable(List<ModalityRequest> reqs) {
+        List<ModalityResponse> resList = new List<ModalityResponse>();
+        ModalityResponse res = new ModalityResponse();
+        res.result = generateModalityPerformance();
+        resList.add(res);
+        return resList;
+    }
+
+    @InvocableMethod(label='Get Order Details')
+    public static List<OrderRefResponse> getOrderDetailsInvocable(List<OrderRefRequest> reqs) {
+        List<OrderRefResponse> resList = new List<OrderRefResponse>();
+        for (OrderRefRequest r : reqs) {
+            OrderRefResponse res = new OrderRefResponse();
+            res.result = findOrderByRef(r.orderRef);
+            resList.add(res);
+        }
+        return resList;
+    }
+
+    @InvocableMethod(label='Compare Two Orders')
+    public static List<CompareResponse> compareOrdersInvocable(List<CompareRequest> reqs) {
+        List<CompareResponse> resList = new List<CompareResponse>();
+        for (CompareRequest r : reqs) {
+            CompareResponse res = new CompareResponse();
+            res.result = compareTwoOrders(r.orderRef1, r.orderRef2);
+            resList.add(res);
+        }
+        return resList;
+    }
+
+    @InvocableMethod(label='Orders by Date Range')
+    public static List<DateRangeResponse> getOrdersByDateRangeInvocable(List<DateRangeRequest> reqs) {
+        List<DateRangeResponse> resList = new List<DateRangeResponse>();
+        for (DateRangeRequest r : reqs) {
+            DateRangeResponse res = new DateRangeResponse();
+            res.result = getOrdersByDateRange(r.startDate, r.endDate);
+            resList.add(res);
+        }
+        return resList;
+    }
+
+    @InvocableMethod(label='Aggregations')
+    public static List<AggregateResponse> getAggregationsInvocable(List<AggregateRequest> reqs) {
+        List<AggregateResponse> resList = new List<AggregateResponse>();
+        AggregateResponse res = new AggregateResponse();
+        res.result = generateAggregations();
+        resList.add(res);
+        return resList;
+    }
+
+    // ========================
+    // Helper Methods (Logic)
+    // ========================
+
+    private static String getPendingOrders() {
+        return getOrdersByStatus('Pending');
+    }
+
+    private static String getOrdersByStatus(String status) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = :status
+        ];
+        if (orders.isEmpty()) return 'No orders found with status ' + status;
+
+        String out = '**' + status + ' Orders**\n\n| OrderRef | Customer | Revenue | Modality |\n|---|---|---|---|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            Decimal rev = safeDecimal(o.Revenue_TXT__c);
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' + rev + ' | ' + o.Modality__c + ' |\n';
+        }
+        return out;
+    }
+
+    private static String generateCustomerRevenue() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows = [
+            SELECT CustomerName__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+        ];
+        Map<String, Decimal> totals = new Map<String, Decimal>();
+        for (Realistic_OrderLine_Datacsv__dlm r : rows) {
+            Decimal rev = safeDecimal(r.Revenue_TXT__c);
+            totals.put(r.CustomerName__c, totals.containsKey(r.CustomerName__c) ? totals.get(r.CustomerName__c) + rev : rev);
+        }
+        String out = '**Customer Revenue Totals**\n\n| Customer | Total Revenue |\n|---|---|\n';
+        for (String c : totals.keySet()) out += '| ' + c + ' | $' + totals.get(c) + ' |\n';
+        return out;
+    }
+
+    private static String generateVendorPerformance() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows = [
+            SELECT Vendor__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+        ];
+        Map<String, Decimal> totals = new Map<String, Decimal>();
+        for (Realistic_OrderLine_Datacsv__dlm r : rows) {
+            Decimal rev = safeDecimal(r.Revenue_TXT__c);
+            totals.put(r.Vendor__c, totals.containsKey(r.Vendor__c) ? totals.get(r.Vendor__c) + rev : rev);
+        }
+        String out = '**Vendor Performance**\n\n| Vendor | Total Revenue |\n|---|---|\n';
+        for (String v : totals.keySet()) out += '| ' + v + ' | $' + totals.get(v) + ' |\n';
+        return out;
+    }
+
+    private static String generateModalityPerformance() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows = [
+            SELECT Modality__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+        ];
+        Map<String, Decimal> totals = new Map<String, Decimal>();
+        for (Realistic_OrderLine_Datacsv__dlm r : rows) {
+            Decimal rev = safeDecimal(r.Revenue_TXT__c);
+            totals.put(r.Modality__c, totals.containsKey(r.Modality__c) ? totals.get(r.Modality__c) + rev : rev);
+        }
+        String out = '**Modality Performance**\n\n| Modality | Total Revenue |\n|---|---|\n';
+        for (String m : totals.keySet()) out += '| ' + m + ' | $' + totals.get(m) + ' |\n';
+        return out;
+    }
+
+    private static String getOrdersByDateRange(Date startDate, Date endDate) {
+        List<Realistic_OrderLine_Datacsv__dlm> rows = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, OrderCreateDate__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderCreateDate__c >= :startDate AND OrderCreateDate__c <= :endDate
+        ];
+        if (rows.isEmpty()) return 'No orders found in the given date range';
+
+        String out = '**Orders from ' + startDate + ' to ' + endDate + '**\n\n| OrderRef | Customer | Revenue | Date |\n|---|---|---|---|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : rows) {
+            Decimal rev = safeDecimal(o.Revenue_TXT__c);
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' + rev + ' | ' + o.OrderCreateDate__c + ' |\n';
+        }
+        return out;
+    }
+
+    private static String findOrderByRef(String orderRef) {
+        List<Realistic_OrderLine_Datacsv__dlm> rows = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c = :orderRef
+        ];
+        if (rows.isEmpty()) return 'Order not found: ' + orderRef;
+
+        Realistic_OrderLine_Datacsv__dlm o = rows[0];
+        return '**Order Details: ' + orderRef + '**\n'
+            + 'Customer: ' + o.CustomerName__c + '\n'
+            + 'Revenue: $' + safeDecimal(o.Revenue_TXT__c) + '\n'
+            + 'Modality: ' + o.Modality__c + '\n'
+            + 'Vendor: ' + o.Vendor__c + '\n'
+            + 'Status: ' + o.OrderStatus__c + '\n';
+    }
+
+    private static String compareTwoOrders(String orderRef1, String orderRef2) {
+        Realistic_OrderLine_Datacsv__dlm o1 = [SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OrderStatus__c 
+                                               FROM Realistic_OrderLine_Datacsv__dlm WHERE OrderRefNumber__c = :orderRef1 LIMIT 1];
+        Realistic_OrderLine_Datacsv__dlm o2 = [SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OrderStatus__c 
+                                               FROM Realistic_OrderLine_Datacsv__dlm WHERE OrderRefNumber__c = :orderRef2 LIMIT 1];
+
+        String out = '**Compare Orders**\n\n| Field | ' + orderRef1 + ' | ' + orderRef2 + ' |\n|---|---|---|\n';
+        out += '| Customer | ' + o1.CustomerName__c + ' | ' + o2.CustomerName__c + ' |\n';
+        out += '| Revenue | $' + safeDecimal(o1.Revenue_TXT__c) + ' | $' + safeDecimal(o2.Revenue_TXT__c) + ' |\n';
+        out += '| Modality | ' + o1.Modality__c + ' | ' + o2.Modality__c + ' |\n';
+        out += '| Vendor | ' + o1.Vendor__c + ' | ' + o2.Vendor__c + ' |\n';
+        out += '| Status | ' + o1.OrderStatus__c + ' | ' + o2.OrderStatus__c + ' |\n';
+        return out;
+    }
+
+    private static String generateAggregations() {
+        // Example: Vendor + Modality combined totals
+        List<Realistic_OrderLine_Datacsv__dlm> rows = [
+            SELECT Vendor__c, Modality__c, Revenue_TXT__c FROM Realistic_OrderLine_Datacsv__dlm
+        ];
+        if (rows.isEmpty()) return 'No data available for aggregations';
+
+        Map<String, Decimal> totals = new Map<String, Decimal>();
+        for (Realistic_OrderLine_Datacsv__dlm r : rows) {
+            Decimal rev = safeDecimal(r.Revenue_TXT__c);
+            String key = r.Vendor__c + ' - ' + r.Modality__c;
+            totals.put(key, totals.containsKey(key) ? totals.get(key) + rev : rev);
+        }
+
+        String out = '**Aggregations (Vendor + Modality)**\n\n| Vendor - Modality | Total Revenue |\n|---|---|\n';
+        for (String k : totals.keySet()) out += '| ' + k + ' | $' + totals.get(k) + ' |\n';
+        return out;
+    }
+
+    // Safe decimal converter
+    private static Decimal safeDecimal(String txt) {
+        try {
+            return (txt == null) ? 0 : Decimal.valueOf(txt);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+}
