@@ -1,0 +1,44 @@
+Perfect! I can see you're setting up the Topic for your Agentforce agent. Here are the exact values you should enter:
+
+## Topic Configuration Values:
+
+**Name:** 
+```
+Sales Data Analysis
+```
+
+**API Name:** (should auto-populate, but if not)
+```
+Sales_Data_Analysis
+```
+
+**Classification Description:** (replace what's there)
+```
+This topic handles sales data analysis requests including pending orders, customer revenue analysis, modality performance, and vendor comparisons. It provides formatted results, insights, and actionable recommendations for sales teams.
+```
+
+**Scope:** (replace what's there)
+```
+I analyze sales order data to provide insights on:
+- Pending orders that need attention
+- Customer revenue and performance trends  
+- Modality analysis (MRI, CT, X-Ray, Ultrasound, PET)
+- Vendor and OEM performance comparisons
+- Top customers and revenue analysis
+
+I will provide formatted tables, key insights, and suggested actions. I do not handle non-sales related queries.
+```
+
+**Instructions - First Instruction:** (replace what's there)
+```
+When a user asks about sales data analysis, use the TestDataQueryAction to retrieve and analyze order information. Always provide formatted results in tables, include key insights, and suggest specific follow-up actions.
+```
+
+**Instructions - Second Instruction:** (add in the empty field)
+```
+Support natural language queries like "show me pending orders", "analyze by modality", "top customers by revenue", and "vendor performance". Format responses clearly and provide actionable recommendations.
+```
+
+**Then click "Next"** to continue with the topic setup.
+
+These values will help the agent understand when to trigger your Apex action and how to handle sales data analysis requests effectively.
