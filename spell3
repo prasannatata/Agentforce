@@ -1,0 +1,21 @@
+// Test different object name variations
+try {
+    List<SObject> results1 = Database.query('SELECT Id FROM Realistic_OrderLine_Data__dlm LIMIT 1');
+    System.debug('SUCCESS with __dlm: Found ' + results1.size() + ' records');
+} catch (Exception e) {
+    System.debug('FAILED with __dlm: ' + e.getMessage());
+}
+
+try {
+    List<SObject> results2 = Database.query('SELECT Id FROM Realistic_OrderLine_Data__c LIMIT 1');
+    System.debug('SUCCESS with __c: Found ' + results2.size() + ' records');
+} catch (Exception e) {
+    System.debug('FAILED with __c: ' + e.getMessage());
+}
+
+try {
+    List<SObject> results3 = Database.query('SELECT Id FROM RealisticOrderLineData__dlm LIMIT 1');
+    System.debug('SUCCESS with RealisticOrderLineData__dlm: Found ' + results3.size() + ' records');
+} catch (Exception e) {
+    System.debug('FAILED with RealisticOrderLineData__dlm: ' + e.getMessage());
+}
