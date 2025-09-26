@@ -1,0 +1,198 @@
+public with sharing class TestDataQueryAction {
+
+    // ==============================
+    // Request & Response Wrappers
+    // ==============================
+
+    public class QueryRequest {
+        @InvocableVariable(label='Query Type' required=true)
+        public String queryType;  // e.g. PendingOrders, OrdersByStatus, OrdersByDateRange, CustomerRevenue, etc.
+
+        @InvocableVariable(label='Status')
+        public String status;
+
+        @InvocableVariable(label='Order Reference 1')
+        public String orderRef;
+
+        @InvocableVariable(label='Order Reference 2')
+        public String orderRef2;
+
+        @InvocableVariable(label='Start Date')
+        public Date startDate;
+
+        @InvocableVariable(label='End Date')
+        public Date endDate;
+    }
+
+    public class QueryResponse {
+        @InvocableVariable(label='Result')
+        public String result;
+    }
+
+    // ==============================
+    // SINGLE Invocable Entry Point
+    // ==============================
+    @InvocableMethod(label='Sales Data Analysis')
+    public static List<QueryResponse> runAnalysis(List<QueryRequest> requests) {
+        List<QueryResponse> results = new List<QueryResponse>();
+
+        for (QueryRequest req : requests) {
+            QueryResponse res = new QueryResponse();
+
+            try {
+                if (req.queryType == 'PendingOrders') {
+                    res.result = getOrdersByStatus('Pending');
+                } else if (req.queryType == 'OrdersByStatus') {
+                    res.result = getOrdersByStatus(req.status);
+                } else if (req.queryType == 'OrdersByDateRange') {
+                    res.result = getOrdersByDateRange(req.startDate, req.endDate);
+                } else if (req.queryType == 'CustomerRevenue') {
+                    res.result = generateCustomerRevenue();
+                } else if (req.queryType == 'VendorPerformance') {
+                    res.result = generateVendorPerformance();
+                } else if (req.queryType == 'ModalityPerformance') {
+                    res.result = generateModalityPerformance();
+                } else if (req.queryType == 'CompareOrders') {
+                    res.result = compareTwoOrders(req.orderRef, req.orderRef2);
+                } else if (req.queryType == 'GetOrderDetails') {
+                    res.result = getOrderDetails(req.orderRef);
+                } else if (req.queryType == 'Aggregations') {
+                    res.result = generateAggregations();
+                } else {
+                    res.result = '❌ Unsupported queryType: ' + req.queryType;
+                }
+            } catch (Exception e) {
+                res.result = '⚠️ Error: ' + e.getMessage();
+            }
+
+            results.add(res);
+        }
+        return results;
+    }
+
+    // ==============================
+    // HELPER METHODS
+    // ==============================
+
+    // 1. Orders by Status
+    private static String getOrdersByStatus(String status) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = :status
+        ];
+        if (orders.isEmpty()) return 'No orders found with status: ' + status;
+
+        String out = '**Orders with Status: ' + status + '**\n\n| OrderRef | Customer | Revenue | Modality |\n|---|---|---|---|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                   ' | $' + o.Revenue_TXT__c + ' | ' + o.Modality__c + ' |\n';
+        }
+        return out;
+    }
+
+    // 2. Orders by Date Range
+    private static String getOrdersByDateRange(Date startDate, Date endDate) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, OrderPODate__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderPODate__c >= :startDate AND OrderPODate__c <= :endDate
+        ];
+        if (orders.isEmpty()) return 'No orders found between ' + startDate + ' and ' + endDate;
+
+        String out = '**Orders from ' + startDate + ' to ' + endDate + '**\n\n| OrderRef | Customer | Revenue | PO Date |\n|---|---|---|---|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                   ' | $' + o.Revenue_TXT__c + ' | ' + o.OrderPODate__c + ' |\n';
+        }
+        return out;
+    }
+
+    // 3. Customer Revenue Totals
+    private static String generateCustomerRevenue() {
+        List<AggregateResult> grouped = [
+            SELECT CustomerName__c c, SUM(Revenue_TXT__c) total
+            FROM Realistic_OrderLine_Datacsv__dlm
+            GROUP BY CustomerName__c
+        ];
+        if (grouped.isEmpty()) return 'No customer revenue data found';
+
+        String out = '**Customer Revenue Totals**\n\n| Customer | Total Revenue |\n|---|---|\n';
+        for (AggregateResult a : grouped) {
+            out += '| ' + a.get('c') + ' | $' + a.get('total') + ' |\n';
+        }
+        return out;
+    }
+
+    // 4. Vendor Performance
+    private static String generateVendorPerformance() {
+        List<AggregateResult> grouped = [
+            SELECT Vendor__c v, SUM(Revenue_TXT__c) total
+            FROM Realistic_OrderLine_Datacsv__dlm
+            GROUP BY Vendor__c
+        ];
+        if (grouped.isEmpty()) return 'No vendor performance data found';
+
+        String out = '**Vendor Performance**\n\n| Vendor | Total Revenue |\n|---|---|\n';
+        for (AggregateResult a : grouped) {
+            out += '| ' + a.get('v') + ' | $' + a.get('total') + ' |\n';
+        }
+        return out;
+    }
+
+    // 5. Modality Performance
+    private static String generateModalityPerformance() {
+        List<AggregateResult> grouped = [
+            SELECT Modality__c m, SUM(Revenue_TXT__c) total
+            FROM Realistic_OrderLine_Datacsv__dlm
+            GROUP BY Modality__c
+        ];
+        if (grouped.isEmpty()) return 'No modality performance data found';
+
+        String out = '**Modality Performance**\n\n| Modality | Total Revenue |\n|---|---|\n';
+        for (AggregateResult a : grouped) {
+            out += '| ' + a.get('m') + ' | $' + a.get('total') + ' |\n';
+        }
+        return out;
+    }
+
+    // 6. Compare Two Orders
+    private static String compareTwoOrders(String ref1, String ref2) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c IN :new List<String>{ref1, ref2}
+        ];
+        if (orders.size() < 2) return 'Could not find both orders for comparison';
+
+        String out = '**Order Comparison**\n\n| OrderRef | Customer | Revenue | Modality |\n|---|---|---|---|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            out += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c +
+                   ' | $' + o.Revenue_TXT__c + ' | ' + o.Modality__c + ' |\n';
+        }
+        return out;
+    }
+
+    // 7. Get Order Details
+    private static String getOrderDetails(String ref) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c = :ref
+        ];
+        if (orders.isEmpty()) return 'No order found with reference: ' + ref;
+
+        Realistic_OrderLine_Datacsv__dlm o = orders[0];
+        return '**Order Details: ' + ref + '**\n' +
+               'Customer: ' + o.CustomerName__c + '\n' +
+               'Revenue: $' + o.Revenue_TXT__c + '\n' +
+               'Modality: ' + o.Modality__c + '\n' +
+               'Vendor: ' + o.Vendor__c + '\n' +
+               'Status: ' + o.OrderStatus__c + '\n';
+    }
+
+    // 8. Aggregations
+    private static String generateAggregations() {
+        return 'Aggregations result (implement as needed)';
+    }
+}
