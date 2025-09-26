@@ -1,0 +1,216 @@
+public class TestDataQueryAction {
+
+    // -----------------------------
+    // Request / Response Structures
+    // -----------------------------
+    public class QueryRequest {
+        @InvocableVariable(required=true)
+        public String query;
+    }
+
+    public class QueryResult {
+        @InvocableVariable public String queryExecuted;
+        @InvocableVariable public Integer recordCount;
+        @InvocableVariable public String formattedResults;
+        @InvocableVariable public String insights;
+        @InvocableVariable public List<String> suggestedActions;
+        @InvocableVariable public Boolean success;
+        @InvocableVariable public String errorMessage;
+    }
+
+    // -----------------------------
+    // Main Invocable Method
+    // -----------------------------
+    @InvocableMethod(label='Query Order Line Test Data')
+    public static List<QueryResult> executeTestDataQuery(List<QueryRequest> requests) {
+        List<QueryResult> results = new List<QueryResult>();
+
+        for (QueryRequest request : requests) {
+            QueryResult result = new QueryResult();
+            result.success = true;
+            result.queryExecuted = 'Dynamic query for: ' + request.query;
+
+            try {
+                String queryLower = (request.query != null) ? request.query.toLowerCase() : '';
+
+                if (queryLower.contains('pending')) {
+                    result.formattedResults = generatePendingOrders();
+                    result.insights = 'Pending orders retrieved from dataset.';
+                    result.suggestedActions = new List<String>{'Escalate to fulfillment team','Notify sales rep'};
+
+                } else if (queryLower.contains('modality')) {
+                    result.formattedResults = generateModalityPerformance();
+                    result.insights = 'Modality performance based on volume and revenue.';
+                    result.suggestedActions = new List<String>{'Optimize scheduling','Review underperforming modalities'};
+
+                } else if (queryLower.contains('customer')) {
+                    result.formattedResults = generateCustomerRevenue();
+                    result.insights = 'Top customers identified by revenue.';
+                    result.suggestedActions = new List<String>{'Assign account managers','Offer premium packages'};
+
+                } else if (queryLower.contains('vendor')) {
+                    result.formattedResults = generateVendorComparison();
+                    result.insights = 'Vendor performance comparison.';
+                    result.suggestedActions = new List<String>{'Review vendor contracts','Schedule performance review'};
+
+                } else if (queryLower.startsWith('ord-')) {
+                    result.formattedResults = findOrderByRef(request.query.trim());
+                    result.insights = 'Details for order ' + request.query;
+                    result.suggestedActions = new List<String>{'Review order history','Contact account rep'};
+
+                } else {
+                    result.formattedResults = 'No matching query type found.';
+                    result.insights = 'Try asking about pending orders, modalities, customers, vendors, or an order ID (e.g., ORD-1009).';
+                    result.suggestedActions = new List<String>{'Try a different query','Ask for help with query types'};
+                }
+
+                result.recordCount = (result.formattedResults != null) ? result.formattedResults.split('\n').size() - 2 : 0;
+
+            } catch (Exception e) {
+                result.success = false;
+                result.errorMessage = 'Error processing query: ' + e.getMessage();
+            }
+
+            results.add(result);
+        }
+        return results;
+    }
+
+    // -----------------------------
+    // Helper: Parse Revenue
+    // -----------------------------
+    private static Decimal parseRevenue(String revenueTxt) {
+        if (String.isBlank(revenueTxt)) return 0;
+        String cleaned = revenueTxt.replaceAll('[^0-9]', '');
+        return (String.isBlank(cleaned)) ? 0 : Decimal.valueOf(cleaned);
+    }
+
+    // -----------------------------
+    // Query Generators
+    // -----------------------------
+    private static String generatePendingOrders() {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderStatus__c = 'In Progress' OR OrderStatus__c = 'Pending'
+            LIMIT 20
+        ];
+
+        String output = '**PENDING ORDERS**\n\n| OrderRef | Customer | Revenue | Modality |\n|----------|----------|---------|----------|\n';
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            Decimal revenue = parseRevenue(o.Revenue_TXT__c);
+            output += '| ' + o.OrderRefNumber__c + ' | ' + o.CustomerName__c + ' | $' + revenue + ' | ' + o.Modality__c + ' |\n';
+        }
+        return output;
+    }
+
+    private static String generateModalityPerformance() {
+        Map<String, Decimal> modalityRevenue = new Map<String, Decimal>();
+        Map<String, Integer> modalityCount = new Map<String, Integer>();
+
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT Modality__c, Revenue_TXT__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE Modality__c != null
+        ];
+
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            Decimal revenue = parseRevenue(o.Revenue_TXT__c);
+            String modality = o.Modality__c;
+            modalityRevenue.put(modality, modalityRevenue.containsKey(modality) ? modalityRevenue.get(modality) + revenue : revenue);
+            modalityCount.put(modality, modalityCount.containsKey(modality) ? modalityCount.get(modality) + 1 : 1);
+        }
+
+        String output = '**MODALITY PERFORMANCE**\n\n| Modality | Order Count | Total Revenue |\n|----------|-------------|---------------|\n';
+        for (String m : modalityRevenue.keySet()) {
+            output += '| ' + m + ' | ' + modalityCount.get(m) + ' | $' + modalityRevenue.get(m) + ' |\n';
+        }
+        return output;
+    }
+
+    private static String generateCustomerRevenue() {
+        Map<String, Decimal> customerRevenue = new Map<String, Decimal>();
+
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT CustomerName__c, Revenue_TXT__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE CustomerName__c != null
+        ];
+
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            Decimal revenue = parseRevenue(o.Revenue_TXT__c);
+            String customer = o.CustomerName__c;
+            customerRevenue.put(customer, customerRevenue.containsKey(customer) ? customerRevenue.get(customer) + revenue : revenue);
+        }
+
+        List<String> sortedCustomers = new List<String>(customerRevenue.keySet());
+        sortedCustomers.sort(new CustomerRevenueComparator(customerRevenue));
+
+        String output = '**CUSTOMER REVENUE ANALYSIS**\n\n| Customer | Total Revenue |\n|----------|---------------|\n';
+        for (String c : sortedCustomers) {
+            output += '| ' + c + ' | $' + customerRevenue.get(c) + ' |\n';
+        }
+        return output;
+    }
+
+    private static String generateVendorComparison() {
+        Map<String, Decimal> vendorRevenue = new Map<String, Decimal>();
+        Map<String, Integer> vendorCount = new Map<String, Integer>();
+
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT Vendor__c, Revenue_TXT__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE Vendor__c != null
+        ];
+
+        for (Realistic_OrderLine_Datacsv__dlm o : orders) {
+            Decimal revenue = parseRevenue(o.Revenue_TXT__c);
+            String vendor = o.Vendor__c;
+            vendorRevenue.put(vendor, vendorRevenue.containsKey(vendor) ? vendorRevenue.get(vendor) + revenue : revenue);
+            vendorCount.put(vendor, vendorCount.containsKey(vendor) ? vendorCount.get(vendor) + 1 : 1);
+        }
+
+        String output = '**VENDOR PERFORMANCE COMPARISON**\n\n| Vendor | Order Count | Total Revenue |\n|--------|-------------|---------------|\n';
+        for (String v : vendorRevenue.keySet()) {
+            output += '| ' + v + ' | ' + vendorCount.get(v) + ' | $' + vendorRevenue.get(v) + ' |\n';
+        }
+        return output;
+    }
+
+    private static String findOrderByRef(String orderRef) {
+        List<Realistic_OrderLine_Datacsv__dlm> orders = [
+            SELECT OrderRefNumber__c, CustomerName__c, Revenue_TXT__c, Modality__c, Vendor__c, OEM__c, OrderStatus__c
+            FROM Realistic_OrderLine_Datacsv__dlm
+            WHERE OrderRefNumber__c = :orderRef
+            LIMIT 1
+        ];
+
+        if (orders.isEmpty()) return 'No order found for reference ' + orderRef;
+
+        Realistic_OrderLine_Datacsv__dlm o = orders[0];
+        Decimal revenue = parseRevenue(o.Revenue_TXT__c);
+        return '**ORDER DETAILS**\nOrderRef: ' + o.OrderRefNumber__c +
+               '\nCustomer: ' + o.CustomerName__c +
+               '\nRevenue: $' + revenue +
+               '\nModality: ' + o.Modality__c +
+               '\nVendor: ' + o.Vendor__c +
+               '\nOEM: ' + o.OEM__c +
+               '\nStatus: ' + o.OrderStatus__c;
+    }
+
+    // -----------------------------
+    // Custom Comparator
+    // -----------------------------
+    public class CustomerRevenueComparator implements Comparator<String> {
+        Map<String, Decimal> revenueMap;
+        public CustomerRevenueComparator(Map<String, Decimal> revenueMap) {
+            this.revenueMap = revenueMap;
+        }
+        public Integer compare(String a, String b) {
+            Decimal revA = (revenueMap.containsKey(a) && revenueMap.get(a) != null) ? revenueMap.get(a) : 0;
+            Decimal revB = (revenueMap.containsKey(b) && revenueMap.get(b) != null) ? revenueMap.get(b) : 0;
+            if (revA == revB) return 0;
+            return (revB > revA) ? 1 : -1;  // descending order
+        }
+    }
+}
