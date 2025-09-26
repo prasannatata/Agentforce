@@ -115,3 +115,19 @@ public with sharing class OrdersAction {
                'Status: ' + o.OrderStatus__c + '\n';
     }
 }
+
++++++++++++
+
+// === Test Pending Orders ===
+List<OrdersAction.Request> reqs = new List<OrdersAction.Request>();
+OrdersAction.Request r = new OrdersAction.Request();
+r.actionType = 'Pending';   // Options: Pending, ByStatus, ByDate, Details
+reqs.add(r);
+
+List<OrdersAction.Response> results = OrdersAction.run(reqs);
+
+// Print result
+for (OrdersAction.Response res : results) {
+    System.debug('Result: ' + res.result);
+}
+
