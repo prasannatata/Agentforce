@@ -1,0 +1,30 @@
+// Build test queries
+List<TestDataQueryAction.QueryRequest> requests = new List<TestDataQueryAction.QueryRequest>();
+
+// Example queries (you can add/remove as needed)
+requests.add(new TestDataQueryAction.QueryRequest('Show me pending orders'));
+requests.add(new TestDataQueryAction.QueryRequest('Give details for ORD-1009'));
+requests.add(new TestDataQueryAction.QueryRequest('Compare ORD-1008 and ORD-1009'));
+requests.add(new TestDataQueryAction.QueryRequest('Show customer revenue analysis'));
+requests.add(new TestDataQueryAction.QueryRequest('Show vendor performance comparison'));
+requests.add(new TestDataQueryAction.QueryRequest('Show modality performance'));
+requests.add(new TestDataQueryAction.QueryRequest('Show orders with status In Progress'));
+requests.add(new TestDataQueryAction.QueryRequest('Show orders with status Completed'));
+
+// Execute
+List<TestDataQueryAction.QueryResult> results = TestDataQueryAction.runQueries(requests);
+
+// Print results
+for (TestDataQueryAction.QueryResult res : results) {
+    System.debug('==============================================');
+    System.debug('Query Executed: ' + res.queryExecuted);
+    System.debug('Success: ' + res.success);
+    System.debug('Record Count: ' + res.recordCount);
+    System.debug('Formatted Results:\n' + res.formattedResults);
+    System.debug('Insights: ' + res.insights);
+    System.debug('Suggested Actions: ' + String.join(res.suggestedActions, ', '));
+    if (!res.success) {
+        System.debug('Error Message: ' + res.errorMessage);
+    }
+}
+System.debug('==============================================');
