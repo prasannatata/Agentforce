@@ -1,0 +1,112 @@
+public with sharing class OrdersAction {
+
+    public class Request {
+        @InvocableVariable public String actionType;
+        @InvocableVariable public String orderRef;
+        @InvocableVariable public String status;
+        @InvocableVariable public Date startDate;
+        @InvocableVariable public Date endDate;
+    }
+
+    public class Response {
+        @InvocableVariable public String result;
+    }
+
+    @InvocableMethod(label='Orders Action')
+    public static List<Response> run(List<Request> reqs) {
+        List<Response> results = new List<Response>();
+
+        for (Request r : reqs) {
+            Response res = new Response();
+            String output;
+
+            if (r.actionType == 'Pending') {
+                output = handlePending();
+            } else if (r.actionType == 'ByStatus' && r.status != null) {
+                output = handleByStatus(r.status);
+            } else if (r.actionType == 'Details' && r.orderRef != null) {
+                output = handleDetails(r.orderRef);
+            } else if (r.actionType == 'ByDate' && r.startDate != null && r.endDate != null) {
+                output = handleByDate(r.startDate, r.endDate);
+            } else if (r.actionType == 'ByVendor') {
+                output = handleByVendor();
+            } else if (r.actionType == 'ByCustomer') {
+                output = handleByCustomer();
+            } else if (r.actionType == 'ByModality') {
+                output = handleByModality();
+            } else {
+                output = '⚠️ Unknown actionType: ' + r.actionType;
+            }
+
+            res.result = output;
+            results.add(res);
+        }
+        return results;
+    }
+
+    // === Handlers ===
+    private static String handlePending() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT OrderRefNumber__c, CustomerName__c, OrderStatus__c, Modality__c,
+                    Vendor__c, Quantity__c, Revenue__c
+             FROM Realistic_OrderLine_Datacsv__dlm
+             WHERE OrderStatus__c = 'Pending'];
+        return OrderDL_Util.fmtOrdersTable(rows, 'Pending Orders');
+    }
+
+    private static String handleByStatus(String status) {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT OrderRefNumber__c, CustomerName__c, OrderStatus__c, Modality__c,
+                    Vendor__c, Quantity__c, Revenue__c
+             FROM Realistic_OrderLine_Datacsv__dlm
+             WHERE OrderStatus__c = :status];
+        return OrderDL_Util.fmtOrdersTable(rows, 'Orders with Status ' + status);
+    }
+
+    private static String handleDetails(String orderRef) {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT OrderRefNumber__c, CustomerName__c, OrderStatus__c, Modality__c,
+                    Vendor__c, OEM__c, PartNumber__c, PartDescription__c,
+                    Quantity__c, Revenue__c, SalesRep__c, Requestor__c,
+                    OrderCreateDate__c, OrderPODate__c, CustomerID__c, ParentCustomerName__c
+             FROM Realistic_OrderLine_Datacsv__dlm
+             WHERE OrderRefNumber__c = :orderRef
+             LIMIT 1];
+
+        if (rows.isEmpty()) return '❌ No order found with reference ' + orderRef;
+        return OrderDL_Util.fmtOrderCard(rows[0]);
+    }
+
+    private static String handleByDate(Date startDate, Date endDate) {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT OrderRefNumber__c, CustomerName__c, OrderStatus__c, Modality__c,
+                    Vendor__c, Quantity__c, Revenue__c, OrderCreateDate__c
+             FROM Realistic_OrderLine_Datacsv__dlm
+             WHERE OrderCreateDate__c >= :startDate AND OrderCreateDate__c <= :endDate];
+        return OrderDL_Util.fmtOrdersTable(rows, 'Orders between ' + startDate + ' and ' + endDate);
+    }
+
+    private static String handleByVendor() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT Vendor__c, Quantity__c, Revenue__c
+             FROM Realistic_OrderLine_Datacsv__dlm];
+        Map<String, OrderDL_Util.Tot> totals = OrderDL_Util.rollup(rows, 'Vendor');
+        return OrderDL_Util.fmtRollupTable(totals, 'Vendor Performance', 'Vendor');
+    }
+
+    private static String handleByCustomer() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT CustomerName__c, Quantity__c, Revenue__c
+             FROM Realistic_OrderLine_Datacsv__dlm];
+        Map<String, OrderDL_Util.Tot> totals = OrderDL_Util.rollup(rows, 'Customer');
+        return OrderDL_Util.fmtRollupTable(totals, 'Customer Revenue', 'Customer');
+    }
+
+    private static String handleByModality() {
+        List<Realistic_OrderLine_Datacsv__dlm> rows =
+            [SELECT Modality__c, Quantity__c, Revenue__c
+             FROM Realistic_OrderLine_Datacsv__dlm];
+        Map<String, OrderDL_Util.Tot> totals = OrderDL_Util.rollup(rows, 'Modality');
+        return OrderDL_Util.fmtRollupTable(totals, 'Modality Performance', 'Modality');
+    }
+}
