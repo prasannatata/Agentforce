@@ -1,0 +1,11 @@
+Sales Insight Assistant – Data Cloud Configuration Summary
+
+Imported Excel file containing sales data.
+
+Created a Data Stream from that file to ingest data into Data Cloud.
+
+Defined a Data Model Object (DMO) to store and map the data fields (Order ID, PO Date, Customer, OEM, Status, etc.).
+
+Connected the DMO to Agent Actions for querying and displaying results in the Sales Insight Assistant.
+
+Tested queries in Agentforce Copilot to confirm successful data retrieval.
