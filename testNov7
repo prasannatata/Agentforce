@@ -1,0 +1,37 @@
+// ✅ 1. Prepare fake or real inputs
+String testAccountId = '001xxxxxxxxxxxx';   // put any Account Id you used in Flow
+Date testDosStart = Date.today();
+Date testDosEnd = Date.today();
+
+// Other inputs your method needs
+Boolean testIsSubscriberPatient = false;
+String testLocation = 'test';
+String testPayerCode = '01333';
+String testPayerName = 'Medicare';
+String testProviderLastName = 'Smith';
+String testProviderNpi = '1234567890';
+String testSubscriberDOB = '01/11/1948';
+String testSubscriberFN = 'Alexis';
+String testSubscriberLN = 'Renault';
+String testSubscriberMemberId = '8RT0EU6MV20';
+
+// ✅ 2. Wrap your Apex call in try-catch to catch EXACT failure location
+try {
+    System.debug('=== STARTING ELIGIBILITY TEST ===');
+
+    // ✅ Replace with YOUR Apex class and method
+    EligibilitySummaryInvocable.Response result =
+        EligibilitySummaryInvocable.createInsuranceCoverageRecord(
+            null,        // If method expects HttpResponse, pass null
+            testAccountId
+        );
+
+    System.debug('=== SUCCESS ===');
+    System.debug(result);
+
+} catch (Exception ex) {
+    System.debug('❌ ERROR FOUND');
+    System.debug('Message: ' + ex.getMessage());
+    System.debug('Line: ' + ex.getLineNumber());
+    System.debug('Stack: ' + ex.getStackTraceString());
+}
