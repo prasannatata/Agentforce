@@ -5,3 +5,12 @@ AND(
         NOT(ISBLANK(LABS_Patient_Last_Name__c))
     )
 )
+
+
+
+
+
+AND(
+   ISPICKVAL(Status__c, "In Review"),
+   NOT($Profile.Name = "System Administrator")
+)
