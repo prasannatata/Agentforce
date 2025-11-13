@@ -1,0 +1,7 @@
+AND(
+    NOT(ISBLANK(MRN__c)),
+    OR(
+        NOT(ISBLANK(LABS_Patient_First_Initial__c)),
+        NOT(ISBLANK(LABS_Patient_Last_Name__c))
+    )
+)
